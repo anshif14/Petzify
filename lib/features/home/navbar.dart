@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
-import 'package:luna_demo/core/features/explore/screens/exploreScren.dart';
-import 'package:luna_demo/core/features/home/home.dart';
+// import 'package:luna_demo/core/features/explore/screens/exploreScren.dart';
+// import 'package:luna_demo/core/features/home/home.dart';
+
+import '../explore/screens/exploreScren.dart';
+import 'home.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});

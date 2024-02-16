@@ -8,8 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/core/features/product/screens/productSingle.dart';
+// import 'package:luna_demo/core/features/product/screens/productSingle.dart';
 import 'package:luna_demo/main.dart';
+
+import '../product/screens/productSingle.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
