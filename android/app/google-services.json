@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "236523224662",
+    "project_id": "luna-pets-anywhere",
+    "storage_bucket": "luna-pets-anywhere.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236523224662:android:0ecb96e93f8ebe96cb45f7",
+        "android_client_info": {
+          "package_name": "com.example.luna_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt6hnJG1RHCrpyqyZEXY6kqtglXjdaRrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
