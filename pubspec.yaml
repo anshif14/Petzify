@@ -45,7 +45,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   flutter_rating_stars: ^1.0.3+4
   firebase_core: ^2.24.2
-  cloud_firestore: ^4.15.4
+  cloud_firestore: ^4.14.0
 
 dev_dependencies:
   flutter_test:
