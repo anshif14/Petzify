@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
+import 'package:luna_demo/features/profile/screen/profileScreen.dart';
 // import 'package:luna_demo/core/features/explore/screens/exploreScren.dart';
 // import 'package:luna_demo/core/features/home/home.dart';
 
@@ -20,7 +21,7 @@ class _NavBarState extends State<NavBar> {
     HomePage(),
     ExploreScreen(),
     Text("data"),
-    Text("data")
+    profileScreen()
   ];
 
   int selectedIndex = 0;

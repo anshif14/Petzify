@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:luna_demo/features/profile/screen/profileScreen.dart';
 // import 'package:luna_demo/core/features/splash/screens/splashScreen.dart';
 
 import 'features/splash/screens/splashScreen.dart';
@@ -22,8 +23,6 @@ WidgetsFlutterBinding.ensureInitialized();
 
 }
 
-
-
 class MyApp extends StatelessWidget {
 
 
@@ -31,24 +30,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus!.unfocus();
+      },
+      child: MaterialApp(
 
-      theme: ThemeData.from(
-        colorScheme: ColorScheme.light(),
-        // backgroundColor: Colors.white,
+        theme: ThemeData.from(
+          colorScheme: ColorScheme.light(),
+          // backgroundColor: Colors.white,
 
-        textTheme: GoogleFonts.poppinsTextTheme()
-      ).copyWith(
-    pageTransitionsTheme: const PageTransitionsTheme(
-    builders: <TargetPlatform, PageTransitionsBuilder>{
-      TargetPlatform.android: ZoomPageTransitionsBuilder(),
-    },
-    ),
-    ),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(
+          textTheme: GoogleFonts.poppinsTextTheme()
+        ).copyWith(
+      pageTransitionsTheme: const PageTransitionsTheme(
+      builders: <TargetPlatform, PageTransitionsBuilder>{
+        TargetPlatform.android: ZoomPageTransitionsBuilder(),
+      },
+      ),
+      ),
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(
 
 
+        ),
       ),
     );
   }

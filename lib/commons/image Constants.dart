@@ -38,4 +38,5 @@ class imageConstants{
 
   //svg
   static const dogSvg='assets/svg/dog.svg';
+  static const editsvg='assets/svg/edit.svg';
 }
