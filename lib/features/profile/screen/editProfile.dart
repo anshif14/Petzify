@@ -29,9 +29,8 @@ class _editProfileState extends State<editProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xfff8f6f4),
+
       appBar: AppBar(
-        backgroundColor: Color(0xfff8f6f4),
         elevation: 0,
         centerTitle: true,
         title: Text("Bio-Data",
@@ -117,7 +116,7 @@ class _editProfileState extends State<editProfile> {
                         fontWeight: FontWeight.w500,
                       ),
                       decoration: InputDecoration(
-                        fillColor: Colors.white,
+                        fillColor: Pallette.white,
                         filled: true,
                         hintText: "Enter your name",
                         hintStyle: TextStyle(
@@ -152,7 +151,7 @@ class _editProfileState extends State<editProfile> {
                         fontWeight: FontWeight.w500,
                       ),
                       decoration: InputDecoration(
-                        fillColor: Colors.white,
+                        fillColor: Pallette.white,
                         filled: true,
                         hintText: "Enter your email",
                         hintStyle: TextStyle(
@@ -167,7 +166,7 @@ class _editProfileState extends State<editProfile> {
                   ),
                   Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Pallette.white,
                           borderRadius: BorderRadius.circular(width * 0.02),
                           border: Border.all(color: Pallette.primaryColor),
                           boxShadow: [
@@ -202,7 +201,7 @@ class _editProfileState extends State<editProfile> {
                   Container(
                     height: height * 0.07,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Pallette.white,
                         borderRadius: BorderRadius.circular(width * 0.02),
                         border: Border.all(color: Pallette.primaryColor),
                         boxShadow: [
@@ -221,7 +220,7 @@ class _editProfileState extends State<editProfile> {
                             fontSize: width * 0.045,
                           ),
                         ),
-                        dropdownColor: Colors.white,
+                        dropdownColor: Pallette.white,
                         icon: Icon(Icons.arrow_drop_down),
                         isExpanded: true,
                         underline: gap,
@@ -255,14 +254,22 @@ class _editProfileState extends State<editProfile> {
               width: width * 0.4,
               decoration: BoxDecoration(
                   color: Pallette.primaryColor,
-                  borderRadius: BorderRadius.circular(width * 0.025)),
+                  borderRadius: BorderRadius.circular(width * 0.025),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                      offset: Offset(0, 4)
+                  ),
+                ],
+              ),
               child: Center(
                   child: Text(
                 "Update Profile",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Pallette.white,
                   fontSize: width * 0.04,
-                  // fontWeight: FontWeight.w500
                 ),
               )),
             )

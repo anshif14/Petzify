@@ -21,13 +21,10 @@ class _profileScreenState extends State<profileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff8f6f4),
       appBar: AppBar(
-        backgroundColor: Color(0xfff8f6f4),
         elevation: 0,
         title:Text("Profile",style: TextStyle(
             fontSize:width*0.06,
-            color: Colors.black,
             fontWeight: FontWeight.w600
         )),
         // backgroundColor: Colors.yellow,
@@ -44,9 +41,17 @@ class _profileScreenState extends State<profileScreen> {
               width: width*1,
               decoration: BoxDecoration(
                 // color: Pallette.profile,
-                color: Pallette.primaryColor,
-                borderRadius: BorderRadius.circular(width*0.02),
-                border: Border.all(color: Colors.white,width: width*0.005),
+                gradient: LinearGradient(colors: [
+                  Pallette.primaryColor,
+                  Pallette.secondaryBrown,
+                ],
+                  begin: Alignment.topLeft,
+                  end: Alignment(4, 2),
+                // end: AlignmentDirectional(3, 0.1),
+                ),
+                // color: Pallette.primaryColor,
+                borderRadius: BorderRadius.circular(width*0.03),
+                border: Border.all(color:Pallette.secondaryBrown,width: width*0.005),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
@@ -66,7 +71,7 @@ class _profileScreenState extends State<profileScreen> {
                       children: [
                         CircleAvatar(
                           radius: width*0.09,
-                          backgroundColor: Colors.white,
+                          backgroundColor:Pallette.white,
                           child: CircleAvatar(
                             backgroundColor: Pallette.secondaryBrown,
                             radius: width*0.085,
@@ -84,12 +89,12 @@ class _profileScreenState extends State<profileScreen> {
                             style: TextStyle(
                               fontSize: width*0.04,
                                fontWeight: FontWeight.w600,
-                              color: Colors.white
+                              color: Pallette.white,
                             )),
                             Text("Perintalmanna",
                             style: TextStyle(
                               fontSize: width*0.035,
-                              color: Colors.white
+                              color: Pallette.white,
                             ),)
                           ],
                         )
@@ -118,16 +123,18 @@ class _profileScreenState extends State<profileScreen> {
               width: width*1,
               height: height*0.4,
               decoration: BoxDecoration(
+                color:Pallette.white,
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withOpacity(0.15),
                       blurRadius: 5,
-                      spreadRadius: 1,
-                      offset: Offset(0, 4)
+                      spreadRadius: 2,
+                      // offset: Offset(0, 0)
                   ),
                 ],
                 borderRadius: BorderRadius.circular(width*0.02),
-                color: Colors.white,
+                // border: Border.all(color: Pallette.primaryColor),
+
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,12 +148,14 @@ class _profileScreenState extends State<profileScreen> {
                     //     backgroundColor: Colors.white,
                     //   ),
                     // ),
-                    leading: CircleAvatar(
-                      radius: width*0.063,
-                      backgroundColor: Pallette.primaryColor,
-                      child: CircleAvatar(
-                        radius: width*0.055,
-                        backgroundColor: Color(0xfff8f6f4),
+                    leading:Container(
+                      height: height*0.06,
+                      width: width*0.13,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xfff8f6f4),
+                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
+
                       ),
                     ),
                     title: Text("My Order",
@@ -171,7 +180,7 @@ class _profileScreenState extends State<profileScreen> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xfff8f6f4),
-                        border: Border.all(color: Pallette.primaryColor,width: width*0.008)
+                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
 
                       ),
 
@@ -198,7 +207,7 @@ class _profileScreenState extends State<profileScreen> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.008)
+                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
 
                       ),
 
@@ -224,7 +233,7 @@ class _profileScreenState extends State<profileScreen> {
                             height: height * 0.032,
                             width: width * 0.12,
                             decoration: BoxDecoration(
-                              color: toggle ? Pallette.primaryColor:Pallette.profile.withOpacity(0.5),
+                              color: toggle ? Pallette.primaryColor:Pallette.primaryColor.withOpacity(0.4),
                               borderRadius: BorderRadius.circular(width * 0.05),
                             ),
                           ),
@@ -245,7 +254,7 @@ class _profileScreenState extends State<profileScreen> {
                                 height: width * 0.055,
                                 width: width * 0.055,
                                 decoration: BoxDecoration(
-                                    color: Colors.white, shape: BoxShape.circle),
+                                    color: Pallette.white, shape: BoxShape.circle),
                               ),
                             ))
                       ],
@@ -258,7 +267,7 @@ class _profileScreenState extends State<profileScreen> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.008)
+                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
 
                       ),
 
@@ -285,11 +294,11 @@ class _profileScreenState extends State<profileScreen> {
                   BoxShadow(
                       color: Colors.black.withOpacity(0.15),
                       blurRadius: 5,
-                      spreadRadius: 1,
-                      offset: Offset(0, 4)
+                      spreadRadius: 2,
+                      // offset: Offset(0, 4)
                   ),
                 ],
-                color: Colors.white,
+                color:Pallette.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -301,7 +310,7 @@ class _profileScreenState extends State<profileScreen> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.008)
+                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
 
                       ),
 
@@ -323,7 +332,7 @@ class _profileScreenState extends State<profileScreen> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.008)
+                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
 
                       ),
 
