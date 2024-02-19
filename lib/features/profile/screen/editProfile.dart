@@ -33,9 +33,9 @@ class _editProfileState extends State<editProfile> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text("Bio-Data",
+        title: Text("Edit profile",
             style: TextStyle(
-                fontSize: width * 0.04,
+                fontSize: width * 0.05,
                 color: Colors.black,
                 fontWeight: FontWeight.w600)),
         toolbarHeight: height * 0.06,
@@ -110,6 +110,7 @@ class _editProfileState extends State<editProfile> {
                       textCapitalization: TextCapitalization.words,
                       keyboardType: TextInputType.multiline,
                       textInputAction: TextInputAction.done,
+                      cursorColor: Pallette.primaryColor,
                       style: TextStyle(
                         fontSize: width * 0.05,
                         fontWeight: FontWeight.w500,
@@ -145,6 +146,7 @@ class _editProfileState extends State<editProfile> {
                       textCapitalization: TextCapitalization.words,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
+                      cursorColor: Pallette.primaryColor,
                       style: TextStyle(
                         fontSize: width * 0.05,
                         fontWeight: FontWeight.w500,
@@ -181,10 +183,12 @@ class _editProfileState extends State<editProfile> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
+                          cursorColor: Pallette.primaryColor,
                           style: TextStyle(
                             fontSize: width * 0.05,
                           ),
                           decoration: InputDecoration(
+
                             counterText: "",
                             hintText: "Enter your number",
                             border: OutlineInputBorder(

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/profile/screen/editProfile.dart';
+import 'package:luna_demo/features/profile/screen/myOrder.dart';
 
 import '../../../main.dart';
 
@@ -169,10 +170,17 @@ class _profileScreenState extends State<profileScreen> {
                       fontSize: width*0.035,
                       color: Colors.grey.shade600
                     ),
-                    trailing: Icon(Icons.arrow_forward_ios_outlined,
-                      color: Pallette.primaryColor,
-                      size: width*0.05,
+                    trailing: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) =>myOrder() ,));
+                      },
+                      child: Container(
+                        child: Icon(Icons.arrow_forward_ios_outlined,
+                          color: Pallette.primaryColor,
+                          size: width*0.05,
 
+                        ),
+                      ),
                     ),
                   ),
                   ListTile(
