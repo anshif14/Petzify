@@ -27,7 +27,7 @@ class _profileScreenState extends State<profileScreen> {
             fontSize:width*0.06,
             fontWeight: FontWeight.w600
         )),
-        // backgroundColor: Colors.yellow,
+
         toolbarHeight: height*0.06,
       ),
       body: Padding(
@@ -46,7 +46,7 @@ class _profileScreenState extends State<profileScreen> {
                   Pallette.secondaryBrown,
                 ],
                   begin: Alignment.topLeft,
-                  end: Alignment(4, 2),
+                  end: Alignment(5, 2),
                 // end: AlignmentDirectional(3, 0.1),
                 ),
                 // color: Pallette.primaryColor,
@@ -121,7 +121,7 @@ class _profileScreenState extends State<profileScreen> {
             ),
             Container(
               width: width*1,
-              height: height*0.4,
+              height: height*0.3,
               decoration: BoxDecoration(
                 color:Pallette.white,
                 boxShadow: [
@@ -152,6 +152,8 @@ class _profileScreenState extends State<profileScreen> {
                       height: height*0.06,
                       width: width*0.13,
                       decoration: BoxDecoration(
+                        image: DecorationImage(image: AssetImage(imageConstants.order),
+                            scale: width*0.035,alignment: AlignmentDirectional(0.1, 0)),
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
                           border: Border.all(color: Pallette.primaryColor,width: width*0.006)
@@ -178,6 +180,8 @@ class _profileScreenState extends State<profileScreen> {
                       height: height*0.06,
                       width: width*0.13,
                       decoration: BoxDecoration(
+                          image: DecorationImage(image: AssetImage(imageConstants.ads),
+                              scale: width*0.055,alignment: AlignmentDirectional(0.25, 0)),
                         shape: BoxShape.circle,
                         color: Color(0xfff8f6f4),
                           border: Border.all(color: Pallette.primaryColor,width: width*0.006)
@@ -185,7 +189,7 @@ class _profileScreenState extends State<profileScreen> {
                       ),
 
                     ),
-                    title: Text("Saved Beneficiary",
+                    title: Text("My Ads",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         )),
@@ -200,71 +204,73 @@ class _profileScreenState extends State<profileScreen> {
 
                     ),
                   ),
+                  // ListTile(
+                  //   leading:Container(
+                  //     height: height*0.06,
+                  //     width: width*0.13,
+                  //     decoration: BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //         color: Color(0xfff8f6f4),
+                  //         border: Border.all(color: Pallette.primaryColor,width: width*0.006)
+                  //
+                  //     ),
+                  //
+                  //   ),
+                  //   title: Text("Face ID / Touch ID",
+                  //       style: TextStyle(
+                  //         fontWeight: FontWeight.w600,
+                  //       )),
+                  //   subtitle: Text("Manage your device security "),
+                  //   subtitleTextStyle: TextStyle(
+                  //       fontSize: width*0.035,
+                  //       color: Colors.grey.shade600
+                  //   ),
+                  //
+                  //   trailing:  Stack(
+                  //     children: [
+                  //       InkWell(
+                  //         onTap: () {
+                  //           toggle = !toggle;
+                  //           setState(() {});
+                  //         },
+                  //         child: Container(
+                  //           height: height * 0.032,
+                  //           width: width * 0.12,
+                  //           decoration: BoxDecoration(
+                  //             color: toggle ? Pallette.primaryColor:Pallette.primaryColor.withOpacity(0.4),
+                  //             borderRadius: BorderRadius.circular(width * 0.05),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       AnimatedPositioned(
+                  //           duration: Duration(milliseconds: 200),
+                  //           left: toggle ? width * 0.05: width * 0.009,
+                  //           right: toggle ? width * 0.009 : width * 0.05,
+                  //           top: width*0.008,
+                  //           child: InkWell(
+                  //             onTap: () {
+                  //               toggle = !toggle;
+                  //               setState(() {});
+                  //             },
+                  //             child: AnimatedContainer(
+                  //               duration: Duration(milliseconds: 200),
+                  //               curve: Curves.easeIn,
+                  //               height: width * 0.055,
+                  //               width: width * 0.055,
+                  //               decoration: BoxDecoration(
+                  //                   color: Pallette.white, shape: BoxShape.circle),
+                  //             ),
+                  //           ))
+                  //     ],
+                  //   ),
+                  // ),
                   ListTile(
                     leading:Container(
                       height: height*0.06,
                       width: width*0.13,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
-
-                      ),
-
-                    ),
-                    title: Text("Face ID / Touch ID",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        )),
-                    subtitle: Text("Manage your device security "),
-                    subtitleTextStyle: TextStyle(
-                        fontSize: width*0.035,
-                        color: Colors.grey.shade600
-                    ),
-
-                    trailing:  Stack(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            toggle = !toggle;
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: height * 0.032,
-                            width: width * 0.12,
-                            decoration: BoxDecoration(
-                              color: toggle ? Pallette.primaryColor:Pallette.primaryColor.withOpacity(0.4),
-                              borderRadius: BorderRadius.circular(width * 0.05),
-                            ),
-                          ),
-                        ),
-                        AnimatedPositioned(
-                            duration: Duration(milliseconds: 200),
-                            left: toggle ? width * 0.05: width * 0.009,
-                            right: toggle ? width * 0.009 : width * 0.05,
-                            top: width*0.008,
-                            child: InkWell(
-                              onTap: () {
-                                toggle = !toggle;
-                                setState(() {});
-                              },
-                              child: AnimatedContainer(
-                                duration: Duration(milliseconds: 200),
-                                curve: Curves.easeIn,
-                                height: width * 0.055,
-                                width: width * 0.055,
-                                decoration: BoxDecoration(
-                                    color: Pallette.white, shape: BoxShape.circle),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    leading:Container(
-                      height: height*0.06,
-                      width: width*0.13,
-                      decoration: BoxDecoration(
+                          image: DecorationImage(image: AssetImage(imageConstants.logout),
+                              scale: width*0.045,alignment: AlignmentDirectional(0.2, 0)),
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
                           border: Border.all(color: Pallette.primaryColor,width: width*0.006)
@@ -308,6 +314,8 @@ class _profileScreenState extends State<profileScreen> {
                       height: height*0.06,
                       width: width*0.13,
                       decoration: BoxDecoration(
+                          image: DecorationImage(image: AssetImage(imageConstants.customerSupport),
+                              scale: width*0.035,),
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
                           border: Border.all(color: Pallette.primaryColor,width: width*0.006)
@@ -330,6 +338,8 @@ class _profileScreenState extends State<profileScreen> {
                       height: height*0.06,
                       width: width*0.13,
                       decoration: BoxDecoration(
+                          image: DecorationImage(image: AssetImage(imageConstants.aboutapp),
+                            scale: width*0.035,),
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
                           border: Border.all(color: Pallette.primaryColor,width: width*0.006)

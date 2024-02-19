@@ -38,7 +38,6 @@ class _editProfileState extends State<editProfile> {
                 fontSize: width * 0.04,
                 color: Colors.black,
                 fontWeight: FontWeight.w600)),
-        // backgroundColor: Colors.yellow,
         toolbarHeight: height * 0.06,
       ),
       body: Padding(

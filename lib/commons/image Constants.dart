@@ -32,6 +32,13 @@ class imageConstants{
   static const pet14 = 'assets/pet/pet (14).jpg';
 
 
+  static const order = 'assets/images/logistics.png';
+  static const ads = 'assets/images/ads.png';
+  static const logout = 'assets/images/logout.png';
+  static const customerSupport = 'assets/images/online-service.png';
+  static const aboutapp = 'assets/images/information.png';
+
+
 
 
 
