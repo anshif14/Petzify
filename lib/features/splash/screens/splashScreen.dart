@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/features/auth/screen/loginPage.dart';
 // import 'package:luna_demo/core/features/home/navbar.dart';
 import 'package:luna_demo/main.dart';
 
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     
     Future.delayed(Duration(seconds: 2)).then((value) => 
-    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),))
+    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => LoginPage(),))
     );
     
     // TODO: implement initState

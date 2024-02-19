@@ -45,5 +45,15 @@ class imageConstants{
 
   //svg
   static const dogSvg='assets/svg/dog.svg';
-  static const editsvg='assets/svg/edit.svg';
+  //login
+
+  //login
+  static const googleicon='assets/login/googleicon.png';
+  static const appleicon='assets/login/apple-logo.png';
+  static const user='assets/login/user.png';
+  static const addicon='assets/login/add.png';
+  static const pageimage='assets/login/background.jpg';
+
+
+
 }

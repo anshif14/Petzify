@@ -110,7 +110,7 @@ class _profileScreenState extends State<profileScreen> {
                           child: Container(
                             height: height*0.05,
                             width: width*0.07,
-                              child: SvgPicture.asset(imageConstants.editsvg)),
+                              child: Icon(Icons.edit)),
                         )
                       ],
                     )
