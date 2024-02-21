@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'c';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/explore/screens/addProduct.dart';
 
 import '../../../../commons/color constansts.dart';
 import '../../../../main.dart';
@@ -24,6 +26,19 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+      floatingActionButton: FloatingActionButton.extended(
+        elevation: width*0,
+          onPressed: () {
+            Navigator.push(context, CupertinoPageRoute(builder: (context) =>AddProduct() ,));
+          },
+          label: Text("Add",style: TextStyle(fontWeight: FontWeight.w600,color: CupertinoColors.black)),
+        icon: Icon(Icons.add,color: CupertinoColors.black,),
+        backgroundColor: Colors.white,
+        shape: BeveledRectangleBorder(side: BorderSide(color: Pallette.primaryColor),
+            borderRadius: BorderRadius.circular(width*0.03)),
+      ),
+          
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -91,11 +106,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 )),
               ),
             ),
-
-
-
-
-
+            
           ],
         ),
       ),
