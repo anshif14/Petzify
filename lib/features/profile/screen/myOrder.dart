@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/profile/screen/orderView.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
@@ -15,6 +19,7 @@ class _myOrderState extends State<myOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         title:Text("My Order",style: TextStyle(
@@ -22,7 +27,6 @@ class _myOrderState extends State<myOrder> {
             fontWeight: FontWeight.w600
         )),
 
-        toolbarHeight: height*0.06,
       ),
 
       body: Padding(
@@ -40,13 +44,14 @@ class _myOrderState extends State<myOrder> {
                 textCapitalization: TextCapitalization.words,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.search,
+                cursorColor: Pallette.primaryColor,
                 style: TextStyle(
                   fontSize: width * 0.05,
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
                   prefixIcon:Icon(Icons.search),
-                  fillColor: Pallette.secondaryBrown,
+                  fillColor: Pallette.white,
                   filled: true,
                   hintText: "Search",
                   hintStyle: TextStyle(
@@ -84,6 +89,70 @@ class _myOrderState extends State<myOrder> {
             //     ),
             //   ),
             // ),
+            Expanded(
+              child: ListView.separated(
+                itemCount: 9,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => orderView(),));
+                      },
+                      child: Container(
+                        height: height*0.12,
+                        width: width*1,
+                        child: Padding(
+                          padding: EdgeInsets.all(width*0.03),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // SizedBox(width:width*0.02),
+                              Container(
+                                height: width*0.2,
+                                width: width*0.2,
+                                decoration:  BoxDecoration(
+                                    color: Colors.white,
+                                  image: DecorationImage(image: AssetImage(imageConstants.fish),fit: BoxFit.cover),
+                                  borderRadius: BorderRadius.circular(width*0.02)
+                                ),
+                                // image: DecorationImage(image: AssetImage(coupons[index]["poster"]),fit: BoxFit.cover),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Fish",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: width*0.041
+                                    ),
+                                  ),
+                                  SizedBox(height:width*0.02),
+                                  Text("Clown Fish",
+                                    style: TextStyle(
+                                        color: Colors.grey[500],
+                                        fontSize: width*0.041
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              gap,
+                              gap,
+                              gap,
+                              Icon(Icons.arrow_forward_ios_outlined,
+                                color: Pallette.primaryColor,
+                                size: width*0.04,
+
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(color: Pallette.primaryColor,);
+                  },),
+            )
           ],
 
         ),

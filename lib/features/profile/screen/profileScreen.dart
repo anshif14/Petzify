@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/profile/screen/editProfile.dart';
+import 'package:luna_demo/features/profile/screen/myAds.dart';
 import 'package:luna_demo/features/profile/screen/myOrder.dart';
 
 import '../../../main.dart';
@@ -110,7 +112,7 @@ class _profileScreenState extends State<profileScreen> {
                           child: Container(
                             height: height*0.05,
                             width: width*0.07,
-                              child: Icon(Icons.edit)),
+                              child: Icon(Icons.edit,color: Pallette.white,)),
                         )
                       ],
                     )
@@ -140,41 +142,41 @@ class _profileScreenState extends State<profileScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ListTile(
-                    // leading: CircleAvatar(
-                    //   radius: width*0.068,
-                    //   backgroundColor: Pallette.primaryColor,
-                    //   child: CircleAvatar(
-                    //     radius: width*0.06,
-                    //     backgroundColor: Colors.white,
-                    //   ),
-                    // ),
-                    leading:Container(
-                      height: height*0.06,
-                      width: width*0.13,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: AssetImage(imageConstants.order),
-                            scale: width*0.035,alignment: AlignmentDirectional(0.1, 0)),
-                          shape: BoxShape.circle,
-                          color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) =>myOrder() ,));
+                    },
+                    child: ListTile(
+                      // leading: CircleAvatar(
+                      //   radius: width*0.068,
+                      //   backgroundColor: Pallette.primaryColor,
+                      //   child: CircleAvatar(
+                      //     radius: width*0.06,
+                      //     backgroundColor: Colors.white,
+                      //   ),
+                      // ),
+                      leading:Container(
+                        height: height*0.06,
+                        width: width*0.13,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: AssetImage(imageConstants.order),
+                              scale: width*0.035,alignment: AlignmentDirectional(0.1, 0)),
+                            shape: BoxShape.circle,
+                            color: Color(0xfff8f6f4),
+                            border: Border.all(color: Pallette.primaryColor,width: width*0.006)
 
+                        ),
                       ),
-                    ),
-                    title: Text("My Order",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                    )),
-                    subtitle: Text("Make changes to your order"),
-                    subtitleTextStyle: TextStyle(
-                      fontSize: width*0.035,
-                      color: Colors.grey.shade600
-                    ),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) =>myOrder() ,));
-                      },
-                      child: Container(
+                      title: Text("My Order",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      )),
+                      subtitle: Text("Make changes to your order"),
+                      subtitleTextStyle: TextStyle(
+                        fontSize: width*0.035,
+                        color: Colors.grey.shade600
+                      ),
+                      trailing: Container(
                         child: Icon(Icons.arrow_forward_ios_outlined,
                           color: Pallette.primaryColor,
                           size: width*0.05,
@@ -183,33 +185,41 @@ class _profileScreenState extends State<profileScreen> {
                       ),
                     ),
                   ),
-                  ListTile(
-                    leading:Container(
-                      height: height*0.06,
-                      width: width*0.13,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage(imageConstants.ads),
-                              scale: width*0.055,alignment: AlignmentDirectional(0.25, 0)),
-                        shape: BoxShape.circle,
-                        color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) =>myAds() ,));
+
+                    },
+                    child: ListTile(
+                      leading:Container(
+                        height: height*0.06,
+                        width: width*0.13,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(image: AssetImage(imageConstants.ads),
+                                scale: width*0.055,alignment: AlignmentDirectional(0.25, 0)),
+                          shape: BoxShape.circle,
+                          color: Color(0xfff8f6f4),
+                            border: Border.all(color: Pallette.primaryColor,width: width*0.006)
+
+                        ),
 
                       ),
+                      title: Text("My Ads",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      subtitle: Text("Manage your saved account "),
+                      subtitleTextStyle: TextStyle(
+                          fontSize: width*0.035,
+                          color: Colors.grey.shade600
+                      ),
+                      trailing: Container(
+                        child: Icon(Icons.arrow_forward_ios_outlined,
+                          color: Pallette.primaryColor,
+                          size: width*0.05,
 
-                    ),
-                    title: Text("My Ads",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        )),
-                    subtitle: Text("Manage your saved account "),
-                    subtitleTextStyle: TextStyle(
-                        fontSize: width*0.035,
-                        color: Colors.grey.shade600
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios_outlined,
-                      color: Pallette.primaryColor,
-                      size: width*0.05,
-
+                        ),
+                      ),
                     ),
                   ),
                   // ListTile(
@@ -272,28 +282,99 @@ class _profileScreenState extends State<profileScreen> {
                   //     ],
                   //   ),
                   // ),
-                  ListTile(
-                    leading:Container(
-                      height: height*0.06,
-                      width: width*0.13,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage(imageConstants.logout),
-                              scale: width*0.045,alignment: AlignmentDirectional(0.2, 0)),
-                          shape: BoxShape.circle,
-                          color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
+                  GestureDetector(
+                    onTap: () {
+                      showCupertinoModalPopup(
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        context: context,
+                        builder: (context) {
+                          return CupertinoAlertDialog(
+                            content: Text(
+                                "Are you Sure\nYou Want to Exit !",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: width * 0.045)),
+                            actions: [
+                              CupertinoDialogAction(
+                                textStyle: TextStyle(
+                                    color: Colors.grey.shade800
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Cancel"),
+                              ),
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                textStyle: TextStyle(
+                                  color: Pallette.primaryColor
+                                ),
+                                onPressed: () {
+                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => LoginPage(),));
+                                },
+                                child: Text("Confirm"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    // onTap: () {
+                    //     showCupertinoModalPopup(
+                    //       barrierColor: Colors.black.withOpacity(0.5),
+                    //       context: context,
+                    //       builder: (context) {
+                    //         return CupertinoActionSheet(
+                    //           actions: [
+                    //             CupertinoActionSheetAction(
+                    //               onPressed: () {
+                    //
+                    //               },
+                    //               child: Text("Log Out",
+                    //                   style: TextStyle(
+                    //                       fontWeight: FontWeight.w400,
+                    //                       fontSize: width * 0.05)),
+                    //               isDefaultAction: true,
+                    //             ),
+                    //           ],
+                    //           cancelButton: CupertinoActionSheetAction(
+                    //               onPressed: () {
+                    //                 Navigator.pop(context);
+                    //               },
+                    //               child: Text(
+                    //                 "Cancel",
+                    //                 style: TextStyle(
+                    //                     fontWeight: FontWeight.w700,
+                    //                     fontSize: width * 0.05),
+                    //               )),
+                    //         );
+                    //       },
+                    //     );
+                    //
+                    // },
+                    child: ListTile(
+                      leading:Container(
+                        height: height*0.06,
+                        width: width*0.13,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(image: AssetImage(imageConstants.logout),
+                                scale: width*0.045,alignment: AlignmentDirectional(0.2, 0)),
+                            shape: BoxShape.circle,
+                            color: Color(0xfff8f6f4),
+                            border: Border.all(color: Pallette.primaryColor,width: width*0.006)
+
+                        ),
 
                       ),
+                      title: Text("Log Out",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      trailing: Icon(Icons.arrow_forward_ios_outlined,
+                        color: Pallette.primaryColor,
+                        size: width*0.05,
 
-                    ),
-                    title: Text("Log Out",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        )),
-                    trailing: Icon(Icons.arrow_forward_ios_outlined,
-                      color: Pallette.primaryColor,
-                      size: width*0.05,
-
+                      ),
                     ),
                   ),
                 ],

@@ -37,11 +37,7 @@ class imageConstants{
   static const logout = 'assets/images/logout.png';
   static const customerSupport = 'assets/images/online-service.png';
   static const aboutapp = 'assets/images/information.png';
-
-
-
-
-
+  static const  checkout= 'assets/images/checkout.png';
 
   //svg
   static const dogSvg='assets/svg/dog.svg';
@@ -53,7 +49,6 @@ class imageConstants{
   static const user='assets/login/user.png';
   static const addicon='assets/login/add.png';
   static const pageimage='assets/login/background.jpg';
-
 
 
 }
