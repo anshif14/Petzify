@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:luna_demo/Payment/screens/deliveryAddress.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -252,21 +254,52 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                 SizedBox(
                   height: height * 0.01,
                 ),
-                Container(
-                  height: height * 0.07,
-                  width: width * 1,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(width * 0.03),
-                      color: Colors.black),
-                  child: Center(
-                    child: Text(
-                      "ADD TO CART",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: width * 0.05,
-                          color: Colors.white),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        width: width * 0.45,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(width * 0.03),
+                            color: Pallette.primaryColor),
+                        child: Center(
+                          child: Text(
+                            "ADD TO CART",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: width * 0.04,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(),));
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        width: width * 0.45,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(width * 0.03),
+                            color: Pallette.primaryColor),
+                        child: Center(
+                          child: Text(
+                            "BUY NOW",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: width * 0.04,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

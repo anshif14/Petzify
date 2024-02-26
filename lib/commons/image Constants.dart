@@ -51,4 +51,8 @@ class imageConstants{
   static const pageimage='assets/login/background.jpg';
 
 
+  //Lottie
+static const lottie='assets/animation/gg.json';
+
+
 }

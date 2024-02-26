@@ -51,6 +51,7 @@ class _AddProductState extends State<AddProduct> {
       appBar: AppBar(
         title: Text("Add Product",style: TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.05),),
         surfaceTintColor: Colors.white,
+        toolbarHeight: height*0.04,
         elevation: 0,
         leading: InkWell(
             onTap: () {
@@ -73,6 +74,7 @@ class _AddProductState extends State<AddProduct> {
                   width: width*1,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    color: Colors.red,
                     image: DecorationImage(image: AssetImage(imageConstants.pet1),fit: BoxFit.cover)
                   ),
                 ),
@@ -132,7 +134,7 @@ class _AddProductState extends State<AddProduct> {
                             child: Icon(CupertinoIcons.plus_app,size: 40,),
                           ),
                           decoration: BoxDecoration(
-                            border: Border.all(color: CupertinoColors.black),
+                            border: Border.all(color: Pallette.primaryColor),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
