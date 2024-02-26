@@ -22,6 +22,7 @@ class _myOrderState extends State<myOrder> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
+        surfaceTintColor: Pallette.white,
         title:Text("My Order",style: TextStyle(
             fontSize:width*0.05,
             fontWeight: FontWeight.w600

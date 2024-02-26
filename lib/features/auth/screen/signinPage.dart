@@ -336,7 +336,7 @@ class _SigninPageState extends State<SigninPage> {
                   ),),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => SignupPage(),));
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => SignupPage(sign: false,),));
                     },
                     child: Text(" Sign up",style: TextStyle(
                       fontSize: width*0.035,

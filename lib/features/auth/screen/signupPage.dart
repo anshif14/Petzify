@@ -1,18 +1,24 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
 import 'package:luna_demo/features/home/home.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
+import '../../../model/user_Model.dart';
+import '../../home/navbar.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+  final bool sign;
+  const SignupPage({super.key, required this.sign});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -20,21 +26,53 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   var file;
+  String imageurl = "";
+
   bool tap=true;
   bool tick=false;
   RegExp emailvalidation=RegExp(r"^[a-z0-9.a-z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-z0-9]+\.[a-z]+");
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   TextEditingController usernameController=TextEditingController();
-  PickedFile(ImageSource) async {
-    final imagefile = await ImagePicker.platform.pickImage(source: ImageSource);
-    file = File(imagefile!.path);
+
+
+  pickFile(ImageSource) async {
+    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+    file = File(imageFile!.path);
     if (mounted) {
       setState(() {
-        file = File(imagefile.path);
+        file = File(imageFile.path);
       });
-
+      uploadFile();
     }
+  }
+
+  uploadFile() async {
+    if (file != null) {
+      var uploadTask = await FirebaseStorage.instance
+          .ref('images')
+          .child("${DateTime.now()}")
+          .putFile(file!);
+
+      imageurl = await uploadTask.ref.getDownloadURL();
+      print(imageurl);
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("image uploaded")));
+
+      setState(() {});
+      Navigator.pop(context);
+    }
+  }
+  @override
+  void initState() {
+    if (widget.sign == true) {
+      emailController.text = UserEmail!.toString();
+      usernameController.text = UserName!.toString();
+      imageurl =  Userimage;
+    }
+    // TODO: implement initState
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -65,9 +103,9 @@ class _SignupPageState extends State<SignupPage> {
                     Center(
                       child: Stack(
                         children: [
-                          file!=null?CircleAvatar(
+                          file!=""?CircleAvatar(
                             radius: width * 0.15,
-                            backgroundImage: FileImage(file),
+                            backgroundImage: NetworkImage(imageurl),
                           ):
                           CircleAvatar(
                             radius: width * 0.15,
@@ -92,7 +130,7 @@ class _SignupPageState extends State<SignupPage> {
                                       actions: [
                                         CupertinoActionSheetAction(
                                             onPressed: () {
-                                              PickedFile(ImageSource.gallery);
+                                              pickFile(ImageSource.gallery);
                                             },
                                             isDefaultAction: true,
                                             child: Text(
@@ -103,7 +141,8 @@ class _SignupPageState extends State<SignupPage> {
                                             )),
                                         CupertinoActionSheetAction(
                                             onPressed: () {
-                                              PickedFile(ImageSource.camera);
+                                              pickFile(ImageSource.camera);
+
                                             },
                                             isDefaultAction: true,
                                             child: Text(
@@ -365,8 +404,42 @@ class _SignupPageState extends State<SignupPage> {
               ),
               gap,
               InkWell(
-                onTap: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePage(),));
+                onTap: () async {
+                  if (widget.sign == true) {
+                    userModel  loginModelData=userModel(
+                        name: usernameController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                        images: imageurl,
+                    );
+                    // var passid=
+                    await  FirebaseFirestore.instance.collection("users").add(loginModelData.toMap()
+
+                    ).then((value){
+                      value.update(
+                          loginModelData.copyWith(id: value.id).toMap()
+
+                      );
+                      Userid= value.id;
+                    });
+                    // currentUserName = nameController.text;
+
+                    // Future.delayed(Duration(seconds: 1)).then((value){
+                    //   emailController.clear();
+                      // nameController.clear();
+                      // emailController.clear();
+                      // passwordController.clear();
+                      // numberController.clear();
+
+                    // });
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NavBar(),
+                        ));
+
+                  }
                 },
                 child: Container(
                   width: width*0.8,
