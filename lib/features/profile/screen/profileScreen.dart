@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
@@ -310,6 +312,10 @@ class _profileScreenState extends State<profileScreen> {
                                   color: Pallette.primaryColor
                                 ),
                                 onPressed: () {
+                                  GoogleSignIn().signOut();
+                                  FirebaseAuth.instance.signOut();
+
+
                                   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => LoginPage(),));
                                 },
                                 child: Text("Confirm"),

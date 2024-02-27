@@ -8,6 +8,8 @@ import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/features/home/home.dart';
 import 'package:luna_demo/features/home/navbar.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
@@ -313,6 +315,28 @@ class _SigninPageState extends State<SigninPage> {
               gap,
               InkWell(
                 onTap: () {
+                  if(emailController.text ==""){
+                    QuickAlert.show(
+                      barrierDismissible: false,
+                      confirmBtnColor: Colors.red.shade600,
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Sorry, please your email',
+                    );
+                    return;
+                  }
+                  if(passwordController.text ==""){
+                    QuickAlert.show(
+                      barrierDismissible: false,
+                      confirmBtnColor: Colors.red.shade600,
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Sorry, please your password',
+                    );
+                    return;
+                  }
                   Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),),(route) => false,);
                 },
                 child: Container(

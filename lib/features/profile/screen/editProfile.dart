@@ -50,7 +50,6 @@ class _editProfileState extends State<editProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -284,7 +283,6 @@ class _editProfileState extends State<editProfile> {
                             fontSize: width * 0.05,
                           ),
                           decoration: InputDecoration(
-
                             counterText: "",
                             hintText: "Enter your number",
                             border: OutlineInputBorder(
@@ -350,21 +348,22 @@ class _editProfileState extends State<editProfile> {
             gap,
             GestureDetector(
               onTap: () {
-                Alert(
-                  style: AlertStyle(
-                    alertElevation: 0,
-                    backgroundColor: Pallette.secondaryBrown,
-                  ),
-                  context: context,
-                  title: "Are you sure ",
-                  buttons: [DialogButton(child: Text("Edit Profile"), onPressed: () {
-
-                  },color: Pallette.primaryColor,)],
-                  desc: "Flutter is better with RFlutter Alert.",
-                  image: Container(
-                      height: height*0.1,
-                      child: Image.asset(imageConstants.user)),
-                ).show();
+                // Alert(
+                //   style: AlertStyle(
+                //     alertElevation: 0,
+                //     backgroundColor: Pallette.secondaryBrown,
+                //   ),
+                //   context: context,
+                //   title: "Are you sure ",
+                //   buttons: [DialogButton(child: Text("Edit Profile"), onPressed: () {
+                //
+                //   },color: Pallette.primaryColor,)],
+                //   desc: "Flutter is better with RFlutter Alert.",
+                //   image: Container(
+                //       height: height*0.1,
+                //       child: Image.asset(imageConstants.user)),
+                // ).show();
+                Navigator.pop(context);
               },
               child: Container(
                 height: height * 0.06,

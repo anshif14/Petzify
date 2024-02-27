@@ -10,6 +10,8 @@ import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
 import 'package:luna_demo/features/home/home.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
@@ -35,7 +37,6 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController passwordController=TextEditingController();
   TextEditingController usernameController=TextEditingController();
 
-
   pickFile(ImageSource) async {
     final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
     file = File(imageFile!.path);
@@ -52,7 +53,9 @@ class _SignupPageState extends State<SignupPage> {
       var uploadTask = await FirebaseStorage.instance
           .ref('images')
           .child("${DateTime.now()}")
-          .putFile(file!);
+          .putFile(file!,SettableMetadata(
+          contentType: 'image/jpeg'
+      ));
 
       imageurl = await uploadTask.ref.getDownloadURL();
       print(imageurl);
@@ -64,6 +67,7 @@ class _SignupPageState extends State<SignupPage> {
       Navigator.pop(context);
     }
   }
+
   @override
   void initState() {
     if (widget.sign == true) {
@@ -405,23 +409,60 @@ class _SignupPageState extends State<SignupPage> {
               gap,
               InkWell(
                 onTap: () async {
-                  if (widget.sign == true) {
+                  if(usernameController.text ==""){
+                    QuickAlert.show(
+                      barrierDismissible: false,
+                      confirmBtnColor: Colors.red.shade600,
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Sorry, please your name',
+                    );
+                    return;
+                  }
+                  if(emailController.text ==""){
+                    QuickAlert.show(
+                      barrierDismissible: false,
+                      confirmBtnColor: Colors.red.shade600,
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Sorry, please your email',
+                    );
+                    return;
+                  }
+                  if(passwordController.text ==""){
+                    QuickAlert.show(
+                      barrierDismissible: false,
+                      confirmBtnColor: Colors.red.shade600,
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Sorry, please your password',
+                    );
+                    return;
+                  }
                     userModel  loginModelData=userModel(
                         name: usernameController.text,
                         email: emailController.text,
                         password: passwordController.text,
                         images: imageurl,
+                      id: emailController.text.trim(),
                     );
                     // var passid=
-                    await  FirebaseFirestore.instance.collection("users").add(loginModelData.toMap()
+                    // await  FirebaseFirestore.instance.collection("users").add(loginModelData.toMap()
+                    //
+                    // ).then((value){
+                    //   value.update(
+                    //       loginModelData.copyWith(id: value.id).toMap()
+                    //
+                    //   );
+                    //   Userid= value.id;
+                    // });
 
-                    ).then((value){
-                      value.update(
-                          loginModelData.copyWith(id: value.id).toMap()
+                    await  FirebaseFirestore.instance.collection("users").doc(emailController.text.trim()).set(loginModelData.toMap()
 
-                      );
-                      Userid= value.id;
-                    });
+                    );
                     // currentUserName = nameController.text;
 
                     // Future.delayed(Duration(seconds: 1)).then((value){
@@ -439,7 +480,7 @@ class _SignupPageState extends State<SignupPage> {
                           builder: (context) => NavBar(),
                         ));
 
-                  }
+
                 },
                 child: Container(
                   width: width*0.8,

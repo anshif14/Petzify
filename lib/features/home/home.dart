@@ -271,7 +271,6 @@ class _petTileState extends State<petTile> {
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: FavoriteButton(
-
                           iconSize: 25,
                           valueChanged: (_isFavorite) {
                             print('Is Favorite $_isFavorite)');

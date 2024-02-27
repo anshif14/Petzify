@@ -1,15 +1,15 @@
 class userModel {
-  String? name;
-  String? email;
-  String? password;
-  String? id;
-  String? images;
+  String name;
+  String email;
+  String password;
+  String id;
+  String images;
   userModel({
-    this.name,
-    this.email,
-    this.password,
-    this.id,
-    this.images,
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.id,
+    required this.images,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,7 +38,6 @@ class userModel {
     String? password,
     String? id,
     String? images,
-
   }) {
     return userModel(
       name: name ?? this.name,
