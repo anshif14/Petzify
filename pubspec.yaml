@@ -56,6 +56,8 @@ dependencies:
   firebase_auth: ^4.16.0
   firebase_storage: ^11.6.6
   quickalert: ^1.0.2
+  shared_preferences: ^2.2.2
+
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

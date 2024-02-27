@@ -9,6 +9,7 @@ import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/profile/screen/editProfile.dart';
 import 'package:luna_demo/features/profile/screen/myAds.dart';
 import 'package:luna_demo/features/profile/screen/myOrder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
 
@@ -311,10 +312,11 @@ class _profileScreenState extends State<profileScreen> {
                                 textStyle: TextStyle(
                                   color: Pallette.primaryColor
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
+                                  SharedPreferences  _prefs=await SharedPreferences.getInstance() ;
+                                  _prefs.clear();
                                   GoogleSignIn().signOut();
                                   FirebaseAuth.instance.signOut();
-
 
                                   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => LoginPage(),));
                                 },

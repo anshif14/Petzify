@@ -12,6 +12,7 @@ import 'package:luna_demo/features/auth/screen/signinPage.dart';
 import 'package:luna_demo/features/home/home.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
@@ -66,6 +67,11 @@ class _SignupPageState extends State<SignupPage> {
       setState(() {});
       Navigator.pop(context);
     }
+  }
+
+  setData() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setBool("login",true);
   }
 
   @override
@@ -459,7 +465,7 @@ class _SignupPageState extends State<SignupPage> {
                     //   );
                     //   Userid= value.id;
                     // });
-
+                  setData();
                     await  FirebaseFirestore.instance.collection("users").doc(emailController.text.trim()).set(loginModelData.toMap()
 
                     );

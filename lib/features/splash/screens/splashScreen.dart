@@ -4,6 +4,7 @@ import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 // import 'package:luna_demo/core/features/home/navbar.dart';
 import 'package:luna_demo/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home/navbar.dart';
 
@@ -15,13 +16,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool login=false;
+  getData() async {
+    SharedPreferences _prefs= await SharedPreferences.getInstance();
+    login=_prefs.getBool("login")??false;
+    Future.delayed(Duration(seconds: 3)).then((value) =>
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) =>login?NavBar():LoginPage())));
+  }
+
+
   @override
-  void initState() {
-    
-    Future.delayed(Duration(seconds: 2)).then((value) => 
-    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => LoginPage(),))
-    );
-    
+ void initState() {
+    getData();
     // TODO: implement initState
     super.initState();
   }
