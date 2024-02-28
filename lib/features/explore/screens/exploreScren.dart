@@ -40,21 +40,21 @@ class _ExploreScreenState extends State<ExploreScreen> {
       ),
           
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding:  EdgeInsets.all(8.0),
         child: Column(
           children: [
             gap,
             gap,
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(8.0),
               child: Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:  EdgeInsets.all(8.0),
                     child: Container(
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding:  EdgeInsets.all(8.0),
                             child: Icon(Icons.search),
                           ),
                           Text(
@@ -99,14 +99,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           ),
                         ),
                         Text('Free puppy socialisation in store',style: TextStyle(fontSize: 16),),
-                        Text('Free',style: TextStyle(fontSize: 14,color: Colors.red.shade600),)
+                        Text('Free',style: TextStyle(fontSize: 14,color: Colors.grey.shade600),)
                       ],
                     ),
                   ),
                 )),
               ),
             ),
-            
+
           ],
         ),
       ),
