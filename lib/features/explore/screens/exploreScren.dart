@@ -99,7 +99,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           ),
                         ),
                         Text('Free puppy socialisation in store',style: TextStyle(fontSize: 16),),
-                        Text('Free',style: TextStyle(fontSize: 14,color: Colors.grey.shade600),)
+                        Text('Free',style: TextStyle(fontSize: 14,color: Colors.red.shade600),)
                       ],
                     ),
                   ),
