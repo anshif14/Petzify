@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -21,25 +23,48 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   var file;
-  pickimage(ImageSource)async{
-    final imgFile=await
-    ImagePicker.platform.pickImage(source: ImageSource);
-    file=File(imgFile!.path);
-    if(mounted){
+  String imageurl = "";
+
+
+  pickFile(ImageSource) async {
+    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+    file = File(imageFile!.path);
+    if (mounted) {
       setState(() {
-        file=File(imgFile.path);
-        pets.add(file);
+        file = File(imageFile.path);
       });
+      uploadFile();
     }
-    Navigator.pop(context);
   }
-  List pets=[ ];
+
+  uploadFile() async {
+    if (file != null) {
+      var uploadTask = await FirebaseStorage.instance
+          .ref('images')
+          .child("${DateTime.now()}")
+          .putFile(file!,SettableMetadata(
+          contentType: 'image/jpeg'
+      ));
+
+      imageurl = await uploadTask.ref.getDownloadURL();
+      print(imageurl);
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("image uploaded")));
+
+      setState(() {});
+      Navigator.pop(context);
+    }
+  }
+
 
   TextEditingController namecontroller=TextEditingController();
   TextEditingController descriptioncontroller=TextEditingController();
   TextEditingController pricecontroller=TextEditingController();
 
   String? dropdownvalue;
+  List pets=[ ];
+
   var drop=[
     "Pet",
     "Product"
@@ -95,7 +120,8 @@ class _AddProductState extends State<AddProduct> {
                                     CupertinoActionSheetAction(
                                         // isDefaultAction: true,
                                         onPressed: () {
-                                          pickimage(ImageSource.gallery);
+                                          pickFile(ImageSource.gallery);
+
                                           setState(() {
 
                                           });
@@ -108,7 +134,7 @@ class _AddProductState extends State<AddProduct> {
                                     CupertinoActionSheetAction(
                                         // isDefaultAction: true,
                                         onPressed: () {
-                                          pickimage(ImageSource.camera);
+                                          pickFile(ImageSource.camera);
                                         },
                                         child: Text("Camera",style: TextStyle(color: Pallette.primaryColor),)
                                     ),
@@ -124,6 +150,7 @@ class _AddProductState extends State<AddProduct> {
                                 );
                               },
                             );
+                            pets.add(imageurl);
                           // }
 
                         },
@@ -152,7 +179,7 @@ class _AddProductState extends State<AddProduct> {
                                       height: height*0.2,
                                       width: width*0.4,
                                       decoration: BoxDecoration(
-                                        image: DecorationImage(image: FileImage(pets[index]),fit: BoxFit.cover),
+                                        image: DecorationImage(image: NetworkImage(imageurl),fit: BoxFit.cover),
                                         color: Pallette.secondaryBrown,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
@@ -264,6 +291,13 @@ class _AddProductState extends State<AddProduct> {
                 ),
                 InkWell(
                   onTap: () {
+                    FirebaseFirestore.instance.collection("product").add({
+                      "name": namecontroller.text,
+                      "description": descriptioncontroller.text,
+                      "category": dropdownvalue,
+                      "price": double.parse( pricecontroller.text,)
+                    });
+
                     Navigator.pop(context);
                   },
                   child: Container(
