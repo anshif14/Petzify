@@ -52,7 +52,8 @@ class imageConstants{
 
 
   //Lottie
-static const lottie='assets/animation/gg.json';
+// static const lottie='assets/animation/gg.json';
+static const lottie='assets/animation/an.json';
 
 
 }
