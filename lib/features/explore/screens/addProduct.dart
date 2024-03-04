@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/model/product_Model.dart';
 
 import '../../../main.dart';
 
@@ -34,6 +35,7 @@ class _AddProductState extends State<AddProduct> {
         file = File(imageFile.path);
       });
       uploadFile();
+
     }
   }
 
@@ -48,6 +50,12 @@ class _AddProductState extends State<AddProduct> {
 
       imageurl = await uploadTask.ref.getDownloadURL();
       print(imageurl);
+      if(imageurl!=""){
+        pets.add(imageurl);
+        setState(() {
+
+        });
+      }
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("image uploaded")));
@@ -100,8 +108,9 @@ class _AddProductState extends State<AddProduct> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.red,
-                  image: DecorationImage(image: AssetImage(imageConstants.pet1),fit: BoxFit.cover)
                 ),
+                child: pets.isNotEmpty?Image(image: NetworkImage(pets[0]),fit: BoxFit.cover,)
+                    :Image(image: AssetImage(imageConstants.pet1),fit: BoxFit.cover)
               ),
               gap,
               SingleChildScrollView(
@@ -151,7 +160,7 @@ class _AddProductState extends State<AddProduct> {
                               );
                             },
                           );
-                          pets.add(imageurl);
+
                         // }
 
                       },
@@ -180,7 +189,7 @@ class _AddProductState extends State<AddProduct> {
                                     height: height*0.2,
                                     width: width*0.4,
                                     decoration: BoxDecoration(
-                                      image: DecorationImage(image: NetworkImage(imageurl),fit: BoxFit.cover),
+                                      image: DecorationImage(image: NetworkImage(pets[index]),fit: BoxFit.cover),
                                       color: Pallette.secondaryBrown,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -298,7 +307,7 @@ class _AddProductState extends State<AddProduct> {
               Text("Personal Information",style: TextStyle(fontSize: width*0.04,fontWeight: FontWeight.w600),),
               gap,
               Container(
-                height: height*0.3,
+                height: height*0.35,
                 width: width*1,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(width*0.04),
@@ -389,13 +398,22 @@ class _AddProductState extends State<AddProduct> {
               gap,
               InkWell(
                 onTap: () {
-                  FirebaseFirestore.instance.collection("product").add({
-                    "name": namecontroller.text,
-                    "description": descriptioncontroller.text,
-                    "category": dropdownvalue,
-                    "price": double.parse( pricecontroller.text,)
-                  });
-
+                  // FirebaseFirestore.instance.collection("product").add({
+                  //   "name": namecontroller.text,
+                  //   "description": descriptioncontroller.text,
+                  //   "category": dropdownvalue,
+                  //   "price": double.parse( pricecontroller.text,)
+                  // });
+                  FirebaseFirestore.instance.collection("product").add(ProductModel(
+                    image: pets,
+                    productname: prdnamecontroller.text,
+                    description: descriptioncontroller.text,
+                    category: dropdownvalue,
+                    price: double.parse(pricecontroller.text),
+                    sellername: namecontroller.text,
+                    address: addresscontroller.text,
+                    phonenumber: contactcontroller.text
+                  ).toMap());
                   Navigator.pop(context);
                 },
                 child: Container(
