@@ -24,6 +24,7 @@ class _profileScreenState extends State<profileScreen> {
 
   bool toggle = false;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +43,7 @@ class _profileScreenState extends State<profileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+
             Container(
               height:height*0.11,
               width: width*1,
@@ -51,8 +53,12 @@ class _profileScreenState extends State<profileScreen> {
                   Pallette.primaryColor,
                   Pallette.secondaryBrown,
                 ],
-                  begin: Alignment.topLeft,
-                  end: Alignment(5, 2),
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft
+                    ,
+                stops: [
+                  0.72,0.3
+                ]
                 // end: AlignmentDirectional(3, 0.1),
                 ),
                 // color: Pallette.primaryColor,
@@ -77,7 +83,7 @@ class _profileScreenState extends State<profileScreen> {
                       children: [
                         CircleAvatar(
                           radius: width*0.09,
-                          backgroundColor:Pallette.white,
+                          backgroundColor:Pallette.primaryColor,
                           child: CircleAvatar(
                             backgroundColor: Pallette.secondaryBrown,
                             radius: width*0.085,

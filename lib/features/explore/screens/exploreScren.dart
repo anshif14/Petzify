@@ -37,6 +37,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         elevation: width*0,
@@ -50,9 +52,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
             borderRadius: BorderRadius.circular(width*0.03)),
       ),
           
-      body: Padding(
-        padding:  EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding:  EdgeInsets.all(8.0),
           child: Column(
             children: [
               gap,
@@ -90,7 +92,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   Text("See all",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14),)
                 ],
               ),
-          
+
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 physics: BouncingScrollPhysics(),
@@ -127,8 +129,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     crossAxisCount: 2,
                   crossAxisSpacing: 19,
                   mainAxisSpacing: 19
-          
-          
+
+
                 ),
                 itemBuilder: (context, index) {
                   return    Column(
@@ -150,11 +152,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       Text(items[index]['name'],style: TextStyle(fontSize:width*0.035),)
                     ],
                   );
-          
+
                 },
               )
-          
-          
+
+
             ],
           ),
         ),
