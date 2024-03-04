@@ -39,6 +39,12 @@ class imageConstants{
   static const aboutapp = 'assets/images/information.png';
   static const  checkout= 'assets/images/checkout.png';
 
+  static const veterinary='assets/images/veterinary.jpg';
+  static const breeding='assets/images/breeding center.jpg';
+  static const grooming='assets/images/grooming center.jpg';
+  static const boarding='assets/images/boarding.jpg';
+  static const training='assets/images/training center.webp';
+
   //svg
   static const dogSvg='assets/svg/dog.svg';
   //login
@@ -54,6 +60,7 @@ class imageConstants{
   //Lottie
 // static const lottie='assets/animation/gg.json';
 static const lottie='assets/animation/an.json';
+static const loading='assets/animation/comingsoon.json';
 
 
 }
