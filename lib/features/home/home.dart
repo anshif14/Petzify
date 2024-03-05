@@ -60,17 +60,20 @@ class _HomePageState extends State<HomePage> {
     {'name': 'Small Animals', 'image': imageConstants.rabbit},
   ];
 
-
-
-  @override
-  Future<void> initState() async {
-    var userlist = await FirebaseFirestore.instance
-        .collection('users')
-        .where("email", isEqualTo: Userid)
-        .get();
+data() async {
+  var userlist =await FirebaseFirestore.instance
+      .collection('users').doc(Userid).get();
+  currentUserName=userlist[0]["name"];
+  currentUserEmail=userlist[0]["email"];
+  currentUserImage=userlist[0]["images"];
+}
+@override
+  void initState() {
+  data();
     // TODO: implement initState
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
