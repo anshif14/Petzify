@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:luna_demo/commons/widgets.dart';
 // import 'package:luna_demo/core/features/product/screens/productSingle.dart';
 import 'package:luna_demo/main.dart';
 
+import '../auth/screen/loginPage.dart';
 import '../product/screens/productSingle.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,10 +35,11 @@ class _HomePageState extends State<HomePage> {
   ];
 
   List pets = [
-    {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet2, "price": 1250},
-    {'name': 'pet', "image": imageConstants.pet3, "price": 1000},
+    {'name': 'food', "image": imageConstants.petfood, "price": 1000},
     {'name': 'pet', "image": imageConstants.pet4, "price": 1000},
+    {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
+    {'name': 'supplies', "image": imageConstants.supplies, "price": 1000},
+    {'name': 'pet', "image": imageConstants.pet2, "price": 1250},
     {'name': 'pet', "image": imageConstants.pet5, "price": 1000},
     {'name': 'pet', "image": imageConstants.pet6, "price": 1000},
     {'name': 'pet', "image": imageConstants.pet7, "price": 1000},
@@ -56,6 +59,18 @@ class _HomePageState extends State<HomePage> {
     {'name': 'Fish', 'image': imageConstants.fish},
     {'name': 'Small Animals', 'image': imageConstants.rabbit},
   ];
+
+
+
+  @override
+  Future<void> initState() async {
+    var userlist = await FirebaseFirestore.instance
+        .collection('users')
+        .where("email", isEqualTo: Userid)
+        .get();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +197,11 @@ class _HomePageState extends State<HomePage> {
               GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 4,
+                itemCount: 6,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 0.8, crossAxisCount: 2),
                 itemBuilder: (context, index) {
-                  return
-                    petTile(index: index);
+                  return petTile(index: index);
                 },
               )
             ],
@@ -208,9 +222,11 @@ class petTile extends StatefulWidget {
 
 class _petTileState extends State<petTile> {
   List pets = [
-    {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet2, "price": 1250},
+    {'name': 'food', "image": imageConstants.petfood, "price": 1000},
     {'name': 'pet', "image": imageConstants.pet3, "price": 1000},
+    {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
+    {'name': 'supplies', "image": imageConstants.supplies, "price": 1000},
+    {'name': 'pet', "image": imageConstants.pet2, "price": 1250},
     {'name': 'pet', "image": imageConstants.pet4, "price": 1000},
     {'name': 'pet', "image": imageConstants.pet5, "price": 1000},
     {'name': 'pet', "image": imageConstants.pet6, "price": 1000},
@@ -227,18 +243,23 @@ class _petTileState extends State<petTile> {
   int index = 0;
 
   @override
-
   void initState() {
-
     index = widget.index;
     // TODO: implement initState
     super.initState();
   }
+
   Widget build(BuildContext context) {
-    return      InkWell(
+    return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder:(context) => ProducctSingleScreen(image: pets[index]['image'], tag: pets[index]['image'],),
-        ));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProducctSingleScreen(
+                image: pets[index]['image'],
+                tag: pets[index]['image'],
+              ),
+            ));
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -265,9 +286,8 @@ class _petTileState extends State<petTile> {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.5)
-                      ),
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.5)),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: FavoriteButton(
@@ -298,8 +318,7 @@ class _petTileState extends State<petTile> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('₹ ' +
-                      pets[index]['price'].toDouble().toString()),
+                  Text('₹ ' + pets[index]['price'].toDouble().toString()),
                 ],
               ),
             ),
@@ -307,7 +326,5 @@ class _petTileState extends State<petTile> {
         ),
       ),
     );
-
   }
 }
-

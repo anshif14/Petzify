@@ -37,8 +37,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         elevation: width*0,
@@ -54,36 +53,33 @@ class _ExploreScreenState extends State<ExploreScreen> {
           
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               gap,
               gap,
               Padding(
                 padding:  EdgeInsets.all(8.0),
-                child: Expanded(
-                    child: Padding(
-                      padding:  EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding:  EdgeInsets.all(8.0),
-                              child: Icon(Icons.search),
-                            ),
-                            Text(
-                              "Search",
-                              style: TextStyle(color: Colors.grey),
-                            )
-                          ],
-                        ),
-                        height: height * 0.06,
-                        decoration: BoxDecoration(
-                            color: Pallette.grey,
-                            borderRadius: BorderRadius.circular(10)),
+                child: Container(
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.all(8.0),
+                        child: Icon(Icons.search),
                       ),
-                    )),
+                      Text(
+                        "Search",
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                  height: height * 0.06,
+                  decoration: BoxDecoration(
+                      color: Pallette.grey,
+                      borderRadius: BorderRadius.circular(10)),
+                ),
               ),
+              gap,
               gap,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

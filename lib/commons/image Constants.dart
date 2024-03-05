@@ -30,6 +30,8 @@ class imageConstants{
   static const pet12 = 'assets/pet/pet (12).jpg';
   static const pet13 = 'assets/pet/pet (13).jpg';
   static const pet14 = 'assets/pet/pet (14).jpg';
+  static const supplies = 'assets/pet/supplies.jpg';
+  static const petfood = 'assets/pet/pet food.png';
 
 
   static const order = 'assets/images/logistics.png';
