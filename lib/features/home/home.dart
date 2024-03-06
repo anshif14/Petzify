@@ -60,16 +60,9 @@ class _HomePageState extends State<HomePage> {
     {'name': 'Small Animals', 'image': imageConstants.rabbit},
   ];
 
-data() async {
-  var userlist =await FirebaseFirestore.instance
-      .collection('users').doc(Userid).get();
-  currentUserName=userlist[0]["name"];
-  currentUserEmail=userlist[0]["email"];
-  currentUserImage=userlist[0]["images"];
-}
+
 @override
   void initState() {
-  data();
     // TODO: implement initState
     super.initState();
   }
@@ -296,6 +289,10 @@ class _petTileState extends State<petTile> {
                         child: FavoriteButton(
                           iconSize: 25,
                           valueChanged: (_isFavorite) {
+
+
+
+
                             print('Is Favorite $_isFavorite)');
                           },
                         ),
