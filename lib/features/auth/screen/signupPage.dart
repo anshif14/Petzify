@@ -72,6 +72,7 @@ class _SignupPageState extends State<SignupPage> {
   setData() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.setBool("login",true);
+
   }
 
   @override
@@ -113,10 +114,7 @@ class _SignupPageState extends State<SignupPage> {
                     Center(
                       child: Stack(
                         children: [
-                          file!=""?CircleAvatar(
-                            radius: width * 0.15,
-                            backgroundImage: NetworkImage(imageurl),
-                          ):
+                          file!=null?
                           CircleAvatar(
                             radius: width * 0.15,
                             backgroundColor: Pallette.primaryColor,
@@ -126,6 +124,9 @@ class _SignupPageState extends State<SignupPage> {
                               size: width*0.1,
                             )),
                             // backgroundImage: AssetImage(imageConstants.user),
+                          ):CircleAvatar(
+                            radius: width * 0.15,
+                            backgroundImage: NetworkImage(imageurl),
                           ),
                           Positioned(
                             bottom: 0,
@@ -415,6 +416,7 @@ class _SignupPageState extends State<SignupPage> {
               gap,
               InkWell(
                 onTap: () async {
+
                   if(usernameController.text ==""){
                     QuickAlert.show(
                       barrierDismissible: false,
@@ -448,28 +450,28 @@ class _SignupPageState extends State<SignupPage> {
                     );
                     return;
                   }
+
                     userModel  loginModelData=userModel(
+                      favourites: [],
                         name: usernameController.text,
                         email: emailController.text,
                         password: passwordController.text,
                         images: imageurl,
                       id: emailController.text.trim(),
+                      number: "",
+                      gender: "male",
                     );
-                    // var passid=
-                    // await  FirebaseFirestore.instance.collection("users").add(loginModelData.toMap()
-                    //
-                    // ).then((value){
-                    //   value.update(
-                    //       loginModelData.copyWith(id: value.id).toMap()
-                    //
-                    //   );
-                    //   Userid= value.id;
-                    // });
-                  setData();
+
                     await  FirebaseFirestore.instance.collection("users").doc(emailController.text.trim()).set(loginModelData.toMap()
 
                     );
-                    // currentUserName = nameController.text;
+                  setData();
+                  var data = await FirebaseFirestore.instance.collection('users')
+                      .doc(emailController.text.trim())
+                      .get();
+                  currentUserModel = userModel.fromMap(data!.data()!);
+
+                  // currentUserName = nameController.text;
 
                     // Future.delayed(Duration(seconds: 1)).then((value){
                     //   emailController.clear();

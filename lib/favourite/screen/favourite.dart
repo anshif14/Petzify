@@ -73,7 +73,7 @@ class _favouriteState extends State<favourite> {
             GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: pets.length,
+              itemCount: 9,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 0.8, crossAxisCount: 2),
               itemBuilder: (context, index) {

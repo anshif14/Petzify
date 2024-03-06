@@ -11,6 +11,7 @@ import 'package:luna_demo/features/auth/screen/signinPage.dart';
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/features/home/navbar.dart';
 import 'package:luna_demo/main.dart';
+import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -50,6 +51,7 @@ signInWithGoogle(BuildContext context) async {
       .collection('users')
       .where("email", isEqualTo: UserEmail)
       .get();
+
   if (userlist.docs.isEmpty) {
     Navigator.push(
         context,
@@ -61,9 +63,19 @@ signInWithGoogle(BuildContext context) async {
   } else {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
+      currentUserName = userlist.docs[0]['name'];
+
     _prefs.setBool("login", true);
+    _prefs.setString("email", UserEmail);
+
+    _prefs.setString("name", currentUserName.toString());
 
     Userid = userlist.docs[0].id;
+    var data = await FirebaseFirestore.instance.collection('users')
+        .doc(UserEmail)
+        .get();
+    currentUserModel = userModel.fromMap(data!.data()!);
+
 
     Navigator.push(
         context,

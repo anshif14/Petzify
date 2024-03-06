@@ -4,12 +4,18 @@ class userModel {
   String password;
   String id;
   String images;
+  String number;
+  String gender;
+  List favourites;
   userModel({
     required this.name,
-    required this.email,
-    required this.password,
+    required   this.email,
+    required  this.password,
     required this.id,
-    required this.images,
+    required  this.images,
+    required this.number,
+    required   this.gender,
+  required  this.favourites,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,6 +25,9 @@ class userModel {
       "password": this.password,
       "id": this.id,
       "images": this.images,
+      "number": this.number,
+      "gender": this.gender,
+      "favourites": this.favourites,
     };
   }
 
@@ -29,6 +38,9 @@ class userModel {
       password: Map["password"] ?? "",
       id: Map["id"] ?? "",
       images: Map["images"] ?? "",
+      number: Map["number"] ?? "",
+      gender: Map["gender"] ?? "",
+      favourites: Map["favourites"] ?? "",
     );
   }
 
@@ -38,6 +50,9 @@ class userModel {
     String? password,
     String? id,
     String? images,
+    String? number,
+    String? gender,
+    List? favourites,
   }) {
     return userModel(
       name: name ?? this.name,
@@ -46,6 +61,9 @@ class userModel {
       // google: google ?? this.google,
       id: id ?? this.id,
       images: images ?? this.images,
+      number: number ?? this.number,
+      gender: gender ?? this.gender,
+      favourites: favourites ?? this.favourites,
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,10 +10,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/home/navbar.dart';
+import 'package:luna_demo/model/user_Model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
+import '../../auth/screen/loginPage.dart';
 
 class editProfile extends StatefulWidget {
   const editProfile({super.key});
@@ -21,9 +26,9 @@ class editProfile extends StatefulWidget {
 }
 
 class _editProfileState extends State<editProfile> {
-
   var file;
-  String? chooseitem;
+  String imageurl = "";
+  String gender="";
   var listitem = ["male", "female", "other"];
 
   TextEditingController nameController = TextEditingController();
@@ -32,18 +37,56 @@ class _editProfileState extends State<editProfile> {
   final phoneValidation = RegExp(r"[0-9]{10}");
   final emailvallidation =
       RegExp(r"^[a-z0-9.a-z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-z0-9]+\.[a-z]+");
-  PickedFile(ImageSource) async {
-    final imagefile = await ImagePicker.platform.pickImage(source: ImageSource);
-    file = File(imagefile!.path);
+
+  pickFile(ImageSource) async {
+    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+    file = File(imageFile!.path);
     if (mounted) {
       setState(() {
-        file = File(imagefile.path);
+        file = File(imageFile.path);
       });
-
+      uploadFile();
     }
   }
 
+  uploadFile() async {
+    if (file != null) {
+      var uploadTask = await FirebaseStorage.instance
+          .ref('images')
+          .child("${DateTime.now()}")
+          .putFile(file!, SettableMetadata(
+          contentType: 'image/jpeg'
+      ));
 
+      imageurl = await uploadTask.ref.getDownloadURL();
+      print(imageurl);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("image uploaded")));
+
+      setState(() {});
+      Navigator.pop(context);
+    }
+    //
+    // setModelfunc(){
+    //   FirebaseFirestore.instance.collection("users").doc(Userid).get().then((value){
+    //
+    //     usermodel =userModel.fromMap(value.data()!);
+    //   });
+    // }
+  }
+  String phoneNumber = '';
+
+@override
+  void initState() {
+  // setModelfunc();
+    imageurl = currentUserModel!.images!;
+    nameController.text = currentUserModel!.name!;
+    emailController.text = currentUserModel!.email!;
+    phoneNumber = currentUserModel!.number.toString();
+    gender = currentUserModel!.gender.toString();
+    // TODO: implement initState
+    super.initState();
+  }
 
 
   @override
@@ -82,17 +125,11 @@ class _editProfileState extends State<editProfile> {
                          CircleAvatar(
                           radius: width * 0.14,
                           backgroundColor: Pallette.primaryColor,
-                          child: file==null?CircleAvatar(
+                          child:CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: width * 0.13,
-                            backgroundImage: NetworkImage(
-                              "https://w7.pngwing.com/pngs/86/421/png-transparent-computer-icons-user-profile-set-of-abstract-icon-miscellaneous-monochrome-computer-wallpaper.png",
-                            ),
-                          ):CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: width * 0.13,
-                            backgroundImage: FileImage(file),
-                          )
+                            backgroundImage: NetworkImage(imageurl),
+                          ),
                         ),
                         Positioned(
                           bottom: 0,
@@ -106,7 +143,7 @@ class _editProfileState extends State<editProfile> {
                                     actions: [
                                       CupertinoActionSheetAction(
                                           onPressed: () {
-                                            PickedFile(ImageSource.gallery);
+                                            pickFile(ImageSource.gallery);
                                           },
                                           child: Text(
                                             "Photo Gallery",
@@ -117,7 +154,7 @@ class _editProfileState extends State<editProfile> {
                                           )),
                                       CupertinoActionSheetAction(
                                           onPressed: () {
-                                            PickedFile(ImageSource.camera);
+                                            pickFile(ImageSource.camera);
                                           },
                                           // isDefaultAction: true,
                                           child: Text(
@@ -165,13 +202,13 @@ class _editProfileState extends State<editProfile> {
                     ),
                     Column(
                       children: [
-                        Text("Ashik Muhammed",
+                        Text(currentUserModel!.name!,
                             style: TextStyle(
                                 fontSize: width * 0.042,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black)),
                         Text(
-                          "Perintalmanna",
+                          "Kerala",
                           style: TextStyle(
                               fontSize: width * 0.038,
                               color: Colors.grey.shade700),
@@ -275,6 +312,7 @@ class _editProfileState extends State<editProfile> {
                       child: Padding(
                         padding: EdgeInsets.only(left: width * 0.01),
                         child: IntlPhoneField(
+                          controller: numberController,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
@@ -292,6 +330,8 @@ class _editProfileState extends State<editProfile> {
                           initialCountryCode: 'IN',
                           onChanged: (phone) {
                             print(phone.completeNumber);
+                            phoneNumber = phone.completeNumber;
+
                           },
                         ),
                       )),
@@ -325,7 +365,7 @@ class _editProfileState extends State<editProfile> {
                           color: Colors.black,
                           fontSize: width * 0.055,
                         ),
-                        value: chooseitem,
+                        value: gender,
                         items: listitem.map(
                           (valueItem) {
                             return DropdownMenuItem(
@@ -336,7 +376,7 @@ class _editProfileState extends State<editProfile> {
                         ).toList(),
                         onChanged: (newValue) {
                           setState(() {
-                            chooseitem = newValue;
+                            gender = newValue.toString();
                           });
                         },
                       ),
@@ -347,23 +387,37 @@ class _editProfileState extends State<editProfile> {
             ),
             gap,
             GestureDetector(
-              onTap: () {
-                // Alert(
-                //   style: AlertStyle(
-                //     alertElevation: 0,
-                //     backgroundColor: Pallette.secondaryBrown,
-                //   ),
-                //   context: context,
-                //   title: "Are you sure ",
-                //   buttons: [DialogButton(child: Text("Edit Profile"), onPressed: () {
-                //
-                //   },color: Pallette.primaryColor,)],
-                //   desc: "Flutter is better with RFlutter Alert.",
-                //   image: Container(
-                //       height: height*0.1,
-                //       child: Image.asset(imageConstants.user)),
-                // ).show();
-                Navigator.pop(context);
+              onTap: () async {
+      userModel usermodel = currentUserModel!;
+
+                await FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(currentUserEmail)
+                    .update(
+                  usermodel!.copyWith(
+                        images: imageurl.toString(),
+                        name: nameController.text,
+                        email: emailController.text,
+                    number: phoneNumber,
+                    gender: gender
+
+                  ).toMap()
+
+              //   //   userModel!.copyWith(
+              //   //     images: imageurl.toString(),
+              //   //     name: name_controller.text,
+              //   //     email: email_controller.text,
+              //   //     password: password_controller.text,
+              //   //     phoneNumber: number_controller.text,
+              //   //   ).toMap(),
+                );
+              //
+              //
+
+      var value =await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+      currentUserModel = userModel.fromMap(value.data()!);
+      // Navigator.pop(context);
+                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),));
               },
               child: Container(
                 height: height * 0.06,

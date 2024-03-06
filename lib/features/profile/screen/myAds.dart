@@ -74,7 +74,7 @@ class _myAdsState extends State<myAds> {
         Expanded(
           child: AnimationLimiter(
             child: GridView.builder(
-              itemCount: 14,
+              itemCount: 7,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: width * 0.03,

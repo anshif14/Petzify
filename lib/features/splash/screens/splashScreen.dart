@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 // import 'package:luna_demo/core/features/home/navbar.dart';
 import 'package:luna_demo/main.dart';
+import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home/navbar.dart';
@@ -19,10 +21,32 @@ class _SplashScreenState extends State<SplashScreen> {
   bool login=false;
   getData() async {
     SharedPreferences _prefs= await SharedPreferences.getInstance();
+    currentUserName = _prefs.getString('name');
+    currentUserEmail = _prefs.getString('email');
+
+
     login=_prefs.getBool("login")??false;
-    Future.delayed(Duration(seconds: 3)).then((value) =>
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) =>login?NavBar():LoginPage())));
+
+    if(currentUserEmail != null){
+
+      var userdata = await  FirebaseFirestore.instance.collection('users').doc(currentUserEmail).get();
+
+      currentUserModel = userModel.fromMap(userdata.data()!);
+      print(currentUserModel!.name);
+      setState(() {
+
+      });
+      Future.delayed(Duration(seconds: 3)).then((value) =>
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) =>NavBar())));
+
+    }else
+      {
+        Future.delayed(Duration(seconds: 3)).then((value) =>
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) =>LoginPage())));
+      }
+
   }
 
 

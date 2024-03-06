@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,93 +22,100 @@ class profileScreen extends StatefulWidget {
 }
 
 class _profileScreenState extends State<profileScreen> {
-
   bool toggle = false;
+
+  @override
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
-        title:Text("Profile",style: TextStyle(
-            fontSize:width*0.06,
-            fontWeight: FontWeight.w600
-        )),
-
-        toolbarHeight: height*0.06,
+        title: Text("Profile",
+            style:
+                TextStyle(fontSize: width * 0.06, fontWeight: FontWeight.w600)),
+        toolbarHeight: height * 0.06,
       ),
       body: Padding(
-        padding:  EdgeInsets.only(right: width*0.04,left: width*0.04,bottom: width*0.04,),
+        padding: EdgeInsets.only(
+          right: width * 0.04,
+          left: width * 0.04,
+          bottom: width * 0.04,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             Container(
-              height:height*0.11,
-              width: width*1,
+              height: height * 0.11,
+              width: width * 1,
               decoration: BoxDecoration(
-                // color: Pallette.profile,
-                gradient: LinearGradient(colors: [
-                  Pallette.primaryColor,
-                  Pallette.secondaryBrown,
-                ],
-                  begin: Alignment.bottomRight,
-                  end: Alignment.topLeft
-                    ,
-                stops: [
-                  0.72,0.3
-                ]
-                // end: AlignmentDirectional(3, 0.1),
-                ),
-                // color: Pallette.primaryColor,
-                borderRadius: BorderRadius.circular(width*0.03),
-                border: Border.all(color:Pallette.secondaryBrown,width: width*0.005),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                   offset: Offset(0, 4)
+                  // color: Pallette.profile,
+                  gradient: LinearGradient(
+                      colors: [
+                        Pallette.primaryColor,
+                        Pallette.secondaryBrown,
+                      ],
+                      begin: Alignment.bottomRight,
+                      end: Alignment.topLeft,
+                      stops: [0.725, 0.3]),
+                  // color: Pallette.primaryColor,
+                  borderRadius: BorderRadius.circular(width * 0.03),
+                  border: Border.all(
+                    color: Pallette.primaryColor.withOpacity(0.7),
+                    width: width * 0.005,
                   ),
-
-                ]
-              ),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        offset: Offset(0, 4)),
+                  ]),
               child: Padding(
-                padding:  EdgeInsets.only(left: width*0.04,right: width*0.06,top: width*0.02,bottom: width*0.02),
+                padding: EdgeInsets.only(
+                    left: width * 0.04,
+                    right: width * 0.06,
+                    top: width * 0.02,
+                    bottom: width * 0.02),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
                         CircleAvatar(
-                          radius: width*0.09,
-                          backgroundColor:Pallette.primaryColor,
+                          radius: width * 0.09,
+                          backgroundColor: Pallette.primaryColor,
                           child: CircleAvatar(
                             backgroundColor: Pallette.secondaryBrown,
-                            radius: width*0.085,
+                            radius: width * 0.085,
                             backgroundImage: NetworkImage(
-                              "https://w7.pngwing.com/pngs/86/421/png-transparent-computer-icons-user-profile-set-of-abstract-icon-miscellaneous-monochrome-computer-wallpaper.png",
+                                currentUserModel!.images
                             ),
                           ),
                         ),
-                        SizedBox(width: width*0.03,),
+                        SizedBox(
+                          width: width * 0.03,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Ashik Muhammed",
-                            style: TextStyle(
-                              fontSize: width*0.04,
-                               fontWeight: FontWeight.w600,
-                              color: Pallette.white,
-                            )),
-                            Text("Perintalmanna",
-                            style: TextStyle(
-                              fontSize: width*0.035,
-                              color: Pallette.white,
-                            ),)
+                            Text(currentUserModel!.name!,
+                                style: TextStyle(
+                                  fontSize: width * 0.04,
+                                  fontWeight: FontWeight.w600,
+                                  color: Pallette.white,
+                                )),
+                            Text(
+                              "Kerala",
+                              style: TextStyle(
+                                fontSize: width * 0.035,
+                                color: Pallette.white,
+                              ),
+                            )
                           ],
                         )
                       ],
@@ -116,44 +124,52 @@ class _profileScreenState extends State<profileScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, CupertinoPageRoute(builder: (context) =>editProfile() ,));
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => editProfile(),
+                                ));
                           },
                           child: Container(
-                            height: height*0.05,
-                            width: width*0.07,
-                              child: Icon(Icons.edit,color: Pallette.white,)),
+                              height: height * 0.05,
+                              width: width * 0.07,
+                              child: Icon(
+                                Icons.edit,
+                                color: Pallette.white,
+                              )),
                         )
                       ],
                     )
                   ],
                 ),
               ),
-              
-
             ),
             Container(
-              width: width*1,
-              height: height*0.3,
+              width: width * 1,
+              height: height * 0.3,
               decoration: BoxDecoration(
-                color:Pallette.white,
+                color: Pallette.white,
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 5,
-                      spreadRadius: 2,
-                      // offset: Offset(0, 0)
+                    color: Colors.black.withOpacity(0.15),
+                    blurRadius: 5,
+                    spreadRadius: 2,
+                    // offset: Offset(0, 0)
                   ),
                 ],
-                borderRadius: BorderRadius.circular(width*0.02),
+                borderRadius: BorderRadius.circular(width * 0.02),
                 // border: Border.all(color: Pallette.primaryColor),
-
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) =>myOrder() ,));
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => myOrder(),
+                          ));
                     },
                     child: ListTile(
                       // leading: CircleAvatar(
@@ -164,54 +180,58 @@ class _profileScreenState extends State<profileScreen> {
                       //     backgroundColor: Colors.white,
                       //   ),
                       // ),
-                      leading:Container(
-                        height: height*0.06,
-                        width: width*0.13,
+                      leading: Container(
+                        height: height * 0.06,
+                        width: width * 0.13,
                         decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage(imageConstants.order),
-                              scale: width*0.035,alignment: AlignmentDirectional(0.1, 0)),
+                            image: DecorationImage(
+                                image: AssetImage(imageConstants.order),
+                                scale: width * 0.035,
+                                alignment: AlignmentDirectional(0.1, 0)),
                             shape: BoxShape.circle,
                             color: Color(0xfff8f6f4),
-                            border: Border.all(color: Pallette.primaryColor,width: width*0.006)
-
-                        ),
+                            border: Border.all(
+                                color: Pallette.primaryColor,
+                                width: width * 0.006)),
                       ),
                       title: Text("My Order",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                      )),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          )),
                       subtitle: Text("Make changes to your order"),
                       subtitleTextStyle: TextStyle(
-                        fontSize: width*0.035,
-                        color: Colors.grey.shade600
-                      ),
+                          fontSize: width * 0.035, color: Colors.grey.shade600),
                       trailing: Container(
-                        child: Icon(Icons.arrow_forward_ios_outlined,
+                        child: Icon(
+                          Icons.arrow_forward_ios_outlined,
                           color: Pallette.primaryColor,
-                          size: width*0.05,
-
+                          size: width * 0.05,
                         ),
                       ),
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) =>myAds() ,));
-
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => myAds(),
+                          ));
                     },
                     child: ListTile(
-                      leading:Container(
-                        height: height*0.06,
-                        width: width*0.13,
+                      leading: Container(
+                        height: height * 0.06,
+                        width: width * 0.13,
                         decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage(imageConstants.ads),
-                                scale: width*0.055,alignment: AlignmentDirectional(0.25, 0)),
-                          shape: BoxShape.circle,
-                          color: Color(0xfff8f6f4),
-                            border: Border.all(color: Pallette.primaryColor,width: width*0.006)
-
-                        ),
-
+                            image: DecorationImage(
+                                image: AssetImage(imageConstants.ads),
+                                scale: width * 0.055,
+                                alignment: AlignmentDirectional(0.25, 0)),
+                            shape: BoxShape.circle,
+                            color: Color(0xfff8f6f4),
+                            border: Border.all(
+                                color: Pallette.primaryColor,
+                                width: width * 0.006)),
                       ),
                       title: Text("My Ads",
                           style: TextStyle(
@@ -219,14 +239,12 @@ class _profileScreenState extends State<profileScreen> {
                           )),
                       subtitle: Text("Manage your saved account "),
                       subtitleTextStyle: TextStyle(
-                          fontSize: width*0.035,
-                          color: Colors.grey.shade600
-                      ),
+                          fontSize: width * 0.035, color: Colors.grey.shade600),
                       trailing: Container(
-                        child: Icon(Icons.arrow_forward_ios_outlined,
+                        child: Icon(
+                          Icons.arrow_forward_ios_outlined,
                           color: Pallette.primaryColor,
-                          size: width*0.05,
-
+                          size: width * 0.05,
                         ),
                       ),
                     ),
@@ -298,16 +316,14 @@ class _profileScreenState extends State<profileScreen> {
                         context: context,
                         builder: (context) {
                           return CupertinoAlertDialog(
-                            content: Text(
-                                "Are you Sure\nYou Want to Exit !",
+                            content: Text("Are you Sure\nYou Want to Exit !",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: width * 0.045)),
                             actions: [
                               CupertinoDialogAction(
-                                textStyle: TextStyle(
-                                    color: Colors.grey.shade800
-                                ),
+                                textStyle:
+                                    TextStyle(color: Colors.grey.shade800),
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
@@ -315,16 +331,19 @@ class _profileScreenState extends State<profileScreen> {
                               ),
                               CupertinoDialogAction(
                                 isDefaultAction: true,
-                                textStyle: TextStyle(
-                                  color: Pallette.primaryColor
-                                ),
+                                textStyle:
+                                    TextStyle(color: Pallette.primaryColor),
                                 onPressed: () async {
-                                  SharedPreferences  _prefs=await SharedPreferences.getInstance() ;
+                                  SharedPreferences _prefs =
+                                      await SharedPreferences.getInstance();
                                   _prefs.clear();
                                   GoogleSignIn().signOut();
                                   FirebaseAuth.instance.signOut();
-
-                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => LoginPage(),));
+                                  Navigator.pushReplacement(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) => LoginPage(),
+                                      ));
                                 },
                                 child: Text("Confirm"),
                               ),
@@ -367,27 +386,28 @@ class _profileScreenState extends State<profileScreen> {
                     //
                     // },
                     child: ListTile(
-                      leading:Container(
-                        height: height*0.06,
-                        width: width*0.13,
+                      leading: Container(
+                        height: height * 0.06,
+                        width: width * 0.13,
                         decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage(imageConstants.logout),
-                                scale: width*0.045,alignment: AlignmentDirectional(0.2, 0)),
+                            image: DecorationImage(
+                                image: AssetImage(imageConstants.logout),
+                                scale: width * 0.045,
+                                alignment: AlignmentDirectional(0.2, 0)),
                             shape: BoxShape.circle,
                             color: Color(0xfff8f6f4),
-                            border: Border.all(color: Pallette.primaryColor,width: width*0.006)
-
-                        ),
-
+                            border: Border.all(
+                                color: Pallette.primaryColor,
+                                width: width * 0.006)),
                       ),
                       title: Text("Log Out",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                           )),
-                      trailing: Icon(Icons.arrow_forward_ios_outlined,
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_outlined,
                         color: Pallette.primaryColor,
-                        size: width*0.05,
-
+                        size: width * 0.05,
                       ),
                     ),
                   ),
@@ -395,78 +415,80 @@ class _profileScreenState extends State<profileScreen> {
               ),
             ),
             Container(
-              width: width*1,
-              height: height*0.2,
+              width: width * 1,
+              height: height * 0.2,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width*0.02),
+                borderRadius: BorderRadius.circular(width * 0.02),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 5,
-                      spreadRadius: 2,
-                      // offset: Offset(0, 4)
+                    color: Colors.black.withOpacity(0.15),
+                    blurRadius: 5,
+                    spreadRadius: 2,
+                    // offset: Offset(0, 4)
                   ),
                 ],
-                color:Pallette.white,
+                color: Pallette.white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ListTile(
-                    leading:Container(
-                      height: height*0.06,
-                      width: width*0.13,
+                    leading: Container(
+                      height: height * 0.06,
+                      width: width * 0.13,
                       decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage(imageConstants.customerSupport),
-                              scale: width*0.035,),
+                          image: DecorationImage(
+                            image: AssetImage(imageConstants.customerSupport),
+                            scale: width * 0.035,
+                          ),
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
-
-                      ),
-
+                          border: Border.all(
+                              color: Pallette.primaryColor,
+                              width: width * 0.006)),
                     ),
                     title: Text("Help & Support",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                    )),
-                    trailing: Icon(Icons.arrow_forward_ios_outlined,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        )),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_outlined,
                       color: Pallette.primaryColor,
-                      size: width*0.05,
-
+                      size: width * 0.05,
                     ),
                   ),
                   ListTile(
-                    leading:Container(
-                      height: height*0.06,
-                      width: width*0.13,
+                    leading: Container(
+                      height: height * 0.06,
+                      width: width * 0.13,
                       decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage(imageConstants.aboutapp),
-                            scale: width*0.035,),
+                          image: DecorationImage(
+                            image: AssetImage(imageConstants.aboutapp),
+                            scale: width * 0.035,
+                          ),
                           shape: BoxShape.circle,
                           color: Color(0xfff8f6f4),
-                          border: Border.all(color: Pallette.primaryColor,width: width*0.006)
-
-                      ),
-
+                          border: Border.all(
+                              color: Pallette.primaryColor,
+                              width: width * 0.006)),
                     ),
                     title: Text("About App",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                         )),
-                    trailing: Icon(Icons.arrow_forward_ios_outlined,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_outlined,
                       color: Pallette.primaryColor,
-                      size: width*0.05,
-
+                      size: width * 0.05,
                     ),
                   ),
-
                 ],
               ),
             ),
-            SizedBox(height: height*0.03,)
+            SizedBox(
+              height: height * 0.03,
+            )
           ],
-          
         ),
       ),
     );

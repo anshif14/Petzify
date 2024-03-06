@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -38,6 +39,8 @@ class _SigninPageState extends State<SigninPage> {
 
     }
   }
+
+  /// change pickedfile
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -314,7 +317,7 @@ class _SigninPageState extends State<SigninPage> {
               ),
               gap,
               InkWell(
-                onTap: () {
+                onTap: () async {
                   if(emailController.text ==""){
                     QuickAlert.show(
                       barrierDismissible: false,
@@ -337,6 +340,16 @@ class _SigninPageState extends State<SigninPage> {
                     );
                     return;
                   }
+                  var userlist = await FirebaseFirestore.instance
+                      .collection('users')
+                      .where("email", isEqualTo: emailController.text)
+                      .get();
+                  if(userlist.docs.isNotEmpty){
+                    currentUserName = userlist.docs[0]['name'];
+                    currentUserImage = userlist.docs[0]['images'];
+
+                  }
+
                   Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),),(route) => false,);
                 },
                 child: Container(

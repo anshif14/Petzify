@@ -92,7 +92,7 @@ class _myOrderState extends State<myOrder> {
             // ),
             Expanded(
               child: ListView.separated(
-                itemCount: 9,
+                itemCount: 4,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
