@@ -250,6 +250,7 @@ class _editProfileState extends State<editProfile> {
                       decoration: InputDecoration(
                         fillColor: Pallette.white,
                         filled: true,
+                        contentPadding: EdgeInsets.all(width*0.04),
                         hintText: "Enter your name",
                         hintStyle: TextStyle(
                           fontSize: width * 0.05,
@@ -285,6 +286,7 @@ class _editProfileState extends State<editProfile> {
                       ),
                       decoration: InputDecoration(
                         fillColor: Pallette.white,
+                        contentPadding: EdgeInsets.all(width*0.04),
                         filled: true,
                         hintText: "Enter your email",
                         hintStyle: TextStyle(
@@ -321,6 +323,7 @@ class _editProfileState extends State<editProfile> {
                             fontSize: width * 0.05,
                           ),
                           decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(width*0.04),
                             counterText: "",
                             hintText: "Enter your number",
                             border: OutlineInputBorder(
@@ -349,7 +352,7 @@ class _editProfileState extends State<editProfile> {
                               offset: Offset(0, 3)),
                         ]),
                     child: Padding(
-                      padding: EdgeInsets.all(width * 0.03),
+                      padding: EdgeInsets.all(width * 0.04),
                       child: DropdownButton(
                         hint: Text(
                           "Gender",
@@ -416,8 +419,7 @@ class _editProfileState extends State<editProfile> {
 
       var value =await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
       currentUserModel = userModel.fromMap(value.data()!);
-      // Navigator.pop(context);
-                Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),));
+                Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
               },
               child: Container(
                 height: height * 0.06,
