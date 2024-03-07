@@ -259,12 +259,17 @@ class _SigninPageState extends State<SigninPage> {
                       .where('email', isEqualTo: emailController.text).get();
 
                   if(userlist.docs.isNotEmpty){
-                    // SharedPreferences prefs = await SharedPreferences.getInstance();
 
                     // prefs.setString("signin", emailController.text);
 
 
                     if(passwordController.text == userlist.docs[0]['password']){
+                      currentUserName = userlist.docs[0]['name'];
+                      UserEmail = emailController.text;
+                      SharedPreferences _prefs = await SharedPreferences.getInstance();
+                      _prefs.setBool("login", true);
+                      _prefs.setString("email", UserEmail);
+                      _prefs.setString("name", currentUserName.toString());
 
                         Navigator.pushReplacement(context,  CupertinoPageRoute(builder: (context) => NavBar()));
                       //nav

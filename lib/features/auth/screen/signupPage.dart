@@ -479,6 +479,14 @@ class _SignupPageState extends State<SignupPage> {
                   currentUserModel = userModel.fromMap(data!.data()!);
 
 
+
+                  currentUserName = currentUserModel!.name;
+                  UserEmail = currentUserModel!.email;
+                  SharedPreferences _prefs = await SharedPreferences.getInstance();
+                  _prefs.setBool("login", true);
+                  _prefs.setString("email", UserEmail);
+                  _prefs.setString("name", currentUserName.toString());
+
                   // currentUserName = nameController.text;
 
                     // Future.delayed(Duration(seconds: 1)).then((value){
