@@ -19,13 +19,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool login=false;
+
   getData() async {
     SharedPreferences _prefs= await SharedPreferences.getInstance();
+    login=_prefs.getBool("login") ?? false;
     currentUserName = _prefs.getString('name');
     currentUserEmail = _prefs.getString('email');
-
-
-    login=_prefs.getBool("login")??false;
 
     if(currentUserEmail != null){
 

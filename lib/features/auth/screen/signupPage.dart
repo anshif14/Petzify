@@ -81,6 +81,11 @@ class _SignupPageState extends State<SignupPage> {
       emailController.text = UserEmail!.toString();
       usernameController.text = UserName!.toString();
       imageurl =  Userimage;
+
+    }
+    else{
+      imageurl ="https://cdn-icons-png.flaticon.com/128/4146/4146794.png";
+
     }
     // TODO: implement initState
     super.initState();
@@ -114,18 +119,9 @@ class _SignupPageState extends State<SignupPage> {
                     Center(
                       child: Stack(
                         children: [
-                          file!=null?
                           CircleAvatar(
                             radius: width * 0.15,
                             backgroundColor: Pallette.primaryColor,
-                            child: Center(child: Icon(
-                              CupertinoIcons.camera,
-                              color: Colors.white,
-                              size: width*0.1,
-                            )),
-                            // backgroundImage: AssetImage(imageConstants.user),
-                          ):CircleAvatar(
-                            radius: width * 0.15,
                             backgroundImage: NetworkImage(imageurl),
                           ),
                           Positioned(
@@ -417,7 +413,7 @@ class _SignupPageState extends State<SignupPage> {
               InkWell(
                 onTap: () async {
 
-                  if(usernameController.text ==""){
+                  if(usernameController.text.isEmpty){
                     QuickAlert.show(
                       barrierDismissible: false,
                       confirmBtnColor: Colors.red.shade600,
@@ -451,6 +447,18 @@ class _SignupPageState extends State<SignupPage> {
                     return;
                   }
 
+                  if(imageurl.isEmpty){
+                    QuickAlert.show(
+                      barrierDismissible: false,
+                      confirmBtnColor: Colors.red.shade600,
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Sorry, please your image',
+                    );
+                    return;
+                  }
+
                     userModel  loginModelData=userModel(
                       favourites: [],
                         name: usernameController.text,
@@ -465,11 +473,11 @@ class _SignupPageState extends State<SignupPage> {
                     await  FirebaseFirestore.instance.collection("users").doc(emailController.text.trim()).set(loginModelData.toMap()
 
                     );
-                  setData();
                   var data = await FirebaseFirestore.instance.collection('users')
                       .doc(emailController.text.trim())
                       .get();
                   currentUserModel = userModel.fromMap(data!.data()!);
+
 
                   // currentUserName = nameController.text;
 
@@ -542,21 +550,26 @@ class _SignupPageState extends State<SignupPage> {
                 ],
               ),
 
-              Container(
-                width: width*0.8,
-                height: height*0.065,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(width*0.1),
-                    border: Border.all(color: Pallette.grey)
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image(image:AssetImage(imageConstants.googleicon),height: width*0.07,width: width*0.07),
+              GestureDetector(
+                onTap: () {
+                  signInWithGoogle(context);
+                },
+                child: Container(
+                  width: width*0.8,
+                  height: height*0.065,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(width*0.1),
+                      border: Border.all(color: Pallette.grey)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image(image:AssetImage(imageConstants.googleicon),height: width*0.07,width: width*0.07),
 
-                    Text("Continue with Google"),
-                    SizedBox()
-                  ],
+                      Text("Continue with Google"),
+                      SizedBox()
+                    ],
+                  ),
                 ),
               ),
 

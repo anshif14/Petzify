@@ -103,7 +103,7 @@ class _profileScreenState extends State<profileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(currentUserModel!.name!,
+                            Text(currentUserModel!.name,
                                 style: TextStyle(
                                   fontSize: width * 0.04,
                                   fontWeight: FontWeight.w600,

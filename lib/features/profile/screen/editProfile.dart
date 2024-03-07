@@ -79,9 +79,9 @@ class _editProfileState extends State<editProfile> {
 @override
   void initState() {
   // setModelfunc();
-    imageurl = currentUserModel!.images!;
-    nameController.text = currentUserModel!.name!;
-    emailController.text = currentUserModel!.email!;
+    imageurl = currentUserModel!.images;
+    nameController.text = currentUserModel!.name.toString();
+    emailController.text = currentUserModel!.email.toString();
     phoneNumber = currentUserModel!.number.toString();
     gender = currentUserModel!.gender.toString();
     // TODO: implement initState
@@ -126,7 +126,7 @@ class _editProfileState extends State<editProfile> {
                           radius: width * 0.14,
                           backgroundColor: Pallette.primaryColor,
                           child:CircleAvatar(
-                            backgroundColor: Colors.grey,
+                            backgroundColor: Pallette.secondaryBrown,
                             radius: width * 0.13,
                             backgroundImage: NetworkImage(imageurl),
                           ),
@@ -391,13 +391,13 @@ class _editProfileState extends State<editProfile> {
             gap,
             GestureDetector(
               onTap: () async {
-      userModel usermodel = currentUserModel!;
+                userModel usermodel = currentUserModel!;
 
-                await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
                     .collection('users')
                     .doc(currentUserEmail)
                     .update(
-                  usermodel!.copyWith(
+                  usermodel.copyWith(
                         images: imageurl.toString(),
                         name: nameController.text,
                         email: emailController.text,

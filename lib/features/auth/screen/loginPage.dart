@@ -69,6 +69,7 @@ signInWithGoogle(BuildContext context) async {
     _prefs.setString("email", UserEmail);
 
     _prefs.setString("name", currentUserName.toString());
+    currentUserEmail =UserEmail;
 
     Userid = userlist.docs[0].id;
     var data = await FirebaseFirestore.instance.collection('users')

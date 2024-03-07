@@ -9,11 +9,14 @@ import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/features/home/home.dart';
 import 'package:luna_demo/features/home/navbar.dart';
+import 'package:luna_demo/model/user_Model.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
+import 'loginPage.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -29,18 +32,7 @@ class _SigninPageState extends State<SigninPage> {
   RegExp emailvalidation=RegExp(r"^[a-z0-9.a-z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-z0-9]+\.[a-z]+");
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
-  PickedFile(ImageSource) async {
-    final imagefile = await ImagePicker.platform.pickImage(source: ImageSource);
-    file = File(imagefile!.path);
-    if (mounted) {
-      setState(() {
-        file = File(imagefile.path);
-      });
 
-    }
-  }
-
-  /// change pickedfile
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,86 +59,6 @@ class _SigninPageState extends State<SigninPage> {
                         fontSize: width*0.07,
                         fontWeight: FontWeight.w900
                     ),),
-                    Center(
-                      child: Stack(
-                        children: [
-                          file!=null?CircleAvatar(
-                            radius: width * 0.15,
-                            backgroundImage: FileImage(file),
-                          ):
-                          CircleAvatar(
-                            radius: width * 0.15,
-                            backgroundColor: Pallette.primaryColor,
-                            child: Center(child: Icon(
-                              CupertinoIcons.camera,
-                              color: Colors.white,
-                              size: width*0.1,
-                            )),
-                            // backgroundImage: AssetImage(imageConstants.user),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: width * 0.03,
-                            child: InkWell(
-                              onTap: () {
-                                showCupertinoModalPopup(
-                                  context: context,
-                                  // barrierColor: colorPage.color1,
-                                  builder: (context) {
-                                    return CupertinoActionSheet(
-                                      actions: [
-                                        CupertinoActionSheetAction(
-                                            onPressed: () {
-                                              PickedFile(ImageSource.gallery);
-                                            },
-                                            isDefaultAction: true,
-                                            child: Text(
-                                              "Photo Gallery",
-                                              style: TextStyle(
-                                                  fontSize: width * 0.045,
-                                                  fontWeight: FontWeight.w400),
-                                            )),
-                                        CupertinoActionSheetAction(
-                                            onPressed: () {
-                                              PickedFile(ImageSource.camera);
-                                            },
-                                            isDefaultAction: true,
-                                            child: Text(
-                                              "Camera",
-                                              style: TextStyle(
-                                                  fontSize: width * 0.045,
-                                                  fontWeight: FontWeight.w400),
-                                            )),
-                                      ],
-                                      cancelButton: CupertinoActionSheetAction(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(
-                                            "Cancel",
-                                            style: TextStyle(
-                                                fontSize: width * 0.045,
-                                                fontWeight: FontWeight.w600),
-                                          )),
-                                    );
-                                  },
-                                );
-
-                              },
-                              child: CircleAvatar(
-                                radius: width * 0.04,
-                                // backgroundImage: AssetImage(imageConstants.addicon),
-                                backgroundColor: Pallette.secondaryBrown,
-                                child: Icon(
-                                  CupertinoIcons.add,
-                                  color: Pallette.primaryColor,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -340,17 +252,40 @@ class _SigninPageState extends State<SigninPage> {
                     );
                     return;
                   }
+
+
                   var userlist = await FirebaseFirestore.instance
                       .collection('users')
-                      .where("email", isEqualTo: emailController.text)
-                      .get();
+                      .where('email', isEqualTo: emailController.text).get();
+
                   if(userlist.docs.isNotEmpty){
+                    // SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                    // prefs.setString("signin", emailController.text);
+
+
+                    if(passwordController.text == userlist.docs[0]['password']){
+
+                        Navigator.pushReplacement(context,  CupertinoPageRoute(builder: (context) => NavBar()));
+                      //nav
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("wrong password")));
+                      //wromg
+                    }
+
                     currentUserName = userlist.docs[0]['name'];
                     currentUserImage = userlist.docs[0]['images'];
+                    var data = await FirebaseFirestore.instance.collection('users')
+                        .doc(UserEmail)
+                        .get();
+                    currentUserModel = userModel.fromMap(data!.data()!);
 
+                  }else{
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => SignupPage(sign: false),));
+                    //user reg
                   }
 
-                  Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),),(route) => false,);
+
                 },
                 child: Container(
                   width: width*0.8,
@@ -404,21 +339,26 @@ class _SigninPageState extends State<SigninPage> {
                 ],
               ),
 
-              Container(
-                width: width*0.8,
-                height: height*0.065,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(width*0.1),
-                    border: Border.all(color: Pallette.grey)
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image(image:AssetImage(imageConstants.googleicon),height: width*0.07,width: width*0.07),
+              GestureDetector(
+                onTap: () {
+                  signInWithGoogle(context);
+                },
+                child: Container(
+                  width: width*0.8,
+                  height: height*0.065,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(width*0.1),
+                      border: Border.all(color: Pallette.grey)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image(image:AssetImage(imageConstants.googleicon),height: width*0.07,width: width*0.07),
 
-                    Text("Continue with Google"),
-                    SizedBox()
-                  ],
+                      Text("Continue with Google"),
+                      SizedBox()
+                    ],
+                  ),
                 ),
               ),
 
