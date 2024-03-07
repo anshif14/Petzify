@@ -78,11 +78,8 @@ signInWithGoogle(BuildContext context) async {
     currentUserModel = userModel.fromMap(data!.data()!);
 
 
-    Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => NavBar(),
-        ));
+    Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
+
   }
 }
 

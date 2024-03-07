@@ -498,11 +498,7 @@ class _SignupPageState extends State<SignupPage> {
 
                     // });
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NavBar(),
-                        ));
+                  Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
 
 
                 },

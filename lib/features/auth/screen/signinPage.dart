@@ -271,7 +271,8 @@ class _SigninPageState extends State<SigninPage> {
                       _prefs.setString("email", UserEmail);
                       _prefs.setString("name", currentUserName.toString());
 
-                        Navigator.pushReplacement(context,  CupertinoPageRoute(builder: (context) => NavBar()));
+                      Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
+
                       //nav
                     }else{
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("wrong password")));
