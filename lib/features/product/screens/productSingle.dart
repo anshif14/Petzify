@@ -7,17 +7,18 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:luna_demo/Payment/screens/deliveryAddress.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../main.dart';
 
 class ProducctSingleScreen extends StatefulWidget {
-  final String image;
+  // final String image;
   final String tag;
   final String id;
   const ProducctSingleScreen(
-      {super.key, required this.image, required this.tag,required this.id});
+      {super.key, required this.tag,required this.id});
 
   @override
   State<ProducctSingleScreen> createState() => _ProducctSingleScreenState();
@@ -141,9 +142,17 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Beagle age(6-60 days), sex-male\nKCI certified: No",
-                            style: TextStyle(fontSize: width * 0.04),
+                          Container(
+                            width:width*0.7,
+                            child: Text(
+                              "${data.productname} ",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Pallette.primaryColor,
+                                  fontSize: width * 0.05,
+                                fontWeight: FontWeight.w800
+                              ),
+                            ),
                           ),
                           Text(
                             "\₹ ${data.price}",
@@ -220,6 +229,9 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                             child: Icon(CupertinoIcons.add)),
                       ],
                     ),
+                    gap,
+                    Text(data.description,
+                      style: TextStyle(fontSize: width * 0.04),)
                   ],
                 );
               }

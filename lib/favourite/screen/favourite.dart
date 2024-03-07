@@ -130,7 +130,6 @@ class _petTileState extends State<petTile> {
             MaterialPageRoute(
               builder: (context) => ProducctSingleScreen(
                 id: "",
-                image: pets[index]['image'],
                 tag: pets[index]['image'],
               ),
             ));
