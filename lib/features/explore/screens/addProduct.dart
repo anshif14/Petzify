@@ -404,7 +404,7 @@ class _AddProductState extends State<AddProduct> {
                   //   "category": dropdownvalue,
                   //   "price": double.parse( pricecontroller.text,)
                   // });
-                  FirebaseFirestore.instance.collection("product").add(ProductModel(
+                  ProductModel ProductDetails=ProductModel(
                     image: pets,
                     productname: prdnamecontroller.text,
                     description: descriptioncontroller.text,
@@ -412,8 +412,18 @@ class _AddProductState extends State<AddProduct> {
                     price: double.parse(pricecontroller.text),
                     sellername: namecontroller.text,
                     address: addresscontroller.text,
-                    phonenumber: contactcontroller.text
-                  ).toMap());
+                    phonenumber: contactcontroller.text,
+                    id: ""
+                  );
+                  FirebaseFirestore.instance.collection("product").add(
+                    ProductDetails.toMap()
+                  ).then((value) {
+                    value.update(
+                      ProductDetails.copyWith(
+                        id: value.id
+                      ).toMap()
+                    );
+                  });
                   Navigator.pop(context);
                 },
                 child: Container(

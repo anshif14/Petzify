@@ -11,6 +11,7 @@ import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
 // import 'package:luna_demo/core/features/product/screens/productSingle.dart';
 import 'package:luna_demo/main.dart';
+import 'package:luna_demo/model/product_Model.dart';
 
 import '../auth/screen/loginPage.dart';
 import '../product/screens/productSingle.dart';
@@ -190,15 +191,36 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 6,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 0.8, crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  return petTile(index: index);
-                },
+              StreamBuilder(
+              stream: FirebaseFirestore.instance.collection("product").snapshots().map((snapshot) {
+                       return snapshot.docs.map((doc){
+                            return ProductModel.fromMap(doc.data());
+                      }).toList();
+                      }),
+               builder: (context, snapshot) {
+                if(!snapshot.hasData){
+                  return Center(child: CircularProgressIndicator(
+                  ),);
+                }
+                List<ProductModel> data=snapshot.data!;
+                  return GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 0.8, crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return petTile(
+                          index: index,
+                        image:data[index].image.toList(),
+                        name:data[index].productname,
+                        price:data[index].price,
+                        category:data[index].category!,
+                          id:data[index].id
+                      );
+                    },
+                  );
+                }
               )
             ],
           ),
@@ -210,31 +232,26 @@ class _HomePageState extends State<HomePage> {
 
 class petTile extends StatefulWidget {
   final int index;
-  const petTile({super.key, required this.index});
+  final List image;
+  final String name;
+  final double price;
+  final String category;
+  final String id;
+  const petTile({
+    super.key,
+    required this.index,
+    required this.image,
+    required this.name,
+    required this.price,
+    required this.category,
+    required this.id
+  });
 
   @override
   State<petTile> createState() => _petTileState();
 }
 
 class _petTileState extends State<petTile> {
-  List pets = [
-    {'name': 'food', "image": imageConstants.petfood, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet3, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
-    {'name': 'supplies', "image": imageConstants.supplies, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet2, "price": 1250},
-    {'name': 'pet', "image": imageConstants.pet4, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet5, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet6, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet7, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet8, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet9, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet10, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet11, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet12, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet13, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet14, "price": 1000},
-  ];
 
   int index = 0;
 
@@ -247,84 +264,81 @@ class _petTileState extends State<petTile> {
 
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProducctSingleScreen(
-                image: pets[index]['image'],
-                tag: pets[index]['image'],
-              ),
-            ));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Hero(
-                  tag: pets[index]['image'],
-                  child: Container(
-                    height: width * 0.4,
-                    width: width * 0.4,
-                    decoration: BoxDecoration(
-                        color: Pallette.secondaryBrown,
-                        image: DecorationImage(
-                            image: AssetImage(pets[index]['image']),
-                            fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(15)),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProducctSingleScreen(
+                    id:widget.id,
+                    image: widget.image[index],
+                    tag: widget.image[index],
                   ),
-                ),
-                Positioned(
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.5)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: FavoriteButton(
-                          iconSize: 25,
-                          valueChanged: (_isFavorite) {
-
-
-
-
-                            print('Is Favorite $_isFavorite)');
-                          },
-                        ),
+                ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Hero(
+                      tag: widget.image,
+                      child: Container(
+                        height: width * 0.4,
+                        width: width * 0.4,
+                        decoration: BoxDecoration(
+                            color: Pallette.secondaryBrown,
+                            image: DecorationImage(
+                                image: NetworkImage(widget.image[0]),
+                                fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(15)),
                       ),
                     ),
+                    Positioned(
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withOpacity(0.5)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: FavoriteButton(
+                              iconSize: 25,
+                              valueChanged: (_isFavorite) {
+                                print('Is Favorite $_isFavorite)');
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        widget.category,
+                        style: TextStyle(fontWeight: FontWeight.w800),
+                      ),
+                    ],
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('₹ ' + widget.price.toString()),
+                    ],
+                  ),
+                ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(
-                    pets[index]['name'],
-                    style: TextStyle(fontWeight: FontWeight.w800),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('₹ ' + pets[index]['price'].toDouble().toString()),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
   }
 }
