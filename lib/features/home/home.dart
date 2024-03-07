@@ -9,9 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/favourite/screen/favourite.dart';
 // import 'package:luna_demo/core/features/product/screens/productSingle.dart';
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/product_Model.dart';
+import 'package:luna_demo/model/user_Model.dart';
 
 import '../auth/screen/loginPage.dart';
 import '../product/screens/productSingle.dart';
@@ -255,6 +257,8 @@ class _petTileState extends State<petTile> {
 
   int index = 0;
 
+
+
   @override
   void initState() {
     index = widget.index;
@@ -304,8 +308,26 @@ class _petTileState extends State<petTile> {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: FavoriteButton(
+                              isFavorite: currentUserModel!.favourites.contains(widget.id),
                               iconSize: 25,
-                              valueChanged: (_isFavorite) {
+                              valueChanged: (_isFavorite) async {
+                                var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+                                currentUserModel = userModel.fromMap(data.data()!);
+                                List fav=currentUserModel!.favourites;
+                                print(fav);
+                                if(fav.contains(widget.id)){
+                                  fav.remove(widget.id);
+                                }else{
+                                  fav.add(widget.id);
+                                }
+                                FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+                                  "favourites": fav
+                                });
+                                var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+                                currentUserModel = userModel.fromMap(data1.data()!);
+                                setState(() {
+
+                                });
                                 print('Is Favorite $_isFavorite)');
                               },
                             ),

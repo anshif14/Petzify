@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/model/product_Model.dart';
+import 'package:luna_demo/model/user_Model.dart';
 
 import '../../commons/color constansts.dart';
 import '../../commons/widgets.dart';
@@ -73,11 +76,112 @@ class _favouriteState extends State<favourite> {
             GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 9,
+              itemCount: currentUserModel!.favourites.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 0.8, crossAxisCount: 2),
               itemBuilder: (context, index) {
-                return petTile(index: index);
+                return       StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance.collection('product').doc(currentUserModel!.favourites[index]).snapshots(),
+                  builder: (context, snapshot) {
+                    ProductModel product  = ProductModel.fromMap(snapshot.data!.data() as Map<String , dynamic>);
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProducctSingleScreen(
+                                id: product.id,
+                                tag: product.image[0],
+                              ),
+                            ));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Hero(
+                                  tag: product.productname,
+                                  child: Container(
+                                    height: width * 0.4,
+                                    width: width * 0.4,
+                                    decoration: BoxDecoration(
+                                        color: Pallette.secondaryBrown,
+                                        image: DecorationImage(
+                                            image: NetworkImage(product.image[0]),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.circular(15)),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white.withOpacity(0.5)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: FavoriteButton(
+                                          isFavorite: true,
+                                          iconSize: 25,
+                                          valueChanged: (_isFavorite) async {
+                                            var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+                                            currentUserModel = userModel.fromMap(data.data()!);
+                                            List fav=currentUserModel!.favourites;
+                                            print(fav);
+                                            if(fav.contains(product.id)){
+                                              fav.remove(product.id);
+                                            }else{
+                                              fav.add(product.id);
+                                            }
+                                            FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+                                              "favourites": fav
+                                            });
+                                            var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+                                            currentUserModel = userModel.fromMap(data1.data()!);
+                                            setState(() {
+
+                                            });
+                                            print('Is Favorite $_isFavorite)');
+                                            print('Is Favorite $_isFavorite)');
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    product.productname,
+                                    style: TextStyle(fontWeight: FontWeight.w800),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text('₹ ' + product.price.toString()),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                );
+
               },
             )
           ],
@@ -123,7 +227,8 @@ class _petTileState extends State<petTile> {
   }
 
   Widget build(BuildContext context) {
-    return InkWell(
+    return
+      InkWell(
       onTap: () {
         Navigator.push(
             context,
