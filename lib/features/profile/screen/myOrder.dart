@@ -94,7 +94,7 @@ class _myOrderState extends State<myOrder> {
               child: ListView.separated(
                 itemCount: 4,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
+                    return InkWell(
                       onTap: () {
                         Navigator.push(context, CupertinoPageRoute(builder: (context) => orderView(),));
                       },

@@ -202,6 +202,7 @@ class _HomePageState extends State<HomePage> {
                builder: (context, snapshot) {
                 if(!snapshot.hasData){
                   return Center(child: CircularProgressIndicator(
+                    color: Pallette.primaryColor,
                   ),);
                 }
                 List<ProductModel> data=snapshot.data!;

@@ -83,6 +83,9 @@ class _favouriteState extends State<favourite> {
                 return       StreamBuilder<DocumentSnapshot>(
                   stream: FirebaseFirestore.instance.collection('product').doc(currentUserModel!.favourites[index]).snapshots(),
                   builder: (context, snapshot) {
+                    if(!snapshot.hasData){
+                      return Center(child: CircularProgressIndicator(color: Pallette.primaryColor),);
+                    }
                     ProductModel product  = ProductModel.fromMap(snapshot.data!.data() as Map<String , dynamic>);
                     return InkWell(
                       onTap: () {
