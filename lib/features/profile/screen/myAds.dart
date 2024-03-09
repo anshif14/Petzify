@@ -141,8 +141,8 @@ class _myAdsState extends State<myAds> {
                                                   fontSize: width * 0.045)),
                                           actions: [
                                             CupertinoDialogAction(
-                                              textStyle:
-                                              TextStyle(color: Colors.black),
+                                              isDefaultAction: true,
+                                              isDestructiveAction: true,
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
@@ -150,12 +150,14 @@ class _myAdsState extends State<myAds> {
                                             ),
                                             CupertinoDialogAction(
                                               isDefaultAction: true,
-                                              isDestructiveAction: true,
                                               onPressed: ()  {
 
                                                 Navigator.pop(context);
                                               },
-                                              child: Text("Confirm"),
+                                              child: Text("Confirm",
+                                              style: TextStyle(
+                                                color: Colors.black
+                                              )),
                                             ),
                                           ],
                                         );
