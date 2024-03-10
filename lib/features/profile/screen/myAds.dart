@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/profile/screen/adsView.dart';
@@ -151,8 +152,37 @@ class _myAdsState extends State<myAds> {
                                             CupertinoDialogAction(
                                               isDefaultAction: true,
                                               onPressed: ()  {
+                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: width*0.05,
+                                                    ),
+                                                    
+                                                    Center(
+                                                      child: Container(
+                                                          height: height*0.04,
+                                                          width: width*0.1,
+                                                          // color: Colors.red,
+                                                          child: Lottie.asset(imageConstants.remove,)),
+                                                    ),
+                                                    SizedBox(
+                                                      width: width*0.02,
+                                                    ),
 
+                                                    Text("Deleted Success",style: TextStyle(
+                                                      fontSize: width*0.04,
+                                                      color: Pallette.white
+                                                    ),)
+                                                  ],
+
+                                                ),backgroundColor: Colors.black.withOpacity(0.85),
+                                                  padding:  EdgeInsets.all(width*0.015),
+                                                  duration: Duration(seconds: 2),
+                                                ));
                                                 Navigator.pop(context);
+
                                               },
                                               child: Text("Confirm",
                                               style: TextStyle(

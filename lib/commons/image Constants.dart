@@ -63,6 +63,7 @@ class imageConstants{
 // static const lottie='assets/animation/gg.json';
 static const lottie='assets/animation/an.json';
 static const loading='assets/animation/comingsoon.json';
+static const remove='assets/animation/Animation - 1710042872820 (1).json';
 
 
 }
