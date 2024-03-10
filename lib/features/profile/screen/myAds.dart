@@ -159,16 +159,16 @@ class _myAdsState extends State<myAds> {
                                                     SizedBox(
                                                       width: width*0.05,
                                                     ),
-                                                    
+
                                                     Center(
                                                       child: Container(
                                                           height: height*0.04,
                                                           width: width*0.1,
                                                           // color: Colors.red,
-                                                          child: Lottie.asset(imageConstants.remove,)),
+                                                          child: Lottie.asset(imageConstants.remove,fit: BoxFit.fitHeight)),
                                                     ),
                                                     SizedBox(
-                                                      width: width*0.02,
+                                                      width: width*0.015,
                                                     ),
 
                                                     Text("Deleted Success",style: TextStyle(
@@ -178,8 +178,10 @@ class _myAdsState extends State<myAds> {
                                                   ],
 
                                                 ),backgroundColor: Colors.black.withOpacity(0.85),
-                                                  padding:  EdgeInsets.all(width*0.015),
-                                                  duration: Duration(seconds: 2),
+                                                  behavior: SnackBarBehavior.floating,
+                                                  showCloseIcon: true,
+                                                  padding:  EdgeInsets.only(bottom: width*0.012,top: width*0.001),
+                                                  // duration: Duration(seconds: 2),
                                                 ));
                                                 Navigator.pop(context);
 
