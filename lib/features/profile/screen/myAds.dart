@@ -103,12 +103,13 @@ class _myAdsState extends State<myAds> {
                             padding: EdgeInsets.all(8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Container(
                                   height: height*0.15,
                                   width: width*0.5,
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(image: AssetImage(imageConstants.cat),fit: BoxFit.cover),
+                                    image: DecorationImage(image: AssetImage(imageConstants.cat)),
                                     borderRadius: BorderRadius.circular(width*0.01)
                                   ),
                                 ),
