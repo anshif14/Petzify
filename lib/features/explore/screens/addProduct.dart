@@ -413,7 +413,8 @@ class _AddProductState extends State<AddProduct> {
                     sellername: namecontroller.text,
                     address: addresscontroller.text,
                     phonenumber: contactcontroller.text,
-                    id: ""
+                    id: "",
+                    userid: currentUserModel!.id,
                   );
                   FirebaseFirestore.instance.collection("product").add(
                     ProductDetails.toMap()
