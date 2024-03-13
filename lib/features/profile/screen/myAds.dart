@@ -169,6 +169,7 @@ class _myAdsState extends State<myAds> {
                                                   isDefaultAction: true,
                                                   onPressed: ()  {
                                                     FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
+                                                    // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.favourites[index][data[index].id]).delete();
                                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       mainAxisAlignment: MainAxisAlignment.start,
