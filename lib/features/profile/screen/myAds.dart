@@ -25,6 +25,18 @@ class _myAdsState extends State<myAds> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+        floatingActionButton: CircleAvatar(
+          radius: width*0.08,backgroundColor:Pallette.primaryColor ,
+          child: Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,border: Border.all(width: width*0.008,color: Colors.white)
+            ),
+            child: CircleAvatar(
+              radius: width*0.06,
+              child: Icon(Icons.play_circle,size: width*0.08,),
+              backgroundColor: Pallette.primaryColor,),
+          ),
+        ),
       appBar: AppBar(
         surfaceTintColor: Pallette.white,
 
@@ -88,8 +100,9 @@ class _myAdsState extends State<myAds> {
 
                   ),);
                 }
+                
                 List<ProductModel> data=snapshot.data! as List<ProductModel>;
-                return GridView.builder(
+                return data.isNotEmpty?GridView.builder(
                   itemCount: data.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -248,7 +261,7 @@ class _myAdsState extends State<myAds> {
                       ),
                     );
                 
-                    },);
+                    },):Center(child: Text("No Show You Ads \n !",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.06),));
               }
             ),
           ),

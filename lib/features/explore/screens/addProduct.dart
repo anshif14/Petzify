@@ -25,6 +25,7 @@ class AddProduct extends StatefulWidget {
 class _AddProductState extends State<AddProduct> {
   var file;
   String imageurl = "";
+  bool loading = false;
 
 
   pickFile(ImageSource) async {
@@ -40,6 +41,9 @@ class _AddProductState extends State<AddProduct> {
   }
 
   uploadFile() async {
+    setState(() {
+      loading=true;
+    });
     if (file != null) {
       var uploadTask = await FirebaseStorage.instance
           .ref('images')
@@ -60,9 +64,12 @@ class _AddProductState extends State<AddProduct> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("image uploaded")));
 
-      setState(() {});
+      setState(() {
+        loading=false;
+      });
       Navigator.pop(context);
     }
+
   }
 
 
@@ -107,9 +114,10 @@ class _AddProductState extends State<AddProduct> {
                 width: width*1,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.red,
+
+                  color: Pallette.primaryColor,
                 ),
-                child: pets.isNotEmpty?Image(image: NetworkImage(pets[0]),fit: BoxFit.cover,)
+                child: loading?Center(child: CircularProgressIndicator(color: Colors.white,)): pets.isNotEmpty?Image(image: NetworkImage(pets[0]),fit: BoxFit.cover,)
                     :Image(image: AssetImage(imageConstants.pet1),fit: BoxFit.cover)
               ),
               gap,

@@ -154,11 +154,13 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                               ),
                             ),
                           ),
-                          Text(
-                            "\₹ ${data.price}",
-                            style: TextStyle(
-                                fontSize: width * 0.05,
-                                fontWeight: FontWeight.w800),
+                          Container(
+                            child: Text(
+                              "\₹ ${data.price}",
+                              style: TextStyle(
+                                  fontSize: width * 0.05,
+                                  fontWeight: FontWeight.w800),
+                            ),
                           ),
                         ]),
                     SizedBox(
