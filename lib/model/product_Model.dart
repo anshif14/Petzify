@@ -9,6 +9,7 @@ class ProductModel{
   String phonenumber;
   String id;
   String userid;
+  List favUser;
 
 
   ProductModel({
@@ -22,7 +23,8 @@ class ProductModel{
     required this.address,
     required this.phonenumber,
     required this.id,
-    required this.userid
+    required this.userid,
+    required this.favUser
 
 });
 
@@ -37,7 +39,8 @@ class ProductModel{
       "address": this.address,
       "phonenumber": this.phonenumber,
       "id": this.id,
-      "userid":this.userid
+      "userid":this.userid,
+      "favUser":this.favUser
     };
   }
 
@@ -52,7 +55,8 @@ class ProductModel{
       address: Map["address"] ?? "",
       phonenumber: Map["phonenumber"] ?? "",
       id: Map["id"]?? "",
-      userid: Map["user id"]??""
+      userid: Map["user id"]??"",
+      favUser: Map["favUser"]??[]
     );
   }
 
@@ -66,7 +70,8 @@ class ProductModel{
     String? address,
     String? phonenumber,
     String? id,
-    String? userid
+    String? userid,
+    List? favUser
 }){
     return ProductModel(
       productname: productname ?? this.productname,
@@ -78,7 +83,8 @@ class ProductModel{
       address: address ?? this.address,
       phonenumber: phonenumber ?? this.phonenumber,
       id: id ?? this.id,
-      userid: userid ?? this.userid
+      userid: userid ?? this.userid,
+      favUser: favUser??this.favUser
     );
   }
 

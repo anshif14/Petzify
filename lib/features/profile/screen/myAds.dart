@@ -1,12 +1,15 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
-import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/profile/screen/adsView.dart';
 import 'package:luna_demo/model/product_Model.dart';
+import 'package:luna_demo/model/user_Model.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
@@ -20,6 +23,52 @@ class myAds extends StatefulWidget {
 
 class _myAdsState extends State<myAds> {
   TextEditingController searchController = TextEditingController();
+  late ProductModel productData;
+  String? selectedProduct;
+
+
+
+  deletFunc(data,index) async {
+
+    var data1=await FirebaseFirestore.instance.collection("users").get();
+    await FirebaseFirestore.instance.collection("product").doc(data[index].id).get().then((value){
+      productData = ProductModel.fromMap(value.data()!);
+      print(productData);
+    });
+    var product1=productData.favUser;
+
+    for(int i=0;i<=product1.length;i++){
+      for(int j=0;j<=data1.docs.length;j++){
+        if(product1[i]==data1.docs[j].id){
+          var fav=data1.docs[j].id;
+          var fav1=await FirebaseFirestore.instance.collection("users").doc(fav).get();
+          userModel userdata=userModel.fromMap(fav1.data()!);
+          var fav2=userdata.favourites;
+          if(fav2.contains(data[index].id)){
+          print(fav2);
+            fav2.remove(data[index].id);
+          }
+          print(fav2);
+          FirebaseFirestore.instance.collection("users").doc(fav).update(
+              {
+                "favourites":fav2
+              });
+         await FirebaseFirestore.instance.collection("users").doc(fav).get().then((value) {
+            userdata=userModel.fromMap(value.data()!);
+            print(userdata);
+          });
+          setState(() {
+
+          });
+        }
+        FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
+      }
+    }
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +149,7 @@ class _myAdsState extends State<myAds> {
 
                   ),);
                 }
-                
-                List<ProductModel> data=snapshot.data! as List<ProductModel>;
+                 List<ProductModel>data=snapshot.data! ;
                 return data.isNotEmpty?GridView.builder(
                   itemCount: data.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -180,9 +228,10 @@ class _myAdsState extends State<myAds> {
                                                 ),
                                                 CupertinoDialogAction(
                                                   isDefaultAction: true,
-                                                  onPressed: ()  {
-                                                    FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
-                                                    // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.favourites[index][data[index].id]).delete();
+                                                  onPressed: ()  async {
+                                                      deletFunc(data,index);
+
+
                                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       mainAxisAlignment: MainAxisAlignment.start,

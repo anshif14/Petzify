@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/model/product_Model.dart';
@@ -99,14 +100,40 @@ class _favouriteState extends State<favourite> {
 
                             }
 
-                            return product==null?Container(): InkWell(
+                            return product==null?
+
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(7.0),
+                                  child: Container(
+                                    height: width * 0.4,
+                                    width: width * 0.4,
+                                    decoration: BoxDecoration(
+                                        color: Pallette.secondaryBrown,
+                                        borderRadius: BorderRadius.circular(15)),
+                                    child: Center(
+                                      child: Text("Product Deleted \nby Seller",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: width*0.03,
+                                          fontWeight: FontWeight.w700
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+
+                            : InkWell(
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => ProducctSingleScreen(
                                         id: product!.id,
-                                        tag: product.image[index],
+                                        tag: product.productname,
                                       ),
                                     ));
                               },
@@ -145,18 +172,30 @@ class _favouriteState extends State<favourite> {
                                                   valueChanged: (_isFavorite) async {
                                                     var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
                                                     currentUserModel = userModel.fromMap(data.data()!);
+                                                    var data2=await FirebaseFirestore.instance.collection("product").doc(product!.id).get();
+                                                    ProductModel productModel = ProductModel.fromMap(data2.data()!);
                                                     List fav=currentUserModel!.favourites;
+                                                    List favUser=productModel.favUser;
                                                     print(fav);
                                                     if(fav.contains(product!.id)){
                                                       fav.remove(product.id);
                                                     }else{
                                                       fav.add(product.id);
+                                                    }if(favUser.contains(currentUserEmail)){
+                                                      favUser.remove(currentUserEmail);
+                                                    }else{
+                                                      favUser.add(currentUserEmail);
                                                     }
+                                                    FirebaseFirestore.instance.collection("product").doc(product.id).update({
+                                                      "favUser":favUser
+                                                    });
                                                     FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
                                                       "favourites": fav
                                                     });
                                                     var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
                                                     currentUserModel = userModel.fromMap(data1.data()!);
+                                                    var data3=await FirebaseFirestore.instance.collection("product").doc(product.id).get();
+                                                    productModel=ProductModel.fromMap(data3.data()!);
                                                     setState(() {
 
                                                     });
@@ -174,9 +213,12 @@ class _favouriteState extends State<favourite> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
                                         children: [
-                                          Text(
-                                            product!.productname,
-                                            style: TextStyle(fontWeight: FontWeight.w800),
+                                          Expanded(
+                                            child: Text(
+                                              product.productname,overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(fontWeight: FontWeight.w800),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -186,7 +228,7 @@ class _favouriteState extends State<favourite> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          Text('₹ ' + product.price.toString()),
+                                          Text('₹ ' + product.price.toString(),overflow: TextOverflow.ellipsis,),
                                         ],
                                       ),
                                     ),

@@ -139,17 +139,17 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                       height: height * 0.015,
                     ),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width:width*0.7,
+                            width:width*0.5,
                             child: Text(
                               "${data.productname} ",
-                              overflow: TextOverflow.ellipsis,
+                              overflow: TextOverflow.values[0],
                               style: TextStyle(
                                 color: Pallette.primaryColor,
-                                  fontSize: width * 0.05,
+                                  fontSize: width * 0.045,
                                 fontWeight: FontWeight.w800
                               ),
                             ),

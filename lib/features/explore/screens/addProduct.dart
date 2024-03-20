@@ -422,6 +422,7 @@ class _AddProductState extends State<AddProduct> {
                     address: addresscontroller.text,
                     phonenumber: contactcontroller.text,
                     id: "",
+                    favUser: [],
                     userid: currentUserModel!.id,
                   );
                   FirebaseFirestore.instance.collection("product").add(

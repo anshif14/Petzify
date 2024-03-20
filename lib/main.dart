@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_demo/features/profile/screen/profileScreen.dart';
+import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 // import 'package:luna_demo/core/features/splash/screens/splashScreen.dart';
 
@@ -21,6 +22,7 @@ String? currentUserName;
 String? currentUserImage;
 String? currentUserEmail;
 userModel ?currentUserModel;
+ProductModel ?currentProductModel;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
