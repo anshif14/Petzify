@@ -4,10 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
+import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
 import 'package:luna_demo/features/home/home.dart';
 import 'package:quickalert/models/quickalert_type.dart';
@@ -19,15 +21,15 @@ import '../../../main.dart';
 import '../../../model/user_Model.dart';
 import '../../home/navbar.dart';
 
-class SignupPage extends StatefulWidget {
+class SignupPage extends ConsumerStatefulWidget {
   final bool sign;
   const SignupPage({super.key, required this.sign});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  ConsumerState<SignupPage> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends ConsumerState<SignupPage> {
   var file;
   String imageurl = "";
 
@@ -90,6 +92,12 @@ class _SignupPageState extends State<SignupPage> {
     // TODO: implement initState
     super.initState();
   }
+
+
+  googleSignuppage(){
+    ref.watch(googlesignProv).signInWithGoogle(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -556,7 +564,7 @@ class _SignupPageState extends State<SignupPage> {
 
               GestureDetector(
                 onTap: () {
-                  signInWithGoogle(context);
+                  googleSignuppage();
                 },
                 child: Container(
                   width: width*0.8,

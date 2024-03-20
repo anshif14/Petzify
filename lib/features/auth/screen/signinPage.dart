@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/features/home/home.dart';
 import 'package:luna_demo/features/home/navbar.dart';
@@ -18,20 +20,26 @@ import '../../../commons/color constansts.dart';
 import '../../../main.dart';
 import 'loginPage.dart';
 
-class SigninPage extends StatefulWidget {
+class SigninPage extends ConsumerStatefulWidget {
   const SigninPage({super.key});
 
   @override
-  State<SigninPage> createState() => _SigninPageState();
+  ConsumerState<SigninPage> createState() => _SigninPageState();
 }
 
-class _SigninPageState extends State<SigninPage> {
+class _SigninPageState extends ConsumerState<SigninPage> {
   var file;
   bool tap=true;
   bool tick=false;
   RegExp emailvalidation=RegExp(r"^[a-z0-9.a-z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-z0-9]+\.[a-z]+");
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
+
+
+  googleSigninpage(){
+    ref.watch(googlesignProv).signInWithGoogle(context);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -347,7 +355,7 @@ class _SigninPageState extends State<SigninPage> {
 
               GestureDetector(
                 onTap: () {
-                  signInWithGoogle(context);
+                  googleSigninpage();
                 },
                 child: Container(
                   width: width*0.8,

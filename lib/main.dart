@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_demo/features/profile/screen/profileScreen.dart';
 import 'package:luna_demo/model/product_Model.dart';
@@ -32,7 +33,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 
