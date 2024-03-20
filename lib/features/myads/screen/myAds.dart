@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
-import 'package:luna_demo/features/profile/screen/adsView.dart';
+import 'package:luna_demo/features/myads/screen/adsView.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 

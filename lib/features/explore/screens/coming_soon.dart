@@ -26,7 +26,6 @@ class _comingSoonState extends State<comingSoon> {
               child: Center(
                 child:Lottie.asset(imageConstants.loading),
               ),
-
             )
           ],
         ),

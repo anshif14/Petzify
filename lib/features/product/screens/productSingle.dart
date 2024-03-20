@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
-import 'package:luna_demo/Payment/screens/deliveryAddress.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
@@ -12,6 +11,7 @@ import 'package:luna_demo/model/product_Model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../main.dart';
+import '../../Payment/screens/deliveryAddress.dart';
 
 class ProducctSingleScreen extends StatefulWidget {
   // final String image;
@@ -98,7 +98,7 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                         itemCount: image.length,
                         options: CarouselOptions(
                             viewportFraction: 1,
-                            autoPlay: false,
+                            autoPlay: true,
                             onPageChanged: (index, reason) {
                               setState(() {
                                 currentIndex = index;

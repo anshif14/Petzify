@@ -6,10 +6,10 @@ import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
-import '../../commons/color constansts.dart';
-import '../../commons/widgets.dart';
-import '../../features/product/screens/productSingle.dart';
-import '../../main.dart';
+import '../../../commons/color constansts.dart';
+import '../../../commons/widgets.dart';
+import '../../../main.dart';
+import '../../product/screens/productSingle.dart';
 
 class favourite extends StatefulWidget {
   const favourite({super.key});

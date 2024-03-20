@@ -8,8 +8,8 @@ import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/profile/screen/editProfile.dart';
-import 'package:luna_demo/features/profile/screen/myAds.dart';
-import 'package:luna_demo/features/profile/screen/myOrder.dart';
+import 'package:luna_demo/features/myads/screen/myAds.dart';
+import 'package:luna_demo/features/order/screen/myOrder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';

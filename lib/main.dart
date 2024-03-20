@@ -12,7 +12,7 @@ import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 // import 'package:luna_demo/core/features/splash/screens/splashScreen.dart';
 
-import 'features/profile/screen/orderView.dart';
+import 'features/order/screen/orderView.dart';
 import 'features/splash/screens/splashScreen.dart';
 import 'firebase_options.dart';
 

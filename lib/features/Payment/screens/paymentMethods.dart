@@ -4,8 +4,9 @@ import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 
-import '../../commons/widgets.dart';
-import '../../main.dart';
+import '../../../commons/widgets.dart';
+import '../../../main.dart';
+
 
 class paymentMethod extends StatefulWidget {
   const paymentMethod({super.key});

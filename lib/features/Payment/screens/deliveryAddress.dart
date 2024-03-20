@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:luna_demo/Payment/screens/paymentMethods.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
+import 'package:luna_demo/features/Payment/screens/paymentMethods.dart';
 
-import '../../commons/widgets.dart';
-import '../../main.dart';
+import '../../../commons/widgets.dart';
+import '../../../main.dart';
+
 
 class deliveryAddress extends StatefulWidget {
   const deliveryAddress({super.key});

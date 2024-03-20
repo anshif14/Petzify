@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/favourite/screen/favourite.dart';
 // import 'package:luna_demo/core/features/product/screens/productSingle.dart';
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/product_Model.dart';

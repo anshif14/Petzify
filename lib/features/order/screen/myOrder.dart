@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/features/profile/screen/orderView.dart';
+import 'package:luna_demo/features/order/screen/orderView.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
