@@ -11,7 +11,7 @@ import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
-import 'package:luna_demo/features/home/home.dart';
+import 'package:luna_demo/features/home/screen/home.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
 import '../../../model/user_Model.dart';
-import '../../home/navbar.dart';
+import '../../home/screen/navbar.dart';
 
 class SignupPage extends ConsumerStatefulWidget {
   final bool sign;

@@ -5,8 +5,8 @@ import 'package:luna_demo/features/profile/screen/profileScreen.dart';
 // import 'package:luna_demo/core/features/explore/screens/exploreScren.dart';
 // import 'package:luna_demo/core/features/home/home.dart';
 
-import '../explore/screens/exploreScren.dart';
-import '../favourite/screen/favourite.dart';
+import '../../explore/screens/exploreScren.dart';
+import '../../favourite/screen/favourite.dart';
 import 'home.dart';
 
 class NavBar extends StatefulWidget {

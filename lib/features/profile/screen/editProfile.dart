@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/features/home/navbar.dart';
+import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 

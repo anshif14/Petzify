@@ -4,27 +4,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/home/controller/stream_controller.dart';
 // import 'package:luna_demo/core/features/product/screens/productSingle.dart';
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
-import '../auth/screen/loginPage.dart';
-import '../product/screens/productSingle.dart';
+import '../../auth/screen/loginPage.dart';
+import '../../product/screens/productSingle.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   List banner = [
     imageConstants.banner1,
     imageConstants.banner2,
@@ -192,40 +194,46 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("product").snapshots().map((snapshot) {
-                       return snapshot.docs.map((doc){
-                            return ProductModel.fromMap(doc.data());
-                      }).toList();
-                      }),
-               builder: (context, snapshot) {
-                if(!snapshot.hasData){
-                  return Center(child: CircularProgressIndicator(
-                    color: Pallette.primaryColor,
-                  ),);
-                }
-                List<ProductModel> data=snapshot.data!;
-                print(data);
-                print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                  return GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 0.8, crossAxisCount: 2),
-                    itemBuilder: (context, index) {
-                      return petTile(
-                          index: index,
-                        image:data[index].image.toList(),
-                        name:data[index].productname,
-                        price:data[index].price,
-                        category:data[index].category!,
-                          id:data[index].id
-                      );
-                    },
-                  );
-                }
-              )
+              // StreamBuilder(
+              // stream: FirebaseFirestore.instance.collection("product").snapshots().map((snapshot) {
+              //          return snapshot.docs.map((doc){
+              //               return ProductModel.fromMap(doc.data());
+              //         }).toList();
+              //         }),
+              //  builder: (context, snapshot) {
+              //   if(!snapshot.hasData){
+              //     return Center(child: CircularProgressIndicator(
+              //       color: Pallette.primaryColor,
+              //     ),);
+              //   }
+              //   List<ProductModel> data=snapshot.data!;
+              //   print(data);
+              //   print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                   ref.watch(datastreamProvider).when(data: (data) {
+                     return  GridView.builder(
+                       physics: NeverScrollableScrollPhysics(),
+                       shrinkWrap: true,
+                       itemCount: data.length,
+                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                           childAspectRatio: 0.8, crossAxisCount: 2),
+                       itemBuilder: (context, index) {
+                         return petTile(
+                             index: index,
+                             image:data[index].image.toList(),
+                             name:data[index].productname,
+                             price:data[index].price,
+                             category:data[index].category!,
+                             id:data[index].id
+                         );
+                       },
+                     );
+                   },
+                       error: (error, stackTrace) {
+                     return Text(error.toString());
+                       },
+                       loading: () {
+                         return CircularProgressIndicator();
+                       },)
             ],
           ),
         ),

@@ -9,7 +9,9 @@ class AuthController{
   AuthController({required AuthenticationRepository}):
 _authenticationRepository =AuthenticationRepository;
 
-  googleFunction(context){
-    _authenticationRepository.signInWithGoogle(context);
-  }
+  // googleFunction(context){
+  //   _authenticationRepository.signInWithGoogle(context);
+  // }
+
+
 }

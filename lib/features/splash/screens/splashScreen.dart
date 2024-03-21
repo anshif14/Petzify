@@ -8,7 +8,7 @@ import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../home/navbar.dart';
+import '../../home/screen/navbar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

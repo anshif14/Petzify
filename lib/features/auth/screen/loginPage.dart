@@ -12,7 +12,7 @@ import 'package:luna_demo/features/auth/controller/auth_controller.dart';
 import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
-import 'package:luna_demo/features/home/navbar.dart';
+import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';

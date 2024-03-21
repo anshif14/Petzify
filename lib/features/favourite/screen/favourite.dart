@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
@@ -11,14 +12,14 @@ import '../../../commons/widgets.dart';
 import '../../../main.dart';
 import '../../product/screens/productSingle.dart';
 
-class favourite extends StatefulWidget {
+class favourite extends ConsumerStatefulWidget {
   const favourite({super.key});
 
   @override
-  State<favourite> createState() => _favouriteState();
+  ConsumerState<favourite> createState() => _favouriteState();
 }
 
-class _favouriteState extends State<favourite> {
+class _favouriteState extends ConsumerState<favourite> {
   List pets = [
     {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
     {'name': 'pet', "image": imageConstants.pet2, "price": 1250},

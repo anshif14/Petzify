@@ -8,7 +8,7 @@ import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
-import '../../home/navbar.dart';
+import '../../home/screen/navbar.dart';
 import '../screen/loginPage.dart';
 import '../screen/signupPage.dart';
 
@@ -28,62 +28,62 @@ _firestore = firestore;
 
 CollectionReference get _user => _firestore.collection('users');
 
-signInWithGoogle(BuildContext context) async {
-  // Trigger the authentication flow
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication? googleAuth =
-  await googleUser?.authentication;
-
-  // Create a new credential
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
-
-  // Once signed in, return the UserCredential
-  final Auth = await FirebaseAuth.instance.signInWithCredential(credential);
-  User? userDetails = Auth.user;
-  UserName = userDetails!.displayName;
-  UserEmail = userDetails.email;
-  Userimage = userDetails.photoURL;
-
-  var userlist = await FirebaseFirestore.instance
-      .collection('users')
-      .where("email", isEqualTo: UserEmail)
-      .get();
-
-  if (userlist.docs.isEmpty) {
-    Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => SignupPage(
-            sign: true,
-          ),
-        ));
-  } else {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-    currentUserName = userlist.docs[0]['name'];
-
-    _prefs.setBool("login", true);
-    _prefs.setString("email", UserEmail);
-
-    _prefs.setString("name", currentUserName.toString());
-    currentUserEmail =UserEmail;
-
-    Userid = userlist.docs[0].id;
-    var data = await FirebaseFirestore.instance.collection('users')
-        .doc(UserEmail)
-        .get();
-    currentUserModel = userModel.fromMap(data!.data()!);
-
-
-    Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
-
-  }
-}
+// signInWithGoogle(BuildContext context) async {
+//   // Trigger the authentication flow
+//   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//
+//   // Obtain the auth details from the request
+//   final GoogleSignInAuthentication? googleAuth =
+//   await googleUser?.authentication;
+//
+//   // Create a new credential
+//   final credential = GoogleAuthProvider.credential(
+//     accessToken: googleAuth?.accessToken,
+//     idToken: googleAuth?.idToken,
+//   );
+//
+//   // Once signed in, return the UserCredential
+//   final Auth = await FirebaseAuth.instance.signInWithCredential(credential);
+//   User? userDetails = Auth.user;
+//   UserName = userDetails!.displayName;
+//   UserEmail = userDetails.email;
+//   Userimage = userDetails.photoURL;
+//
+//   var userlist = await FirebaseFirestore.instance
+//       .collection('users')
+//       .where("email", isEqualTo: UserEmail)
+//       .get();
+//
+//   if (userlist.docs.isEmpty) {
+//     Navigator.push(
+//         context,
+//         CupertinoPageRoute(
+//           builder: (context) => SignupPage(
+//             sign: true,
+//           ),
+//         ));
+//   } else {
+//     SharedPreferences _prefs = await SharedPreferences.getInstance();
+//
+//     currentUserName = userlist.docs[0]['name'];
+//
+//     _prefs.setBool("login", true);
+//     _prefs.setString("email", UserEmail);
+//
+//     _prefs.setString("name", currentUserName.toString());
+//     currentUserEmail =UserEmail;
+//
+//     Userid = userlist.docs[0].id;
+//     var data = await FirebaseFirestore.instance.collection('users')
+//         .doc(UserEmail)
+//         .get();
+//     currentUserModel = userModel.fromMap(data!.data()!);
+//
+//
+//     Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
+//
+//   }
+// }
 
 
 }
