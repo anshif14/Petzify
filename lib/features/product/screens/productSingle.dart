@@ -11,7 +11,7 @@ import 'package:luna_demo/model/product_Model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../main.dart';
-import '../../Payment/screens/deliveryAddress.dart';
+import '../../bookings/screens/deliveryAddress.dart';
 
 class ProducctSingleScreen extends StatefulWidget {
   // final String image;
@@ -201,7 +201,7 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    Row(
+                    data.category=="Product"? Row(
                       children: [
                         InkWell(
                             onTap: () {
@@ -230,7 +230,7 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                             },
                             child: Icon(CupertinoIcons.add)),
                       ],
-                    ),
+                    ):SizedBox(),
                     gap,
                     Text(data.description,
                       style: TextStyle(fontSize: width * 0.04),)

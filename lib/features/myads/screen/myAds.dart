@@ -57,9 +57,6 @@ class _myAdsState extends State<myAds> {
             userdata=userModel.fromMap(value.data()!);
             print(userdata);
           });
-          setState(() {
-
-          });
         }
         FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
       }

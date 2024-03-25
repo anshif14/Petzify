@@ -1,22 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:luna_demo/features/favourite/repository/favourite_repository.dart';
 import 'package:luna_demo/features/home/repository/stream_repository.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
-final StreamFavControllerProvider = Provider((ref) => StreamController(streamrepository: ref.watch(streamRepositoryProvider)));
-
-final datafavstreamProvider = StreamProvider((ref) => ref.watch(StreamFavControllerProvider).productfavstream());
 
 
-class StreamController{
-  final Streamrepository _streamrepository;
+final datafavstreamProvider = StreamProvider((ref) => ref.watch(StreamFavControllerProvider.notifier).userfavstream());
+
+final productfavstreamProvider =StreamProvider.autoDispose.family((ref,dataFavIndex) => ref.watch(StreamFavControllerProvider.notifier).productfavstream(dataFavIndex: dataFavIndex));
 
 
-  StreamController({required Streamrepository streamrepository }):
-        _streamrepository = streamrepository;
+final StreamFavControllerProvider = StateNotifierProvider((ref) => StreamFavControllerNotifier(streamfavrepository: ref.watch(streamFavRepositoryProvider)));
 
 
-  Stream<List<userModel>> productfavstream(){
-    return _streamrepository.streamData();
+class StreamFavControllerNotifier extends StateNotifier{
+  final StreamFavRepository _streamfavrepository;
+  StreamFavControllerNotifier({required StreamFavRepository streamfavrepository }) :_streamfavrepository = streamfavrepository, super(null);
+
+
+  Stream userfavstream(){
+    return _streamfavrepository.favouriteDataStream();
   }
+
+  Stream productfavstream({dataFavIndex}){
+    return _streamfavrepository.favouriteProductStream(dataFavIndex);
+  }
+
+
 }
