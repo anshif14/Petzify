@@ -17,7 +17,7 @@ import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
 import '../../auth/screen/loginPage.dart';
-import '../../product/screens/productSingle.dart';
+import '../../bookings/screens/productSingle.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});

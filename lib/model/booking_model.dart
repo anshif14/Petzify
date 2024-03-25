@@ -1,33 +1,36 @@
-import 'dart:js_util';
+
 
 class BookingModel{
-  String? productName;
-  String? price;
-  String? qty;
-  String? buyerName;
-  String? buyerAddress;
-  String? buyerPhoneNumer;
-  String? buyerId;
+  String productName;
+  String price;
+  String qty;
+  String buyerName;
+  String buyerAddress;
+  String buyerPhoneNumer;
+  String buyerId;
+  String paymentMethod;
 
   BookingModel({
-    this.productName,
-    this.price,
-    this.qty,
-    this.buyerName,
-    this.buyerAddress,
-    this.buyerPhoneNumer,
-    this.buyerId
+    required this.productName,
+    required this.price,
+    required this.qty,
+    required this.buyerName,
+    required this.buyerAddress,
+    required this.buyerPhoneNumer,
+    required this.buyerId,
+    required this.paymentMethod
 });
 
   Map<String,dynamic>toMap(){
     return {
       "productName":this.productName,
       "price":this.price,
-      "qty":this.buyerName,
-      "buyerName":this.buyerPhoneNumer,
+      "qty":this.qty,
+      "buyerName":this.buyerName,
       "buyerAddress":this.buyerAddress,
       "buyerPhoneNumber":this.buyerPhoneNumer,
       "buyerId":this.buyerId,
+      "paymentMethod":this.paymentMethod
     };
   }
   factory BookingModel.fromMap(Map<String,dynamic>Map){
@@ -38,7 +41,8 @@ class BookingModel{
       buyerName: Map["buyerName"]??"",
       buyerAddress: Map["buyerAddress"]??"",
       buyerPhoneNumer: Map["buyerPhoneNumber"]??"",
-      buyerId: Map["buyerId"]??""
+      buyerId: Map["buyerId"]??"",
+      paymentMethod: Map["paymentMethod"]??""
     );
   }
   BookingModel copyWith({
@@ -48,7 +52,8 @@ class BookingModel{
     String? buyerName,
     String? buyerAddress,
     String? buyerPhoneNumer,
-    String? buyerId
+    String? buyerId,
+    String? paymentMethod
 
 
   }){
@@ -59,7 +64,8 @@ class BookingModel{
         buyerName: buyerName ?? this.buyerName,
         buyerAddress: buyerAddress ?? this.buyerAddress,
         buyerPhoneNumer: buyerPhoneNumer ?? this.buyerPhoneNumer,
-        buyerId: buyerId?? this.buyerId
+        buyerId: buyerId?? this.buyerId,
+        paymentMethod: paymentMethod ?? this.paymentMethod
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/features/bookings/repository/bookig_repository.dart';
+import 'package:luna_demo/model/booking_model.dart';
 
 final bookingContollerProvider=Provider((ref) => BookingController(bookingRepository: ref.watch(bookingRepositoryProvider)));
 
@@ -9,7 +10,7 @@ class BookingController{
     required bookingRepository
 }):_bookingRepository=bookingRepository;
 
-  AddBookings(productName, price, qty, buyerName, buyerAddress, buyerPhoneNumer){
-    _bookingRepository.AddBookings(productName, price, qty, buyerName, buyerAddress, buyerPhoneNumer);
+  AddBooking(BookingModel bookingModel){
+    _bookingRepository.addBooking(bookingModel);
   }
 }

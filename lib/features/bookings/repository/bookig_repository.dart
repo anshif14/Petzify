@@ -11,16 +11,9 @@ class BookingRepository{
 
   CollectionReference get _booking=> _firestore.collection("bookings");
 
-  AddBookings(productName,price,qty,buyerName,buyerAddress,buyerPhoneNumer){
-    BookingModel bookingData= BookingModel(
-      productName: productName,
-      price: price,
-      qty: qty,
-      buyerName: buyerName,
-      buyerAddress: buyerAddress,
-      buyerPhoneNumer:buyerPhoneNumer
-    );
-
-    _booking.add(bookingData.toMap());
+  addBooking(BookingModel bookingdata){
+    _booking.add(bookingdata.toMap()).then((value) {
+      value.update(bookingdata.copyWith(buyerId: value.id).toMap());
+    },);
   }
 }

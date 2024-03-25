@@ -11,7 +11,7 @@ import 'package:luna_demo/model/user_Model.dart';
 import '../../../commons/color constansts.dart';
 import '../../../commons/widgets.dart';
 import '../../../main.dart';
-import '../../product/screens/productSingle.dart';
+import '../../bookings/screens/productSingle.dart';
 
 class favourite extends ConsumerStatefulWidget {
   const favourite({super.key});

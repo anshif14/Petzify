@@ -1,22 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/model/booking_model.dart';
 
 import '../../../commons/widgets.dart';
 import '../../../main.dart';
+import '../controller/booking_controller.dart';
 
 
-class paymentMethod extends StatefulWidget {
-  const paymentMethod({super.key});
+class paymentMethod extends ConsumerStatefulWidget {
+   paymentMethod({super.key,required this.bookingModel1});
+  BookingModel bookingModel1;
 
   @override
-  State<paymentMethod> createState() => _paymentMethodState();
+  ConsumerState<paymentMethod> createState() => _paymentMethodState();
 }
 
-class _paymentMethodState extends State<paymentMethod> {
-  String cont="G";
+class _paymentMethodState extends ConsumerState<paymentMethod> {
+  String cont="COD";
+  add(){
+    BookingModel bookingdata=widget.bookingModel1.copyWith(
+      paymentMethod: cont,
+
+    );
+    ref.watch(bookingContollerProvider).AddBooking(bookingdata);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +67,7 @@ class _paymentMethodState extends State<paymentMethod> {
                   value: "G",
                   groupValue: cont,
                   onChanged: (value) {
-                    setState(() {
-                      cont=value!;
-                    });
+
                   },
                 ) ,
               ),
@@ -77,9 +88,7 @@ class _paymentMethodState extends State<paymentMethod> {
                   value: "C",
                   groupValue: cont,
                   onChanged: (value) {
-                    setState(() {
-                      cont=value!;
-                    });
+
                   },
                 ) ,
               ),
@@ -97,7 +106,7 @@ class _paymentMethodState extends State<paymentMethod> {
                 trailing:Radio(
                   activeColor: Pallette.primaryColor,
                   fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
-                  value: "D",
+                  value: "COD",
                   groupValue: cont,
                   onChanged: (value) {
                     setState(() {
@@ -110,7 +119,9 @@ class _paymentMethodState extends State<paymentMethod> {
             gap,
             gap,
             InkWell(
-              onTap: () {
+              onTap: () async {
+
+              await  add();
                 showDialog(
                     context: context,
                     builder: (context){

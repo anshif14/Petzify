@@ -1,24 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
+import 'package:luna_demo/features/bookings/controller/booking_controller.dart';
 import 'package:luna_demo/features/bookings/screens/paymentMethods.dart';
+import 'package:luna_demo/model/booking_model.dart';
 
 import '../../../commons/widgets.dart';
 import '../../../main.dart';
 
 
-class deliveryAddress extends StatefulWidget {
-  const deliveryAddress({super.key});
+class deliveryAddress extends ConsumerStatefulWidget {
+   deliveryAddress({super.key,required this.bookingdata});
+  BookingModel bookingdata;
+
 
   @override
-  State<deliveryAddress> createState() => _deliveryAddressState();
+  ConsumerState<deliveryAddress> createState() => _deliveryAddressState();
 }
 
-class _deliveryAddressState extends State<deliveryAddress> {
+class _deliveryAddressState extends ConsumerState<deliveryAddress> {
 
   TextEditingController namecontroller=TextEditingController();
   TextEditingController addresscontroller=TextEditingController();
   TextEditingController numbercontroller=TextEditingController();
+
+  add(){
+    //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
+    BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text,
+      buyerAddress: addresscontroller.text,buyerPhoneNumer: numbercontroller.text);
+    // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
+
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +137,7 @@ class _deliveryAddressState extends State<deliveryAddress> {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod() ,));
+                add();
               },
               child: Container(
                 height: height*0.06,

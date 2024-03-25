@@ -9,7 +9,7 @@ import 'package:luna_demo/features/explore/screens/coming_soon.dart';
 
 import '../../../../commons/color constansts.dart';
 import '../../../../main.dart';
-import '../../product/screens/productSingle.dart';
+import '../../bookings/screens/productSingle.dart';
 
 
 class ExploreScreen extends StatefulWidget {
