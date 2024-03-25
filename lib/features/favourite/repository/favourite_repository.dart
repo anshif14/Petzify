@@ -21,7 +21,9 @@ class StreamFavRepository{
   Stream<userModel> favouriteDataStream(){
     return _usersFavourite.doc(currentUserModel?.id).snapshots().map((event) => userModel.fromMap(event.data() as Map<String, dynamic>));
   }
-  Stream <ProductModel>favouriteProductStream(List<Widget> dataFavIndex){
+
+
+  Stream <ProductModel>favouriteProductStream(dataFavIndex){
     print(dataFavIndex);
     print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr*****************************");
     return _productFavourite.doc(dataFavIndex.toString()).snapshots().map((event) => ProductModel.fromMap(event.data() as Map<String,dynamic>));

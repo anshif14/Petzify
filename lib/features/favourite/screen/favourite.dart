@@ -76,8 +76,6 @@ class _favouriteState extends ConsumerState<favourite> {
               ),
             ),
             gap,
-
-
             ref.watch(datafavstreamProvider).when(
                 data: (data) {
                   return GridView.builder(
@@ -87,7 +85,7 @@ class _favouriteState extends ConsumerState<favourite> {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 0.8, crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return petTile(index: index,data: data.favourites[index],);
+                      return petTile(data: data.favourites[index],);
 
                       // return StreamBuilder<DocumentSnapshot>(
                       //     stream: FirebaseFirestore.instance.collection('product').doc(data.favourites[index]).snapshots(),
@@ -235,7 +233,6 @@ class _favouriteState extends ConsumerState<favourite> {
                       //       );
                       //     }
                       // );
-
 
 
 
@@ -426,9 +423,8 @@ class _favouriteState extends ConsumerState<favourite> {
 }
 
 class petTile extends ConsumerStatefulWidget {
-  final int index;
   final dynamic data;
-  const petTile({super.key, required this.index, required this.data});
+  const petTile({super.key, required this.data});
 
   @override
   ConsumerState<petTile> createState() => _petTileState();
@@ -436,11 +432,9 @@ class petTile extends ConsumerStatefulWidget {
 
 class _petTileState extends ConsumerState<petTile> {
 
-  int index = 0;
 
   @override
   void initState() {
-    index = widget.index;
     // TODO: implement initState
     super.initState();
   }
@@ -514,14 +508,14 @@ class _petTileState extends ConsumerState<petTile> {
                                 isFavorite: true,
                                 iconSize: 25,
                                 valueChanged: (_isFavorite) async {
-                                  var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-                                  currentUserModel = userModel.fromMap(data.data()!);
-                                  var data2=await FirebaseFirestore.instance.collection("product").doc(data!.id).get();
+                                  var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+                                  currentUserModel = userModel.fromMap(user.data()!);
+                                  var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
                                   ProductModel productModel = ProductModel.fromMap(data2.data()!);
                                   List fav=currentUserModel!.favourites;
                                   List favUser=productModel.favUser;
                                   print(fav);
-                                  if(fav.contains(data!.id)){
+                                  if(fav.contains(data.id)){
                                     fav.remove(data.id);
                                   }else{
                                     fav.add(data.id);
