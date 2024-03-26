@@ -15,7 +15,7 @@ class BookingStreamRepository{
   CollectionReference get _bookingStream =>_firestore.collection("bookings");
 
   bookingdata(){
-    return _bookingStream.where("userid",isEqualTo: currentUserModel!.id).snapshots().map((event) => event.docs.map((e) =>
+    return _bookingStream.where("userId",isEqualTo: currentUserModel!.id).snapshots().map((event) => event.docs.map((e) =>
     BookingModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
 
