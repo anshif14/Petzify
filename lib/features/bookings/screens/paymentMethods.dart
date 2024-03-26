@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/model/booking_model.dart';
 
 import '../../../commons/widgets.dart';
@@ -145,6 +146,13 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
                       );
                     }
                 );
+                Future.delayed(Duration(seconds: 3))
+                  .then((value) => Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => NavBar(),
+                  )));
+
               },
               child: Container(
                 height: height*0.06,

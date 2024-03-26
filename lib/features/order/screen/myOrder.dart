@@ -1,20 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/order/controller/booking_stream_controller.dart';
 import 'package:luna_demo/features/order/screen/orderView.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
+import '../../../model/booking_model.dart';
 
-class myOrder extends StatefulWidget {
+class myOrder extends ConsumerStatefulWidget {
   const myOrder({super.key});
 
   @override
-  State<myOrder> createState() => _myOrderState();
+  ConsumerState<myOrder> createState() => _myOrderState();
 }
 
-class _myOrderState extends State<myOrder> {
+class _myOrderState extends ConsumerState<myOrder> {
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -91,12 +95,17 @@ class _myOrderState extends State<myOrder> {
             //   ),
             // ),
             Expanded(
-              child: ListView.separated(
-                itemCount: 4,
+              child: ref.watch(bookingDataProvider).when(data: (data) {
+                return  ListView.separated(
+                  itemCount: data.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => orderView(),));
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) =>
+                            orderView(productName: data[index].productName,
+                              productImage: data[index].productImage,
+                              price: data[index].price,
+                              buyerName: data[index].buyerName,),));
                       },
                       child: Container(
                         height: height*0.12,
@@ -112,8 +121,8 @@ class _myOrderState extends State<myOrder> {
                                 width: width*0.2,
                                 decoration:  BoxDecoration(
                                     color: Colors.white,
-                                  image: DecorationImage(image: AssetImage(imageConstants.fish),fit: BoxFit.cover),
-                                  borderRadius: BorderRadius.circular(width*0.02)
+                                    image: DecorationImage(image: NetworkImage(data[index].productImage),fit: BoxFit.cover),
+                                    borderRadius: BorderRadius.circular(width*0.02)
                                 ),
                                 // image: DecorationImage(image: AssetImage(coupons[index]["poster"]),fit: BoxFit.cover),
                               ),
@@ -121,14 +130,14 @@ class _myOrderState extends State<myOrder> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Fish",
+                                  Text(data[index].productName,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: width*0.041
                                     ),
                                   ),
                                   SizedBox(height:width*0.02),
-                                  Text("Clown Fish",
+                                  Text(data[index].price,
                                     style: TextStyle(
                                         color: Colors.grey[500],
                                         fontSize: width*0.041
@@ -152,7 +161,11 @@ class _myOrderState extends State<myOrder> {
                   },
                   separatorBuilder: (context, index) {
                     return Divider(color: Pallette.primaryColor,);
-                  },),
+                  },);
+              }, error: (error, stackTrace) =>  Text(error.toString()),
+                  loading: () {
+                    return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+                  },)
             )
           ],
 

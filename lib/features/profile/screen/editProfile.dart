@@ -316,7 +316,7 @@ class _editProfileState extends State<editProfile> {
                         child: IntlPhoneField(
                           controller: numberController,
                           inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
+                            FilteringTextInputFormatter.digitsOnly,
                           ],
                           cursorColor: Pallette.primaryColor,
                           style: TextStyle(

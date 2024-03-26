@@ -1,3 +1,6 @@
+import 'dart:core';
+
+
 import 'package:another_stepper/dto/stepper_data.dart';
 import 'package:another_stepper/widgets/another_stepper.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,11 @@ import 'package:luna_demo/commons/widgets.dart';
 import '../../../main.dart';
 
 class orderView extends StatefulWidget {
-  const orderView({super.key});
+  const orderView({super.key, required this.productName, required this.productImage, required this.price, required this.buyerName});
+  final String productName;
+  final String productImage ;
+  final String price ;
+  final String buyerName ;
 
   @override
   State<orderView> createState() => _orderViewState();
@@ -87,7 +94,7 @@ class _orderViewState extends State<orderView> {
                       width: width*0.6,
                       height: height*0.1,
                       child: Center(
-                        child: Text('Clown fish',
+                        child: Text(widget.productName,
                             style: TextStyle(
 
                           fontSize: width*0.05,
@@ -100,17 +107,17 @@ class _orderViewState extends State<orderView> {
                       width: width*0.23,
                       decoration:  BoxDecoration(
                           color: Colors.white,
-                          image: DecorationImage(image: AssetImage(imageConstants.fish),fit: BoxFit.cover),
+                          image: DecorationImage(image: NetworkImage(widget.productImage),fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(width*0.02)
                       ),
                       // image: DecorationImage(image: AssetImage(coupons[index]["poster"]),fit: BoxFit.cover),
                     ),
                   ],
                 ),
-                Text("seller :ashik",style: TextStyle(
+                Text(widget.buyerName,style: TextStyle(
                   color: Pallette.grey1
                 ),),
-                Text("₹ 1000",style: TextStyle(
+                Text(widget.price,style: TextStyle(
                   fontSize: width*0.05
                 ),)
 

@@ -67,7 +67,7 @@ class _AddProductState extends State<AddProduct> {
       setState(() {
         loading=false;
       });
-      Navigator.pop(context);
+
     }
 
   }
@@ -168,9 +168,7 @@ class _AddProductState extends State<AddProduct> {
                               );
                             },
                           );
-
                         // }
-
                       },
                       child: Container(
                         height: height*0.2,

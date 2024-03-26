@@ -306,14 +306,17 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                               GestureDetector(
                                 onTap: () {
                                   BookingModel bookingModelData=BookingModel(
-                                      buyerId:currentUserModel!.id,
+                                      buyerId:"",
                                       paymentMethod: "",
                                       price:data.price.toString() ,
                                       qty:count.toString() ,
                                       productName: data.productname,
                                       buyerPhoneNumer: "",
                                       buyerAddress: "",
-                                      buyerName:""
+                                      buyerName:"",
+                                    userId: currentUserModel!.id,
+                                      productImage: image[0].toString()
+
                                   );
                                   Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData,),));
                                 },
