@@ -244,7 +244,7 @@ class _editProfileState extends State<editProfile> {
                       textInputAction: TextInputAction.done,
                       cursorColor: Pallette.primaryColor,
                       style: TextStyle(
-                        fontSize: width * 0.05,
+                        fontSize: width*0.043,
                         fontWeight: FontWeight.w500,
                       ),
                       decoration: InputDecoration(
@@ -252,10 +252,6 @@ class _editProfileState extends State<editProfile> {
                         filled: true,
                         contentPadding: EdgeInsets.all(width*0.04),
                         hintText: "Enter your name",
-                        hintStyle: TextStyle(
-                          fontSize: width * 0.05,
-                          fontWeight: FontWeight.w500,
-                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(width * 0.02),
                             borderSide: BorderSide.none),
@@ -281,7 +277,7 @@ class _editProfileState extends State<editProfile> {
                       textInputAction: TextInputAction.done,
                       cursorColor: Pallette.primaryColor,
                       style: TextStyle(
-                        fontSize: width * 0.05,
+                        fontSize: width * 0.043,
                         fontWeight: FontWeight.w500,
                       ),
                       decoration: InputDecoration(
@@ -289,10 +285,6 @@ class _editProfileState extends State<editProfile> {
                         contentPadding: EdgeInsets.all(width*0.04),
                         filled: true,
                         hintText: "Enter your email",
-                        hintStyle: TextStyle(
-                          fontSize: width * 0.05,
-                          fontWeight: FontWeight.w500,
-                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(width * 0.02),
                             borderSide: BorderSide.none),
@@ -366,7 +358,7 @@ class _editProfileState extends State<editProfile> {
                         underline: gap,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: width * 0.055,
+                          fontSize: width * 0.043,
                         ),
                         value: gender,
                         items: listitem.map(

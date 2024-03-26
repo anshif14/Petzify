@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/features/bookings/controller/booking_controller.dart';
 import 'package:luna_demo/features/bookings/screens/paymentMethods.dart';
@@ -35,6 +37,8 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
 
   }
 
+  String phoneNumber='';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +67,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.text,
                   controller: namecontroller,
+                  cursorColor: Pallette.primaryColor,
                   style: TextStyle(
                       color: CupertinoColors.black
                   ),
@@ -88,6 +93,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.multiline,
                   controller: addresscontroller,
+                  cursorColor: Pallette.primaryColor,
                   maxLines: 3,
                   style: TextStyle(
                       color: CupertinoColors.black
@@ -109,34 +115,84 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                   ),
                 ),
                 gap,
-                TextFormField(
-                  textInputAction: TextInputAction.done,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.number,
+                // TextFormField(
+                //   textInputAction: TextInputAction.done,
+                //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                //   keyboardType: TextInputType.number,
+                //   controller: numbercontroller,
+                //   maxLength: 10,
+                //   inputFormatters: [
+                //     FilteringTextInputFormatter.digitsOnly,
+                //   ],
+                //   style: TextStyle(
+                //       color: CupertinoColors.black
+                //   ),
+                //   decoration: InputDecoration(
+                //       labelText: "Phone Number",
+                //       labelStyle: TextStyle(
+                //           color:CupertinoColors.black,
+                //           fontSize: width*0.04
+                //       ),
+                //       focusedBorder:OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(width*0.03),
+                //           borderSide:BorderSide(color: Pallette.primaryColor)
+                //       ),
+                //       enabledBorder: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(width*0.03),
+                //           borderSide: BorderSide(color: Pallette.primaryColor)
+                //       )
+                //   ),
+                // ),
+                IntlPhoneField(
                   controller: numbercontroller,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  cursorColor: Pallette.primaryColor,
                   style: TextStyle(
-                      color: CupertinoColors.black
+                    fontSize: width * 0.05,
                   ),
                   decoration: InputDecoration(
-                      labelText: "Phone Number",
-                      labelStyle: TextStyle(
-                          color:CupertinoColors.black,
-                          fontSize: width*0.04
-                      ),
-                      focusedBorder:OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(width*0.03),
-                          borderSide:BorderSide(color: Pallette.primaryColor)
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(width*0.03),
-                          borderSide: BorderSide(color: Pallette.primaryColor)
-                      )
+
+                    contentPadding: EdgeInsets.all(width*0.04),
+                    counterText: "",
+                    labelText: "Phone Number",
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Pallette.primaryColor),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(width*0.03),
+                                borderSide: BorderSide(color: Pallette.primaryColor)
+                            ),
+                    focusedBorder:OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(width*0.03),
+                                borderSide:BorderSide(color: Pallette.primaryColor)
+                            ),
                   ),
+                  initialCountryCode: 'IN',
+                  onChanged: (phone) {
+                    print(phone.completeNumber);
+                    phoneNumber = phone.completeNumber;
+
+                  },
                 ),
               ],
             ),
             InkWell(
               onTap: () {
+                if(namecontroller.text.isEmpty){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Name")));
+                  return;
+                }
+                if(addresscontroller.text.isEmpty){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Address")));
+                  return;
+                }
+                if(numbercontroller.text.isEmpty){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Phone Number")));
+                  return;
+                }
                 add();
               },
               child: Container(
