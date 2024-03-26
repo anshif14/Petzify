@@ -7,22 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/explore/controller/explore_controller.dart';
 import 'package:luna_demo/model/product_Model.dart';
+import 'package:luna_demo/model/user_Model.dart';
 
 import '../../../main.dart';
 
-class AddProduct extends StatefulWidget {
+class AddProduct extends ConsumerStatefulWidget {
   const AddProduct({super.key});
 
   @override
-  State<AddProduct> createState() => _AddProductState();
+  ConsumerState<AddProduct> createState() => _AddProductState();
 }
 
-class _AddProductState extends State<AddProduct> {
+class _AddProductState extends ConsumerState<AddProduct> {
   var file;
   String imageurl = "";
   bool loading = false;
@@ -70,6 +73,15 @@ class _AddProductState extends State<AddProduct> {
 
     }
 
+  }
+  
+  add(){
+    ref.watch(exploreControllerProvider).addingProduct(ProductModel(productname: prdnamecontroller.text,
+        image: pets, description: descriptioncontroller.text, price: double.parse(pricecontroller.text),
+        sellername: namecontroller.text, address: addresscontroller.text, phonenumber: contactcontroller.text,
+        id: '', userid: currentUserModel!.id, favUser: []));
+
+    Navigator.pop(context);
   }
 
 
@@ -410,29 +422,58 @@ class _AddProductState extends State<AddProduct> {
                   //   "category": dropdownvalue,
                   //   "price": double.parse( pricecontroller.text,)
                   // });
-                  ProductModel ProductDetails=ProductModel(
-                    image: pets,
-                    productname: prdnamecontroller.text,
-                    description: descriptioncontroller.text,
-                    category: dropdownvalue,
-                    price: double.parse(pricecontroller.text),
-                    sellername: namecontroller.text,
-                    address: addresscontroller.text,
-                    phonenumber: contactcontroller.text,
-                    id: "",
-                    favUser: [],
-                    userid: currentUserModel!.id,
-                  );
-                  FirebaseFirestore.instance.collection("product").add(
-                    ProductDetails.toMap()
-                  ).then((value) {
-                    value.update(
-                      ProductDetails.copyWith(
-                        id: value.id
-                      ).toMap()
-                    );
-                  });
-                  Navigator.pop(context);
+                  // ProductModel ProductDetails=ProductModel(
+                  //   image: pets,
+                  //   productname: prdnamecontroller.text,
+                  //   description: descriptioncontroller.text,
+                  //   category: dropdownvalue,
+                  //   price: double.parse(pricecontroller.text),
+                  //   sellername: namecontroller.text,
+                  //   address: addresscontroller.text,
+                  //   phonenumber: contactcontroller.text,
+                  //   id: "",
+                  //   favUser: [],
+                  //   userid: currentUserModel!.id,
+                  // );
+                  // FirebaseFirestore.instance.collection("product").add(
+                  //   ProductDetails.toMap()
+                  // ).then((value) {
+                  //   value.update(
+                  //     ProductDetails.copyWith(
+                  //       id: value.id
+                  //     ).toMap()
+                  //   );
+                  // });
+                  if(imageurl.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Insert Your Product/Pet Image")));
+                    return;
+                  }
+                  if(prdnamecontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Product Name")));
+                    return;
+                  }
+                  if(dropdownvalue==null){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Select the Category")));
+                    return;
+                  }
+                  if(pricecontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter the Price")));
+                    return;
+                  }
+                  if(namecontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Name")));
+                    return;
+                  }
+                  if(addresscontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Address")));
+                    return;
+                  }
+                  if(contactcontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Contact Number")));
+                    return;
+                  }
+                 add();
+
                 },
                 child: Container(
                   height: width*0.15,

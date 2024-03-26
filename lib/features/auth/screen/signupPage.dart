@@ -428,7 +428,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       context: context,
                       type: QuickAlertType.error,
                       title: 'Oops...',
-                      text: 'Sorry, please your name',
+                      text: 'Sorry, please Enter your name',
                     );
                     return;
                   }
@@ -439,7 +439,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       context: context,
                       type: QuickAlertType.error,
                       title: 'Oops...',
-                      text: 'Sorry, please your email',
+                      text: 'Sorry, please Enter your email',
                     );
                     return;
                   }
@@ -450,7 +450,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       context: context,
                       type: QuickAlertType.error,
                       title: 'Oops...',
-                      text: 'Sorry, please your password',
+                      text: 'Sorry, please Enter your password',
                     );
                     return;
                   }
@@ -462,7 +462,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       context: context,
                       type: QuickAlertType.error,
                       title: 'Oops...',
-                      text: 'Sorry, please your image',
+                      text: 'Sorry, please Insert your image',
                     );
                     return;
                   }
