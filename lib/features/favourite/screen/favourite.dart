@@ -243,7 +243,7 @@ class _favouriteState extends ConsumerState<favourite> {
                   return Text(error.toString());
                 },
                 loading: () {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
                 },
             )
 
@@ -579,7 +579,7 @@ class _petTileState extends ConsumerState<petTile> {
           return Text(error.toString());
         },
         loading: () {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
         },);
   }
 }
