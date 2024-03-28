@@ -21,22 +21,7 @@ class favourite extends ConsumerStatefulWidget {
 }
 
 class _favouriteState extends ConsumerState<favourite> {
-  List pets = [
-    {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet2, "price": 1250},
-    {'name': 'pet', "image": imageConstants.pet3, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet4, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet5, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet6, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet7, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet8, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet9, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet10, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet11, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet12, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet13, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet14, "price": 1000},
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,156 +71,6 @@ class _favouriteState extends ConsumerState<favourite> {
                         childAspectRatio: 0.8, crossAxisCount: 2),
                     itemBuilder: (context, index) {
                       return petTile(data: data.favourites[index],);
-
-                      // return StreamBuilder<DocumentSnapshot>(
-                      //     stream: FirebaseFirestore.instance.collection('product').doc(data.favourites[index]).snapshots(),
-                      //     builder: (context, snapshot1) {
-                      //       if(!snapshot1.hasData){
-                      //         return Center(child: CircularProgressIndicator(color: Pallette.primaryColor),);
-                      //       }
-                      //       ProductModel? product;
-                      //       if(snapshot1.data?.data() != null){
-                      //         print("---------------------------************************---------------------");
-                      //         print(data.favourites.length);
-                      //         product    = ProductModel.fromMap(snapshot1.data?.data()  as Map<String,dynamic>);
-                      //
-                      //       }
-                      //       return  product==null?
-                      //       Column(
-                      //         children: [
-                      //           Padding(
-                      //             padding: const EdgeInsets.all(7.0),
-                      //             child: Container(
-                      //               height: width * 0.4,
-                      //               width: width * 0.4,
-                      //               decoration: BoxDecoration(
-                      //                   color: Pallette.secondaryBrown,
-                      //                   borderRadius: BorderRadius.circular(15)),
-                      //               child: Center(
-                      //                 child: CircularProgressIndicator(
-                      //                   color: Pallette.primaryColor,
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       )
-                      //
-                      //           : InkWell(
-                      //         onTap: () {
-                      //           Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                 builder: (context) => ProducctSingleScreen(
-                      //                   id: product!.id,
-                      //                   tag: product.productname,
-                      //                 ),
-                      //               ));
-                      //         },
-                      //         child:Padding(
-                      //           padding: const EdgeInsets.all(4.0),
-                      //           child: Column(
-                      //             children: [
-                      //               Stack(
-                      //                 children: [
-                      //                   Hero(
-                      //                     tag: product!.productname,
-                      //                     child: Container(
-                      //                       height: width * 0.4,
-                      //                       width: width * 0.4,
-                      //                       decoration: BoxDecoration(
-                      //                           color: Pallette.secondaryBrown,
-                      //                           image: DecorationImage(
-                      //                               image: NetworkImage(product.image[0]),
-                      //                               fit: BoxFit.cover),
-                      //                           borderRadius: BorderRadius.circular(15)),
-                      //                     ),
-                      //                   ),
-                      //                   Positioned(
-                      //                     right: 0,
-                      //                     child: Padding(
-                      //                       padding: const EdgeInsets.all(8.0),
-                      //                       child: Container(
-                      //                         decoration: BoxDecoration(
-                      //                             shape: BoxShape.circle,
-                      //                             color: Colors.white.withOpacity(0.5)),
-                      //                         child: Padding(
-                      //                           padding: const EdgeInsets.all(5.0),
-                      //                           child: FavoriteButton(
-                      //                             isFavorite: true,
-                      //                             iconSize: 25,
-                      //                             valueChanged: (_isFavorite) async {
-                      //                               var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-                      //                               currentUserModel = userModel.fromMap(data.data()!);
-                      //                               var data2=await FirebaseFirestore.instance.collection("product").doc(product!.id).get();
-                      //                               ProductModel productModel = ProductModel.fromMap(data2.data()!);
-                      //                               List fav=currentUserModel!.favourites;
-                      //                               List favUser=productModel.favUser;
-                      //                               print(fav);
-                      //                               if(fav.contains(product!.id)){
-                      //                                 fav.remove(product.id);
-                      //                               }else{
-                      //                                 fav.add(product.id);
-                      //                               }if(favUser.contains(currentUserEmail)){
-                      //                                 favUser.remove(currentUserEmail);
-                      //                               }else{
-                      //                                 favUser.add(currentUserEmail);
-                      //                               }
-                      //                               FirebaseFirestore.instance.collection("product").doc(product.id).update({
-                      //                                 "favUser":favUser
-                      //                               });
-                      //                               FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-                      //                                 "favourites": fav
-                      //                               });
-                      //                               var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-                      //                               currentUserModel = userModel.fromMap(data1.data()!);
-                      //                               var data3=await FirebaseFirestore.instance.collection("product").doc(product.id).get();
-                      //                               productModel=ProductModel.fromMap(data3.data()!);
-                      //                               setState(() {
-                      //
-                      //                               });
-                      //                               print('Is Favorite $_isFavorite)');
-                      //                               print('Is Favorite $_isFavorite)');
-                      //                             },
-                      //                           ),
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   )
-                      //                 ],
-                      //               ),
-                      //               Padding(
-                      //                 padding: const EdgeInsets.all(8.0),
-                      //                 child: Row(
-                      //                   children: [
-                      //                     Expanded(
-                      //                       child: Text(
-                      //                         product.productname,overflow: TextOverflow.ellipsis,
-                      //                         textAlign: TextAlign.start,
-                      //                         style: TextStyle(fontWeight: FontWeight.w800),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //               Padding(
-                      //                 padding: const EdgeInsets.all(2.0),
-                      //                 child: Row(
-                      //                   mainAxisAlignment: MainAxisAlignment.end,
-                      //                   children: [
-                      //                     Text('₹ ' + product.price.toString(),overflow: TextOverflow.ellipsis,),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       );
-                      //     }
-                      // );
-
-
-
                     },
                   );
                 },
@@ -246,175 +81,6 @@ class _favouriteState extends ConsumerState<favourite> {
                   return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
                 },
             )
-
-
-
-            // StreamBuilder<DocumentSnapshot>(
-            //     stream: FirebaseFirestore.instance.collection('users').doc(currentUserModel!.id).snapshots(),
-            //     builder: (context, snapshot) {
-            //       if(!snapshot.hasData){
-            //         return Center(child: CircularProgressIndicator(color: Pallette.primaryColor),);
-            //       }
-            //       currentUserModel = userModel.fromMap(snapshot.data!.data() as Map<String , dynamic>);
-            //     return GridView.builder(
-            //       physics: NeverScrollableScrollPhysics(),
-            //       shrinkWrap: true,
-            //       itemCount: currentUserModel!.favourites.length,
-            //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //           childAspectRatio: 0.8, crossAxisCount: 2),
-            //       itemBuilder: (context, index) {
-            //             return StreamBuilder<DocumentSnapshot>(
-            //               stream: FirebaseFirestore.instance.collection('product').doc(currentUserModel!.favourites[index]).snapshots(),
-            //               builder: (context, snapshot1) {
-            //                 if(!snapshot.hasData){
-            //                   return Center(child: CircularProgressIndicator(color: Pallette.primaryColor),);
-            //                 }
-            //                 ProductModel? product;
-            //                 if(snapshot1.data?.data() != null){
-            //                product    = ProductModel.fromMap(snapshot1.data?.data()  as Map<String,dynamic>);
-            //
-            //                 }
-            //
-            //                 return  product==null?
-            //
-            //                 Column(
-            //                   children: [
-            //                     Padding(
-            //                       padding: const EdgeInsets.all(7.0),
-            //                       child: Container(
-            //                         height: width * 0.4,
-            //                         width: width * 0.4,
-            //                         decoration: BoxDecoration(
-            //                             color: Pallette.secondaryBrown,
-            //                             borderRadius: BorderRadius.circular(15)),
-            //                         child: Center(
-            //                           child: CircularProgressIndicator(
-            //                             color: Pallette.primaryColor,
-            //                           ),
-            //                         ),
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 )
-            //
-            //                     : InkWell(
-            //                   onTap: () {
-            //                     Navigator.push(
-            //                         context,
-            //                         MaterialPageRoute(
-            //                           builder: (context) => ProducctSingleScreen(
-            //                             id: product!.id,
-            //                             tag: product.productname,
-            //                           ),
-            //                         ));
-            //                   },
-            //                   child:Padding(
-            //                     padding: const EdgeInsets.all(4.0),
-            //                     child: Column(
-            //                       children: [
-            //                         Stack(
-            //                           children: [
-            //                             Hero(
-            //                               tag: product!.productname,
-            //                               child: Container(
-            //                                 height: width * 0.4,
-            //                                 width: width * 0.4,
-            //                                 decoration: BoxDecoration(
-            //                                     color: Pallette.secondaryBrown,
-            //                                     image: DecorationImage(
-            //                                         image: NetworkImage(product.image[0]),
-            //                                         fit: BoxFit.cover),
-            //                                     borderRadius: BorderRadius.circular(15)),
-            //                               ),
-            //                             ),
-            //                             Positioned(
-            //                               right: 0,
-            //                               child: Padding(
-            //                                 padding: const EdgeInsets.all(8.0),
-            //                                 child: Container(
-            //                                   decoration: BoxDecoration(
-            //                                       shape: BoxShape.circle,
-            //                                       color: Colors.white.withOpacity(0.5)),
-            //                                   child: Padding(
-            //                                     padding: const EdgeInsets.all(5.0),
-            //                                     child: FavoriteButton(
-            //                                       isFavorite: true,
-            //                                       iconSize: 25,
-            //                                       valueChanged: (_isFavorite) async {
-            //                                         var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-            //                                         currentUserModel = userModel.fromMap(data.data()!);
-            //                                         var data2=await FirebaseFirestore.instance.collection("product").doc(product!.id).get();
-            //                                         ProductModel productModel = ProductModel.fromMap(data2.data()!);
-            //                                         List fav=currentUserModel!.favourites;
-            //                                         List favUser=productModel.favUser;
-            //                                         print(fav);
-            //                                         if(fav.contains(product!.id)){
-            //                                           fav.remove(product.id);
-            //                                         }else{
-            //                                           fav.add(product.id);
-            //                                         }if(favUser.contains(currentUserEmail)){
-            //                                           favUser.remove(currentUserEmail);
-            //                                         }else{
-            //                                           favUser.add(currentUserEmail);
-            //                                         }
-            //                                         FirebaseFirestore.instance.collection("product").doc(product.id).update({
-            //                                           "favUser":favUser
-            //                                         });
-            //                                         FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-            //                                           "favourites": fav
-            //                                         });
-            //                                         var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-            //                                         currentUserModel = userModel.fromMap(data1.data()!);
-            //                                         var data3=await FirebaseFirestore.instance.collection("product").doc(product.id).get();
-            //                                         productModel=ProductModel.fromMap(data3.data()!);
-            //                                         setState(() {
-            //
-            //                                         });
-            //                                         print('Is Favorite $_isFavorite)');
-            //                                         print('Is Favorite $_isFavorite)');
-            //                                       },
-            //                                     ),
-            //                                   ),
-            //                                 ),
-            //                               ),
-            //                             )
-            //                           ],
-            //                         ),
-            //                         Padding(
-            //                           padding: const EdgeInsets.all(8.0),
-            //                           child: Row(
-            //                             children: [
-            //                               Expanded(
-            //                                 child: Text(
-            //                                   product.productname,overflow: TextOverflow.ellipsis,
-            //                                   textAlign: TextAlign.start,
-            //                                   style: TextStyle(fontWeight: FontWeight.w800),
-            //                                 ),
-            //                               ),
-            //                             ],
-            //                           ),
-            //                         ),
-            //                         Padding(
-            //                           padding: const EdgeInsets.all(2.0),
-            //                           child: Row(
-            //                             mainAxisAlignment: MainAxisAlignment.end,
-            //                             children: [
-            //                               Text('₹ ' + product.price.toString(),overflow: TextOverflow.ellipsis,),
-            //                             ],
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                   ),
-            //                 );
-            //               }
-            //             );
-            //
-            //
-            //       },
-            //     );
-            //   }
-            // )
           ],
         ),
       ),
@@ -431,14 +97,38 @@ class petTile extends ConsumerStatefulWidget {
 }
 
 class _petTileState extends ConsumerState<petTile> {
+  favFunc(data) async {
+    var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    currentUserModel = userModel.fromMap(user.data()!);
+    var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
+    ProductModel productModel = ProductModel.fromMap(data2.data()!);
+    List fav=currentUserModel!.favourites;
+    List favUser=productModel.favUser;
+    print(fav);
+    if(fav.contains(data.id)){
+      fav.remove(data.id);
+    }else{
+      fav.add(data.id);
+    }if(favUser.contains(currentUserEmail)){
+      favUser.remove(currentUserEmail);
+    }else{
+      favUser.add(currentUserEmail);
+    }
+    FirebaseFirestore.instance.collection("product").doc(data.id).update({
+      "favUser":favUser
+    });
+    FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+      "favourites": fav
+    });
+    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    currentUserModel = userModel.fromMap(data1.data()!);
+    var data3=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
+    productModel=ProductModel.fromMap(data3.data()!);
+    setState(() {
 
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+    });
   }
-
+  @override
   Widget build(BuildContext context) {
     return
       ref.watch(productfavstreamProvider(widget.data)).when(
@@ -508,37 +198,7 @@ class _petTileState extends ConsumerState<petTile> {
                                 isFavorite: true,
                                 iconSize: 25,
                                 valueChanged: (_isFavorite) async {
-                                  var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-                                  currentUserModel = userModel.fromMap(user.data()!);
-                                  var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
-                                  ProductModel productModel = ProductModel.fromMap(data2.data()!);
-                                  List fav=currentUserModel!.favourites;
-                                  List favUser=productModel.favUser;
-                                  print(fav);
-                                  if(fav.contains(data.id)){
-                                    fav.remove(data.id);
-                                  }else{
-                                    fav.add(data.id);
-                                  }if(favUser.contains(currentUserEmail)){
-                                    favUser.remove(currentUserEmail);
-                                  }else{
-                                    favUser.add(currentUserEmail);
-                                  }
-                                  FirebaseFirestore.instance.collection("product").doc(data.id).update({
-                                    "favUser":favUser
-                                  });
-                                  FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-                                    "favourites": fav
-                                  });
-                                  var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-                                  currentUserModel = userModel.fromMap(data1.data()!);
-                                  var data3=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
-                                  productModel=ProductModel.fromMap(data3.data()!);
-                                  setState(() {
-
-                                  });
-                                  print('Is Favorite $_isFavorite)');
-                                  print('Is Favorite $_isFavorite)');
+                                  favFunc(data);
                                 },
                               ),
                             ),

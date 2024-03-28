@@ -36,30 +36,33 @@ class _myAdsState extends State<myAds> {
       print(productData);
     });
     var product1=productData.favUser;
-
-    for(int i=0;i<=product1.length;i++){
-      for(int j=0;j<=data1.docs.length;j++){
-        if(product1[i]==data1.docs[j].id){
-          var fav=data1.docs[j].id;
-          var fav1=await FirebaseFirestore.instance.collection("users").doc(fav).get();
-          userModel userdata=userModel.fromMap(fav1.data()!);
-          var fav2=userdata.favourites;
-          if(fav2.contains(data[index].id)){
-          print(fav2);
-            fav2.remove(data[index].id);
+    if(product1.isNotEmpty){
+      for(int i=0;i<=product1.length;i++){
+        for(int j=0;j<=data1.docs.length;j++){
+          if(product1[i]==data1.docs[j].id){
+            var fav=data1.docs[j].id;
+            var fav1=await FirebaseFirestore.instance.collection("users").doc(fav).get();
+            userModel userdata=userModel.fromMap(fav1.data()!);
+            var fav2=userdata.favourites;
+            if(fav2.contains(data[index].id)){
+              print(fav2);
+              fav2.remove(data[index].id);
+            }
+            print(fav2);
+            FirebaseFirestore.instance.collection("users").doc(fav).update(
+                {
+                  "favourites":fav2
+                });
+            await FirebaseFirestore.instance.collection("users").doc(fav).get().then((value) {
+              userdata=userModel.fromMap(value.data()!);
+              print(userdata);
+            });
+            FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
           }
-          print(fav2);
-          FirebaseFirestore.instance.collection("users").doc(fav).update(
-              {
-                "favourites":fav2
-              });
-         await FirebaseFirestore.instance.collection("users").doc(fav).get().then((value) {
-            userdata=userModel.fromMap(value.data()!);
-            print(userdata);
-          });
         }
-        FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
       }
+    }else{
+      FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
     }
   }
 

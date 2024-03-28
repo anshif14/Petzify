@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -36,6 +37,38 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
     imageConstants.cat,
     imageConstants.bird,
   ];
+  favFunc() async {
+    var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
+    ProductModel productModel = ProductModel.fromMap(data2.data()!);
+    currentUserModel = userModel.fromMap(data.data()!);
+    List fav=currentUserModel!.favourites;
+    List favUser=productModel.favUser;
+    print(fav);
+    if(fav.contains(widget.id)){
+      fav.remove(widget.id);
+    }else{
+      fav.add(widget.id);
+    }if(favUser.contains(currentUserEmail)){
+      favUser.remove(currentUserEmail);
+    }else{
+      favUser.add(currentUserEmail);
+    }
+
+    FirebaseFirestore.instance.collection("product").doc(widget.id).update({
+      "favUser":favUser
+    });
+    FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+      "favourites": fav
+    });
+    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    currentUserModel = userModel.fromMap(data1.data()!);
+    var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
+    productModel=ProductModel.fromMap(data3.data()!);
+    setState(() {
+
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -58,15 +91,12 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
               color: Colors.black,
             )),
         actions: [
-          InkWell(
-            onTap: () {
-              fav = !fav;
-              setState(() {});
+          FavoriteButton(
+            isFavorite: currentUserModel!.favourites.contains(widget.id),
+            iconSize: 35,
+            valueChanged: (_isFavorite) async {
+              favFunc();
             },
-            child: Icon(
-              Icons.favorite,
-              color: fav ? Colors.red : Colors.black,
-            ),
           ),
           SizedBox(
             width: width * 0.03,
