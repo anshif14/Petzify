@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/auth/repository/auth_repository.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
@@ -96,6 +97,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   googleSignuppage(){
     ref.watch(googlesignProv).signInWithGoogle(context);
+  }
+
+  add(){
+    ref.read(authRepositoryProvider).addUser(userModel(name: usernameController.text,
+        email: emailController.text, password: passwordController.text, id:emailController.text.trim(), images:imageurl,
+        number: "", gender: "male", favourites: []));
   }
 
   @override
@@ -467,25 +474,26 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     return;
                   }
 
-                    userModel  loginModelData=userModel(
-                      favourites: [],
-                        name: usernameController.text,
-                        email: emailController.text,
-                        password: passwordController.text,
-                        images: imageurl,
-                      id: emailController.text.trim(),
-                      number: "",
-                      gender: "male",
-                    );
+                    // userModel  loginModelData=userModel(
+                    //   favourites: [],
+                    //     name: usernameController.text,
+                    //     email: emailController.text,
+                    //     password: passwordController.text,
+                    //     images: imageurl,
+                    //   id: emailController.text.trim(),
+                    //   number: "",
+                    //   gender: "male",
+                    // );
+                    //
+                    // await  FirebaseFirestore.instance.collection("users").doc(emailController.text.trim()).set(loginModelData.toMap()
+                    // );
+                  await add();
 
-                    await  FirebaseFirestore.instance.collection("users").doc(emailController.text.trim()).set(loginModelData.toMap()
 
-                    );
                   var data = await FirebaseFirestore.instance.collection('users')
                       .doc(emailController.text.trim())
                       .get();
                   currentUserModel = userModel.fromMap(data!.data()!);
-
 
 
                   currentUserName = currentUserModel!.name;

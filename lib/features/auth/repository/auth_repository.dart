@@ -27,6 +27,12 @@ AuthenticationRepository({ required FirebaseFirestore firestore,required Firebas
 _firestore = firestore;
 
 CollectionReference get _user => _firestore.collection('users');
+addUser(userModel userData){
+  // _user.add(userData.toMap());
+  _user.doc(userData.email.trim()).set(userData.toMap());
+  // _user.doc(userData.toMap()).set(data)
+  // _user.doc(emailController.text.trim()).set(loginModelData.toMap()
+}
 
 // signInWithGoogle(BuildContext context) async {
 //   // Trigger the authentication flow
