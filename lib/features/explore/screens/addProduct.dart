@@ -39,6 +39,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
         file = File(imageFile.path);
       });
       uploadFile();
+      Navigator.pop(context);
 
     }
   }
@@ -66,10 +67,11 @@ class _AddProductState extends ConsumerState<AddProduct> {
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("image uploaded")));
-
       setState(() {
         loading=false;
       });
+
+
 
     }
 
@@ -129,8 +131,11 @@ class _AddProductState extends ConsumerState<AddProduct> {
 
                   color: Pallette.primaryColor,
                 ),
-                child: loading?Center(child: CircularProgressIndicator(color: Colors.white,)): pets.isNotEmpty?Image(image: NetworkImage(pets[0]),fit: BoxFit.cover,)
-                    :Image(image: AssetImage(imageConstants.pet1),fit: BoxFit.cover)
+                child:ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child:    loading?Center(child: CircularProgressIndicator(color: Colors.white,)): pets.isNotEmpty?Image(image: NetworkImage(pets[0]),fit: BoxFit.cover,)
+                      :Image(image: AssetImage(imageConstants.pet9),fit: BoxFit.cover),
+                )
               ),
               gap,
               SingleChildScrollView(
