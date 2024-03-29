@@ -81,7 +81,10 @@ class _AddProductState extends ConsumerState<AddProduct> {
     ref.watch(exploreControllerProvider).addingProduct(ProductModel(productname: prdnamecontroller.text,
         image: pets, description: descriptioncontroller.text, price: double.parse(pricecontroller.text),
         sellername: namecontroller.text, address: addresscontroller.text, phonenumber: contactcontroller.text,
-        id: '', userid: currentUserModel!.id, favUser: []));
+        id: '', userid: currentUserModel!.id, favUser: [], category: dropdownvalue.toString()));
+    FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
+      "product adder":"add"
+    });
 
     Navigator.pop(context);
   }

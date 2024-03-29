@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/order/screen/strper.dart';
 
 import '../../../main.dart';
 
@@ -23,6 +24,7 @@ class orderView extends StatefulWidget {
 
 class _orderViewState extends State<orderView> {
 
+ int selectindex=0;
   List<StepperData> stepperData = [
     StepperData(
         title: StepperText(
@@ -31,15 +33,15 @@ class _orderViewState extends State<orderView> {
           ),
         ),
         subtitle: StepperText("Your order has been placed"),
-        iconWidget: Container(
-          width: width*0.03,
-          height: height*0.03,
-          decoration:  BoxDecoration(
-              color: Colors.green,
-              shape: BoxShape.circle
-          ),
-          child:  Icon(Icons.check, color: Colors.white,size: width*0.04),
-        )
+        // iconWidget: Container(
+        //   width: width*0.03,
+        //   height: height*0.03,
+        //   decoration:  BoxDecoration(
+        //       color: Colors.green,
+        //       shape: BoxShape.circle
+        //   ),
+        //   child:  Icon(Icons.check, color: Colors.white,size: width*0.04),
+        // )
     ),
     StepperData(
         title: StepperText("On the way",textStyle: TextStyle(
@@ -47,15 +49,15 @@ class _orderViewState extends State<orderView> {
         )),
         subtitle: StepperText(
             "Our delivery executive is on the way to deliver your item"),
-        iconWidget: Container(
-          width: width*0.03,
-          height: height*0.03,
-          decoration:  BoxDecoration(
-              color: Colors.green,
-              shape: BoxShape.circle
-          ),
-          child:  Icon(Icons.check, color: Colors.white,size: width*0.04),
-        )
+        // iconWidget: Container(
+        //   width: width*0.03,
+        //   height: height*0.03,
+        //   decoration:  BoxDecoration(
+        //       color: Colors.green,
+        //       shape: BoxShape.circle
+        //   ),
+        //   child:  Icon(Icons.check, color: Colors.white,size: width*0.04),
+        // )
     ),
     StepperData(
       title: StepperText("Delivered",
@@ -129,8 +131,10 @@ class _orderViewState extends State<orderView> {
             stepperList: stepperData,
             stepperDirection: Axis.vertical,
             inverted: false,
-            activeIndex: 1,
-            activeBarColor: Colors.green,verticalGap: width*0.07,
+            activeIndex: selectindex,
+            barThickness: width*0.006,
+            activeBarColor: Colors.green,
+            verticalGap: width*0.07,
           ),
 
 
@@ -158,22 +162,28 @@ class _orderViewState extends State<orderView> {
             ),),
           ),
           gap,
-          Container(
-            height: height*0.06,
-            width: width*0.8,
-            decoration: BoxDecoration(
-              color: Pallette.primaryColor,
-           borderRadius: BorderRadius.circular(width*0.02)
-            ),
-            child: Center(
-              child: Text("Cancel",
-                  style: TextStyle(
-                    color: Pallette.white,
+          InkWell(
+            onTap: () {
 
-                    fontSize: width*0.04,
-                  )),
+              // Navigator.push(context, MaterialPageRoute(builder: (context) =>steper() ,));
+            },
+            child: Container(
+              height: height*0.06,
+              width: width*0.8,
+              decoration: BoxDecoration(
+                color: Pallette.primaryColor,
+             borderRadius: BorderRadius.circular(width*0.02)
+              ),
+              child: Center(
+                child: Text("Cancel",
+                    style: TextStyle(
+                      color: Pallette.white,
+            
+                      fontSize: width*0.04,
+                    )),
+              ),
+            
             ),
-
           )
         ],
       ),
