@@ -27,11 +27,11 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  List banner = [
-    imageConstants.banner1,
-    imageConstants.banner2,
-    imageConstants.banner3,
-  ];
+  // List banner = [
+  //   imageConstants.banner1,
+  //   imageConstants.banner2,
+  //   imageConstants.banner3,
+  // ];
   List trending = [
     imageConstants.trending,
     imageConstants.trending1,
@@ -128,13 +128,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
               gap,
-              StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('banner').snapshots(),
+              StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance.collection('banner').doc("images").snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
                   var data = snapshot.data;
+                  List banners = data!['images'];
                   return CarouselSlider(
                       items: List.generate(
-                          data!.docs.length,
+                          banners.length,
                           (index) => Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -142,7 +146,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.teal,
                                       image: DecorationImage(
-                                          image: AssetImage(banner[index][images]),
+                                          image: NetworkImage(banners[index]),
                                           fit: BoxFit.cover)),
                                 ),
                               )),
