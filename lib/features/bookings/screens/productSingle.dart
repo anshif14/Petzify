@@ -346,7 +346,8 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
                                       buyerAddress: "",
                                       buyerName:"",
                                     userId: currentUserModel!.id,
-                                      productImage: image[0].toString()
+                                      productImage: image[0].toString(),
+                                      selectindex: -1
 
                                   );
                                   Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData,),));

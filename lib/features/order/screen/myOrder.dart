@@ -105,7 +105,11 @@ class _myOrderState extends ConsumerState<myOrder> {
                             orderView(productName: data[index].productName,
                               productImage: data[index].productImage,
                               price: data[index].price,
-                              buyerName: data[index].buyerName,),));
+                              buyerName: data[index].buyerName, selectindex: data[index].selectindex,),
+                        ));
+                        setState(() {
+
+                        });
                       },
                       child: Container(
                         height: height*0.12,

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -83,7 +84,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
         sellername: namecontroller.text, address: addresscontroller.text, phonenumber: contactcontroller.text,
         id: '', userid: currentUserModel!.id, favUser: [], category: dropdownvalue.toString()));
     FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
-      "product adder":"add"
+      "productadder":"add"
     });
 
     Navigator.pop(context);
@@ -398,11 +399,16 @@ class _AddProductState extends ConsumerState<AddProduct> {
                         keyboardType: TextInputType.phone,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: contactcontroller,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        maxLength: 10,
                         style: TextStyle(
                             color: CupertinoColors.black
                         ),
                         decoration: InputDecoration(
                             labelText: "Contact Number",
+                            counterText: "",
                             labelStyle: TextStyle(
                                 color:CupertinoColors.black,
                                 fontSize: width*0.04
