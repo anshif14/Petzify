@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -128,22 +129,28 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
               gap,
-              CarouselSlider(
-                  items: List.generate(
-                      banner.length,
-                      (index) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.teal,
-                                  image: DecorationImage(
-                                      image: AssetImage(banner[index]),
-                                      fit: BoxFit.cover)),
-                            ),
-                          )),
-                  options:
-                      CarouselOptions(height: height * 0.2, autoPlay: true)),
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('banner').snapshots(),
+                builder: (context, snapshot) {
+                  var data = snapshot.data;
+                  return CarouselSlider(
+                      items: List.generate(
+                          FirebaseFirestore.instance.collection('banner').doc(images),
+                          (index) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.teal,
+                                      image: DecorationImage(
+                                          image: NetworkImage(Banner[index]),
+                                          fit: BoxFit.cover)),
+                                ),
+                              )),
+                      options:
+                          CarouselOptions(height: height * 0.2, autoPlay: true));
+                }
+              ),
               gap,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
