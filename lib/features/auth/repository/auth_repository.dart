@@ -33,6 +33,9 @@ addUser(userModel userData){
   // _user.doc(userData.toMap()).set(data)
   // _user.doc(emailController.text.trim()).set(loginModelData.toMap()
 }
+/// addingupdate(image,name,email,number,gender){
+///   _user.doc(currentUserEmail).update(image,name,email,number,gender);
+/// }
 
 // signInWithGoogle(BuildContext context) async {
 //   // Trigger the authentication flow

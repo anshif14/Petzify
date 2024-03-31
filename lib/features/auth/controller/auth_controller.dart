@@ -13,8 +13,12 @@ _authenticationRepository =AuthenticationRepository;
   addingUser(userModel usermodel){
     _authenticationRepository.addUser(usermodel);
   }
+/// edit(userModel  editModel){
+///   _authenticationRepository..addingupdate(editModel);
+/// }
 
-  // googleFunction(context){
+
+// googleFunction(context){
   //   _authenticationRepository.signInWithGoogle(context);
   // }
 

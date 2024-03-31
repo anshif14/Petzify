@@ -2,7 +2,7 @@ class ProductModel{
   String productname;
   List image;
   String description;
-  String? category;
+  String category;
   double price;
   String sellername;
   String address;
@@ -17,7 +17,7 @@ class ProductModel{
     required this.productname,
     required this.image,
     required this.description,
-    this.category,
+    required this.category,
     required this.price,
     required this.sellername,
     required this.address,
