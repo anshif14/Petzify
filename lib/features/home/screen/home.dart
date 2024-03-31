@@ -142,7 +142,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.teal,
                                       image: DecorationImage(
-                                          image: AssetImage(banner[index]),
+                                          image: AssetImage(banner[index][images]),
                                           fit: BoxFit.cover)),
                                 ),
                               )),
