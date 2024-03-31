@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/features/order/screen/strper.dart';
 
 import '../../../main.dart';
 
 class orderView extends StatefulWidget {
-  const orderView({super.key, required this.productName, required this.productImage, required this.price, required this.buyerName});
+  const orderView({super.key, required this.productName, required this.productImage, required this.price, required this.buyerName, required this.selectindex});
   final String productName;
   final String productImage ;
   final String price ;
   final String buyerName ;
+  final int selectindex;
 
   @override
   State<orderView> createState() => _orderViewState();
@@ -24,7 +24,7 @@ class orderView extends StatefulWidget {
 
 class _orderViewState extends State<orderView> {
 
- int selectindex=0;
+ // int selectindex=0;
   List<StepperData> stepperData = [
     StepperData(
         title: StepperText(
@@ -131,10 +131,11 @@ class _orderViewState extends State<orderView> {
             stepperList: stepperData,
             stepperDirection: Axis.vertical,
             inverted: false,
-            activeIndex: selectindex,
+            activeIndex: widget.selectindex,
             barThickness: width*0.006,
             activeBarColor: Colors.green,
             verticalGap: width*0.07,
+
           ),
 
 

@@ -7,6 +7,8 @@ class userModel {
   String number;
   String gender;
   List favourites;
+  String productadder;
+
   userModel({
     required this.name,
     required   this.email,
@@ -16,6 +18,7 @@ class userModel {
     required this.number,
     required   this.gender,
   required  this.favourites,
+  required  this.productadder,
   });
 
   Map<String, dynamic> toMap() {
@@ -28,6 +31,7 @@ class userModel {
       "number": this.number,
       "gender": this.gender,
       "favourites": this.favourites,
+      "productadder": this.productadder,
     };
   }
 
@@ -41,6 +45,7 @@ class userModel {
       number: Map["number"] ?? "",
       gender: Map["gender"] ?? "",
       favourites: Map["favourites"] ?? "",
+      productadder: Map["productadder"] ?? "",
     );
   }
 
@@ -53,6 +58,7 @@ class userModel {
     String? number,
     String? gender,
     List? favourites,
+    String? productadder,
   }) {
     return userModel(
       name: name ?? this.name,
@@ -64,6 +70,7 @@ class userModel {
       number: number ?? this.number,
       gender: gender ?? this.gender,
       favourites: favourites ?? this.favourites,
+      productadder: productadder ?? this.productadder,
     );
   }
 }

@@ -11,6 +11,7 @@ class BookingModel{
   String buyerId;
   String paymentMethod;
   String userId;
+  int selectindex;
 
   BookingModel({
     required this.productName,
@@ -22,7 +23,8 @@ class BookingModel{
     required this.buyerPhoneNumer,
     required this.buyerId,
     required this.paymentMethod,
-    required this.userId
+    required this.userId,
+    required this.selectindex
 });
 
   Map<String,dynamic>toMap(){
@@ -37,6 +39,7 @@ class BookingModel{
       "buyerId":this.buyerId,
       "paymentMethod":this.paymentMethod,
       "userId":this.userId,
+      "selectindex":this.selectindex,
     };
   }
   factory BookingModel.fromMap(Map<String,dynamic>Map){
@@ -50,7 +53,8 @@ class BookingModel{
       buyerPhoneNumer: Map["buyerPhoneNumber"]??"",
       buyerId: Map["buyerId"]??"",
       paymentMethod: Map["paymentMethod"]??"",
-        userId: Map["userId"] ?? ""
+        userId: Map["userId"] ?? "",
+        selectindex: Map["selectindex"] ?? -1
     );
   }
   BookingModel copyWith({
@@ -63,7 +67,8 @@ class BookingModel{
     String? buyerPhoneNumer,
     String? buyerId,
     String? paymentMethod,
-    String? userId
+    String? userId,
+    int? selectindex,
 
   }){
     return BookingModel(
@@ -77,6 +82,7 @@ class BookingModel{
         buyerId: buyerId?? this.buyerId,
         paymentMethod: paymentMethod ?? this.paymentMethod,
         userId: userId ?? this.userId,
+      selectindex: selectindex ?? this.selectindex,
     );
   }
 }
