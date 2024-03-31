@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -135,7 +134,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   var data = snapshot.data;
                   return CarouselSlider(
                       items: List.generate(
-                          FirebaseFirestore.instance.collection('banner').doc(images),
+                          data!.docs.length,
                           (index) => Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -143,7 +142,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       borderRadius: BorderRadius.circular(12),
                                       color: Colors.teal,
                                       image: DecorationImage(
-                                          image: NetworkImage(Banner[index]),
+                                          image: AssetImage(banner[index]),
                                           fit: BoxFit.cover)),
                                 ),
                               )),
