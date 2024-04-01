@@ -12,15 +12,15 @@ class BookingRepository{
 
   CollectionReference get _booking=> _firestore.collection("bookings");
   CollectionReference get _product=> _firestore.collection("product");
-  addBooking(BookingModel bookingdata){
-    _booking.add(bookingdata.toMap()).then((value) {
+  addBooking(BookingModel bookingdata,){
+    return _booking.add(bookingdata.toMap()).then((value) {
       value.update(bookingdata.copyWith(buyerId: value.id).toMap());
     },);
   }
-  // singleProductStream(productid){
-  //   _product.doc(productid).snapshots().map((event) {
-  //     return ProductModel.fromMap(event.data() as Map<String,dynamic>);
-  //   });
-  // }
+  Stream<ProductModel> singleProductStream(productid){
+   return  _product.doc(productid).snapshots().map((event) {
+      return ProductModel.fromMap(event.data() as Map<String,dynamic>);
+    });
+  }
 
 }

@@ -27,5 +27,4 @@ class StreamFavControllerNotifier extends StateNotifier{
     return _streamfavrepository.favouriteProductStream(dataFavIndex);
   }
 
-
 }

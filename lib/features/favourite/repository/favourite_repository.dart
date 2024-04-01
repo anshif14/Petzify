@@ -27,13 +27,5 @@ class StreamFavRepository{
     print(dataFavIndex);
     return _productFavourite.doc(dataFavIndex.toString()).snapshots().map((event) => ProductModel.fromMap(event.data() as Map<String,dynamic>));
   }
-  
-  
-  // streamData(){
-  //   return _stream.snapshots().map((event) => event.docs.map((e) =>
-  //       ProductModel.fromMap(e.data() as Map<String,dynamic>)).toList());
-  // }
-
-
 
 }

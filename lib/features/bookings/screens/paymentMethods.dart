@@ -27,7 +27,7 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
       paymentMethod: cont,
 
     );
-    ref.watch(bookingContollerProvider).AddBooking(bookingdata);
+    ref.watch(addBookingProvider(bookingdata));
 
   }
 

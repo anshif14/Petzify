@@ -311,7 +311,7 @@ class _myAdsState extends ConsumerState<myAds> {
                   );
                 },
                 loading: () {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 },)
 
 
