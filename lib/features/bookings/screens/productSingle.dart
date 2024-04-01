@@ -111,7 +111,6 @@ class _ProducctSingleScreenState extends State<ProducctSingleScreen> {
               stream: FirebaseFirestore.instance.collection("product").doc(widget.id).snapshots().map((snapshot) {
                 return ProductModel.fromMap(snapshot.data()!);
               } ),
-
               builder: (context, snapshot) {
                 if(!snapshot.hasData){
                   return Center(child: CircularProgressIndicator(
