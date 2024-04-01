@@ -157,7 +157,9 @@ class _myAdsState extends ConsumerState<myAds> {
                           child: FadeInAnimation(
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context, CupertinoPageRoute(builder: (context) => adsView(),));
+                                  Navigator.push(context, CupertinoPageRoute(builder: (context) => adsView(
+                                    id:data[index].id,
+                                  ),));
                                 },
                                 child: Container(
                                   width: width*0.5,
