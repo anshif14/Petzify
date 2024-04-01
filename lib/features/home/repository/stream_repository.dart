@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/core/providers/firebase_provider.dart';
@@ -16,9 +17,16 @@ class Streamrepository{
   CollectionReference get _stream => _firestore.collection('product');
 
 
+  CollectionReference get _banner => _firestore.collection('banner');
+
+
   streamData(){
     return _stream.snapshots().map((event) => event.docs.map((e) =>
     ProductModel.fromMap(e.data() as Map<String,dynamic>)).toList());
+  }
+
+  streamBanner(){
+    return _banner.doc("images").snapshots();
   }
 
 

@@ -128,32 +128,43 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
               gap,
-              StreamBuilder<DocumentSnapshot>(
-                stream: FirebaseFirestore.instance.collection('banner').doc("images").snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  var data = snapshot.data;
-                  List banners = data!['images'];
-                  return CarouselSlider(
-                      items: List.generate(
-                          banners.length,
-                          (index) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.teal,
-                                      image: DecorationImage(
-                                          image: NetworkImage(banners[index]),
-                                          fit: BoxFit.cover)),
+              ref.watch(databannerProvider).when(
+                  data: (data) {
+                    List banners = data!['images'];
+                    return CarouselSlider(
+                        items: List.generate(
+                            banners.length,
+                                (index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                child: ClipRRect(
+                                  borderRadius:  BorderRadius.circular(12),
+                                  child: CachedNetworkImage(imageUrl: banners[index],
+                                  fit: BoxFit.cover,
+                                  ),
                                 ),
-                              )),
-                      options:
-                          CarouselOptions(height: height * 0.2, autoPlay: true));
-                }
-              ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    // color: Colors.teal,
+                                ),
+                              ),
+                            )),
+                        options:
+                        CarouselOptions(height: height * 0.2, autoPlay: true));
+                  },
+                  error: (error, stackTrace) {
+                    return Text(error.toString());
+                  },
+                  loading: () {
+                    return CircularProgressIndicator();
+                  },),
+              // StreamBuilder<DocumentSnapshot>(
+              //    {
+              //
+              //     var data = snapshot.data;
+              //
+              //
+              //   }
               gap,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

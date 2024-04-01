@@ -59,6 +59,9 @@ dependencies:
   shared_preferences: ^2.2.2
   flutter_riverpod: ^2.4.10
 
+
+
+
 #  firebase_crashlytics: ^3.4.16
 
 

@@ -5,6 +5,8 @@ final StreamControllerProvider = Provider((ref) => StreamController(streamreposi
 
 final datastreamProvider = StreamProvider((ref) => ref.watch(StreamControllerProvider).productstream());
 
+final databannerProvider = StreamProvider((ref) => ref.watch(StreamControllerProvider).bannerstream());
+
 
 class StreamController{
   final Streamrepository _streamrepository;
@@ -17,4 +19,9 @@ class StreamController{
  Stream productstream(){
     return _streamrepository.streamData();
   }
+
+  Stream bannerstream(){
+   return _streamrepository.streamBanner();
+  }
+
 }
