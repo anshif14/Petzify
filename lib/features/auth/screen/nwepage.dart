@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:luna_demo/core/providers/firebase_provider.dart';
@@ -12,7 +13,7 @@ import '../../../main.dart';
 import '../../home/screen/navbar.dart';
 import 'loginPage.dart';
 
-
+var currentUserStatus;
 
 final googlesignProv = Provider((ref) => sign());
 
@@ -69,7 +70,31 @@ class sign{
       var data = await FirebaseFirestore.instance.collection('users')
           .doc(UserEmail)
           .get();
+
+
+  //     Navigator.push(context, CupertinoPageRoute(builder: (context) => bottomNavigation(),));
+  //
+  //   }
+  // }
+
       currentUserModel = UserModel.fromMap(data!.data()!);
+      if(currentUserStatus=userlist.docs[0]["block"]==true){
+
+        showDialog(context: context, builder: (context) =>
+            AlertDialog(
+
+              title: Text("This email has been blocked",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
+
+              actions: [
+
+                TextButton(onPressed: () {
+
+                  Navigator.pop(context);
+                }, child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),))
+              ],
+            ),);
+        return;
+      }
 
 
       Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);

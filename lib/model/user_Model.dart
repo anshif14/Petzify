@@ -6,10 +6,10 @@ class UserModel {
   String images;
   String number;
   String gender;
-  List favourites;
-  String productadder;
   String booking;
-
+  String productadder;
+  List favourites;
+  bool block;
   UserModel({
     required this.name,
     required   this.email,
@@ -18,9 +18,10 @@ class UserModel {
     required  this.images,
     required this.number,
     required   this.gender,
-  required  this.favourites,
-  required  this.productadder,
-  required  this.booking,
+    required   this.booking,
+    required   this.productadder,
+    required  this.favourites,
+    required this.block,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,9 +33,9 @@ class UserModel {
       "images": this.images,
       "number": this.number,
       "gender": this.gender,
-      "favourites": this.favourites,
       "productadder": this.productadder,
-      "booking": this.booking,
+      "favourites": this.favourites,
+      "block":this.block
     };
   }
 
@@ -47,9 +48,10 @@ class UserModel {
       images: Map["images"] ?? "",
       number: Map["number"] ?? "",
       gender: Map["gender"] ?? "",
-      favourites: Map["favourites"] ?? "",
-      productadder: Map["productadder"] ?? "",
       booking: Map["booking"] ?? "",
+      productadder: Map["productadder"] ?? "",
+      favourites: Map["favourites"] ?? "",
+      block: Map["block"] ?? false,
     );
   }
 
@@ -61,9 +63,10 @@ class UserModel {
     String? images,
     String? number,
     String? gender,
-    List? favourites,
-    String? productadder,
     String? booking,
+    String? productadder,
+    List? favourites,
+    bool? block
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -74,9 +77,10 @@ class UserModel {
       images: images ?? this.images,
       number: number ?? this.number,
       gender: gender ?? this.gender,
-      favourites: favourites ?? this.favourites,
+      booking: gender ?? this.booking,
       productadder: productadder ?? this.productadder,
-      booking: booking ?? this.booking,
+      favourites: favourites ?? this.favourites,
+      block: block ?? this.block,
     );
   }
 }

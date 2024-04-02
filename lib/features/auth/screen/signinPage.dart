@@ -266,6 +266,24 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                       .collection('users')
                       .where('email', isEqualTo: emailController.text).get();
 
+                  if(currentUserStatus=userlist.docs[0]["block"]==true){
+
+                    showDialog(context: context, builder: (context) =>
+                        AlertDialog(
+
+                          title: Text("This email has been blocked",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
+
+                          actions: [
+
+                            TextButton(onPressed: () {
+
+                              Navigator.pop(context);
+                            }, child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),))
+                          ],
+                        ),);
+                    return;
+                  }
+
                   if(userlist.docs.isNotEmpty){
 
                     // prefs.setString("signin", emailController.text);

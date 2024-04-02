@@ -8,6 +8,7 @@ import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../auth/screen/signupPage.dart';
 import '../../home/screen/navbar.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     currentUserName = _prefs.getString('name');
     currentUserEmail = _prefs.getString('email');
 
-    if(currentUserEmail != null){
+    if(currentUserEmail != null ){
 
       var userdata = await  FirebaseFirestore.instance.collection('users').doc(currentUserEmail).get();
 
@@ -35,9 +36,46 @@ class _SplashScreenState extends State<SplashScreen> {
       setState(() {
 
       });
-      Future.delayed(Duration(seconds: 3)).then((value) =>
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) =>NavBar())));
+
+      if(currentUserModel?.block == false)
+        {
+          Future.delayed(Duration(seconds: 3)).then((value) =>
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) =>NavBar())));
+        }else{
+
+        showDialog(
+            context: context,
+            builder: (context){
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(width*0.05)
+                ),
+                content: Container(
+                  height: height*0.2,
+                  width: width*1,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(width*0.03)
+                  ),
+                  child: Center(
+                    child: Text("This email has been blocked",
+                      textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
+                  ),
+
+                ),
+              );
+            }
+        );
+        Future.delayed(Duration(seconds: 3))
+            .then((value) => Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => LoginPage(),
+            )));
+        ///what to perform when account is blocked
+
+      }
+
 
     }else
       {
