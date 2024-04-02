@@ -10,8 +10,12 @@ class AuthController{
   AuthController({required AuthenticationRepository}):
 _authenticationRepository =AuthenticationRepository;
 
-  addingUser(userModel usermodel){
+  addingUser(UserModel usermodel){
     _authenticationRepository.addUser(usermodel);
+  }
+
+  userupd(UserModel usermodel){
+    _authenticationRepository.userupdate(usermodel);
   }
 /// edit(userModel  editModel){
 ///   _authenticationRepository..addingupdate(editModel);

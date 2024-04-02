@@ -77,17 +77,17 @@ class _AddProductState extends ConsumerState<AddProduct> {
     }
 
   }
+
   
   add(){
     ref.watch(exploreControllerProvider).addingProduct(ProductModel(productname: prdnamecontroller.text,
         image: pets, description: descriptioncontroller.text, price: double.parse(pricecontroller.text),
         sellername: namecontroller.text, address: addresscontroller.text, phonenumber: contactcontroller.text,
         id: '', userid: currentUserModel!.id, favUser: [], category: dropdownvalue.toString()));
-    FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
-      "productadder":"add"
-    });
 
-    Navigator.pop(context);
+  }
+  adrup(){
+    ref.read(exploreControllerProvider).adder("add");
   }
 
 
@@ -486,7 +486,14 @@ class _AddProductState extends ConsumerState<AddProduct> {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Contact Number")));
                     return;
                   }
-                 add();
+
+                  // update();
+
+                add();
+                  adrup();
+                  Navigator.pop(context);
+
+
 
                 },
                 child: Container(

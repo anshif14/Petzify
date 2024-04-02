@@ -15,4 +15,12 @@ class AdstreamController{
   Stream adsData(){
     return _adsStreamRepository.adsData();
   }
+
+  updatedatasss(String remove){
+    _adsStreamRepository.updatefun(remove);
+  }
+  // updatedata(String add){
+  //   _adsStreamRepository.update(add);
+  // }
+
 }

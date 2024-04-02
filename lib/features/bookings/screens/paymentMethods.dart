@@ -30,6 +30,9 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
     ref.watch(addBookingProvider(bookingdata));
 
   }
+  bookingdata(){
+      ref.read(bookingcontprovid).bookingfun("order");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +126,7 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
               onTap: () async {
 
               await  add();
+              bookingdata();
                 showDialog(
                     context: context,
                     builder: (context){

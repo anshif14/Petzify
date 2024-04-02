@@ -5,6 +5,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
@@ -231,22 +232,33 @@ class _HomePageState extends ConsumerState<HomePage> {
               //   print(data);
               //   print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                    ref.watch(datastreamProvider).when(data: (data) {
-                     return  GridView.builder(
-                       physics: NeverScrollableScrollPhysics(),
-                       shrinkWrap: true,
-                       itemCount: data.length,
-                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                           childAspectRatio: 0.8, crossAxisCount: 2),
-                       itemBuilder: (context, index) {
-                         return petTile(
-                             index: index,
-                             image:data[index].image.toList(),
-                             name:data[index].productname,
-                             price:data[index].price,
-                             category:data[index].category!,
-                             id:data[index].id
-                         );
-                       },
+                     return  AnimationLimiter(
+                       child: GridView.builder(
+                         physics: NeverScrollableScrollPhysics(),
+                         shrinkWrap: true,
+                         itemCount: data.length,
+                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                             childAspectRatio: 0.8, crossAxisCount: 2),
+                         itemBuilder: (context, index) {
+                           return AnimationConfiguration.staggeredList(
+                             position: index,
+                             duration:  Duration(milliseconds: 375),
+                             child: SlideAnimation(
+                               verticalOffset: 50.0,
+                               child: FadeInAnimation(
+                                 child: petTile(
+                                     index: index,
+                                     image:data[index].image.toList(),
+                                     name:data[index].productname,
+                                     price:data[index].price,
+                                     category:data[index].category!,
+                                     id:data[index].id
+                                 ),
+                               ),
+                             ),
+                           );
+                         },
+                       ),
                      );
                    },
                        error: (error, stackTrace) {
@@ -291,7 +303,7 @@ class _petTileState extends State<petTile> {
     var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
     var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    currentUserModel = userModel.fromMap(data.data()!);
+    currentUserModel = UserModel.fromMap(data.data()!);
     List fav=currentUserModel!.favourites;
     List favUser=productModel.favUser;
     print(fav);
@@ -312,7 +324,7 @@ class _petTileState extends State<petTile> {
       "favourites": fav
     });
     var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = userModel.fromMap(data1.data()!);
+    currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
     setState(() {

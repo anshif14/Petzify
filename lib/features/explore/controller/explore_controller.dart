@@ -13,5 +13,8 @@ exploreController({required exploreRepository}):
 addingProduct(ProductModel productModel){
   _exploreRepository.addProduct(productModel);
 }
+  adder(String add){
+    _exploreRepository.adder(add);
+  }
 
 }

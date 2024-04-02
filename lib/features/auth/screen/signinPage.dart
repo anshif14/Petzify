@@ -292,7 +292,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                     var data = await FirebaseFirestore.instance.collection('users')
                         .doc(UserEmail)
                         .get();
-                    currentUserModel = userModel.fromMap(data!.data()!);
+                    currentUserModel = UserModel.fromMap(data!.data()!);
 
                   }else{
                     Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => SignupPage(sign: false),));

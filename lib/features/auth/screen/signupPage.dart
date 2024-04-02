@@ -100,9 +100,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   add(){
-    ref.read(authRepositoryProvider).addUser(userModel(name: usernameController.text,
+    ref.read(authRepositoryProvider).addUser(UserModel(name: usernameController.text,
         email: emailController.text, password: passwordController.text, id:emailController.text.trim(), images:imageurl,
-        number: "", gender: "male", favourites: [], productadder: ''));
+        number: "", gender: "male", favourites: [], productadder: '', booking: ''));
   }
 
   @override
@@ -493,7 +493,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   var data = await FirebaseFirestore.instance.collection('users')
                       .doc(emailController.text.trim())
                       .get();
-                  currentUserModel = userModel.fromMap(data!.data()!);
+                  currentUserModel = UserModel.fromMap(data!.data()!);
 
 
                   currentUserName = currentUserModel!.name;

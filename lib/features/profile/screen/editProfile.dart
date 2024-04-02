@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -16,16 +17,18 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
+import '../../auth/controller/auth_controller.dart';
 import '../../auth/screen/loginPage.dart';
+import '../../explore/repository/explore_repository.dart';
 
-class editProfile extends StatefulWidget {
+class editProfile extends ConsumerStatefulWidget {
   const editProfile({super.key});
 
   @override
-  State<editProfile> createState() => _editProfileState();
+  ConsumerState<editProfile> createState() => _editProfileState();
 }
 
-class _editProfileState extends State<editProfile> {
+class _editProfileState extends ConsumerState<editProfile> {
   var file;
   String imageurl = "";
   String gender="";
@@ -66,6 +69,8 @@ class _editProfileState extends State<editProfile> {
       setState(() {});
       Navigator.pop(context);
     }
+
+
     //
     // setModelfunc(){
     //   FirebaseFirestore.instance.collection("users").doc(Userid).get().then((value){
@@ -73,6 +78,11 @@ class _editProfileState extends State<editProfile> {
     //     usermodel =userModel.fromMap(value.data()!);
     //   });
     // }
+  }
+
+  useredit(){
+    ref.read(authControllerProvider).userupd(currentUserModel!.copyWith(images: imageurl,
+        name: nameController.text,email: emailController.text,number: numberController.text,gender: gender));
   }
   String phoneNumber = '';
 
@@ -383,34 +393,13 @@ class _editProfileState extends State<editProfile> {
             gap,
             GestureDetector(
               onTap: () async {
-                userModel usermodel = currentUserModel!;
-
-      await FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(currentUserEmail)
-                    .update(
-                  usermodel.copyWith(
-                        images: imageurl.toString(),
-                        name: nameController.text,
-                        email: emailController.text,
-                    number: phoneNumber,
-                    gender: gender
-
-                  ).toMap()
-
-              //   //   userModel!.copyWith(
-              //   //     images: imageurl.toString(),
-              //   //     name: name_controller.text,
-              //   //     email: email_controller.text,
-              //   //     password: password_controller.text,
-              //   //     phoneNumber: number_controller.text,
-              //   //   ).toMap(),
-                );
+                UserModel usermodel = currentUserModel!;
+                useredit();
               //
               //
 
       var value =await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-      currentUserModel = userModel.fromMap(value.data()!);
+      currentUserModel = UserModel.fromMap(value.data()!);
                 Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
               },
               child: Container(

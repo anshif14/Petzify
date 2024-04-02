@@ -43,7 +43,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
     var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
     var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    currentUserModel = userModel.fromMap(data.data()!);
+    currentUserModel = UserModel.fromMap(data.data()!);
     List fav=currentUserModel!.favourites;
     List favUser=productModel.favUser;
     print(fav);
@@ -64,7 +64,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
       "favourites": fav
     });
     var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = userModel.fromMap(data1.data()!);
+    currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
     setState(() {

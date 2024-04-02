@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       var userdata = await  FirebaseFirestore.instance.collection('users').doc(currentUserEmail).get();
 
-      currentUserModel = userModel.fromMap(userdata.data()!);
+      currentUserModel = UserModel.fromMap(userdata.data()!);
       print(currentUserModel!.name);
       setState(() {
 

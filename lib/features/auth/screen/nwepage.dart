@@ -69,7 +69,7 @@ class sign{
       var data = await FirebaseFirestore.instance.collection('users')
           .doc(UserEmail)
           .get();
-      currentUserModel = userModel.fromMap(data!.data()!);
+      currentUserModel = UserModel.fromMap(data!.data()!);
 
 
       Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);

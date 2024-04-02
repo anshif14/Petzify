@@ -15,6 +15,7 @@ import 'package:luna_demo/model/user_Model.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
+import '../../explore/controller/explore_controller.dart';
 
 class myAds extends ConsumerStatefulWidget {
   const myAds({super.key});
@@ -28,7 +29,9 @@ class _myAdsState extends ConsumerState<myAds> {
   late ProductModel productData;
   String? selectedProduct;
 
-
+  remove(){
+    ref.read(adstreamControllerProvider).updatedatasss("");
+  }
 
   deletFunc(data,index) async {
 
@@ -44,7 +47,7 @@ class _myAdsState extends ConsumerState<myAds> {
           if(product1[i]==data1.docs[j].id){
             var fav=data1.docs[j].id;
             var fav1=await FirebaseFirestore.instance.collection("users").doc(fav).get();
-            userModel userdata=userModel.fromMap(fav1.data()!);
+            UserModel userdata=UserModel.fromMap(fav1.data()!);
             var fav2=userdata.favourites;
             if(fav2.contains(data[index].id)){
               print(fav2);
@@ -56,7 +59,7 @@ class _myAdsState extends ConsumerState<myAds> {
                   "favourites":fav2
                 });
             await FirebaseFirestore.instance.collection("users").doc(fav).get().then((value) {
-              userdata=userModel.fromMap(value.data()!);
+              userdata=UserModel.fromMap(value.data()!);
               print(userdata);
             });
             FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
@@ -67,6 +70,10 @@ class _myAdsState extends ConsumerState<myAds> {
       FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
     }
   }
+
+  // updatedata(){
+  //   ref.read(exploreControllerProvider).updatedata("noOrder");
+  // }
 
 
 
@@ -223,8 +230,8 @@ class _myAdsState extends ConsumerState<myAds> {
                                                       isDefaultAction: true,
                                                       onPressed: ()  async {
                                                         deletFunc(data,index);
-
-
+                                                       await remove();
+                                                      // await  updatedata();
                                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
                                                           crossAxisAlignment: CrossAxisAlignment.end,
                                                           mainAxisAlignment: MainAxisAlignment.start,
@@ -256,6 +263,7 @@ class _myAdsState extends ConsumerState<myAds> {
                                                           padding:  EdgeInsets.only(bottom: width*0.012,top: width*0.001),
                                                           // duration: Duration(seconds: 2),
                                                         ));
+
                                                         Navigator.pop(context);
 
                                                       },

@@ -1,4 +1,4 @@
-class userModel {
+class UserModel {
   String name;
   String email;
   String password;
@@ -8,8 +8,9 @@ class userModel {
   String gender;
   List favourites;
   String productadder;
+  String booking;
 
-  userModel({
+  UserModel({
     required this.name,
     required   this.email,
     required  this.password,
@@ -19,6 +20,7 @@ class userModel {
     required   this.gender,
   required  this.favourites,
   required  this.productadder,
+  required  this.booking,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,11 +34,12 @@ class userModel {
       "gender": this.gender,
       "favourites": this.favourites,
       "productadder": this.productadder,
+      "booking": this.booking,
     };
   }
 
-  factory userModel.fromMap(Map<String, dynamic> Map) {
-    return userModel(
+  factory UserModel.fromMap(Map<String, dynamic> Map) {
+    return UserModel(
       name: Map["name"] ?? "",
       email: Map["email"] ?? "",
       password: Map["password"] ?? "",
@@ -46,10 +49,11 @@ class userModel {
       gender: Map["gender"] ?? "",
       favourites: Map["favourites"] ?? "",
       productadder: Map["productadder"] ?? "",
+      booking: Map["booking"] ?? "",
     );
   }
 
-  userModel copyWith({
+  UserModel copyWith({
     String? name,
     String? email,
     String? password,
@@ -59,8 +63,9 @@ class userModel {
     String? gender,
     List? favourites,
     String? productadder,
+    String? booking,
   }) {
-    return userModel(
+    return UserModel(
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
@@ -71,6 +76,7 @@ class userModel {
       gender: gender ?? this.gender,
       favourites: favourites ?? this.favourites,
       productadder: productadder ?? this.productadder,
+      booking: booking ?? this.booking,
     );
   }
 }

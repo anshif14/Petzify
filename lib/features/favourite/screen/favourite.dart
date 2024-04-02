@@ -99,7 +99,7 @@ class petTile extends ConsumerStatefulWidget {
 class _petTileState extends ConsumerState<petTile> {
   favFunc(data) async {
     var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = userModel.fromMap(user.data()!);
+    currentUserModel = UserModel.fromMap(user.data()!);
     var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
     List fav=currentUserModel!.favourites;
@@ -121,7 +121,7 @@ class _petTileState extends ConsumerState<petTile> {
       "favourites": fav
     });
     var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = userModel.fromMap(data1.data()!);
+    currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
     setState(() {

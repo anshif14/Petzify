@@ -3,6 +3,7 @@ import 'dart:core';
 
 import 'package:another_stepper/dto/stepper_data.dart';
 import 'package:another_stepper/widgets/another_stepper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
@@ -165,7 +166,9 @@ class _orderViewState extends State<orderView> {
           gap,
           InkWell(
             onTap: () {
-
+              // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
+              //   "booking":"noOrder"
+              // });
               // Navigator.push(context, MaterialPageRoute(builder: (context) =>steper() ,));
             },
             child: Container(

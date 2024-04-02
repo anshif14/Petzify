@@ -18,8 +18,8 @@ class StreamFavRepository{
   CollectionReference get _usersFavourite => _firestore.collection('users');
   CollectionReference get _productFavourite => _firestore.collection("product");
 
-  Stream<userModel> favouriteDataStream(){
-    return _usersFavourite.doc(currentUserModel?.id).snapshots().map((event) => userModel.fromMap(event.data() as Map<String, dynamic>));
+  Stream<UserModel> favouriteDataStream(){
+    return _usersFavourite.doc(currentUserModel?.id).snapshots().map((event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
 
 

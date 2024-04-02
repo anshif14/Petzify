@@ -22,7 +22,7 @@ var width;
 String? currentUserName;
 String? currentUserImage;
 String? currentUserEmail;
-userModel ?currentUserModel;
+UserModel ?currentUserModel;
 ProductModel ?currentProductModel;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
