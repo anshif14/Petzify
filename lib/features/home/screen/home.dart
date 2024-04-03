@@ -12,12 +12,13 @@ import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/home/controller/stream_controller.dart';
-// import 'package:luna_demo/core/features/product/screens/productSingle.dart';
+import 'package:luna_demo/features/petcategory/screen/petCategoryPage.dart';
+
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
-import '../../auth/screen/loginPage.dart';
+
 import '../../bookings/screens/productSingle.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -28,11 +29,7 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  // List banner = [
-  //   imageConstants.banner1,
-  //   imageConstants.banner2,
-  //   imageConstants.banner3,
-  // ];
+
   List trending = [
     imageConstants.trending,
     imageConstants.trending1,
@@ -174,10 +171,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                     "Explore by pets",
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
                   ),
-                  Text(
-                    "See all",
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                  )
                 ],
               ),
               SingleChildScrollView(
@@ -192,15 +185,22 @@ class _HomePageState extends ConsumerState<HomePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  height: width * 0.2,
-                                  width: width * 0.2,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              category[index]['image']),
-                                          fit: BoxFit.cover)),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(context, CupertinoPageRoute(builder:(context) => PetCategoryPage(
+                                      category:category[index]["name"]
+                                    ), ));
+                                  },
+                                  child: Container(
+                                    height: width * 0.2,
+                                    width: width * 0.2,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                category[index]['image']),
+                                            fit: BoxFit.cover)),
+                                  ),
                                 ),
                                 Text(category[index]['name'])
                               ],
@@ -216,22 +216,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                 ],
               ),
-              // StreamBuilder(
-              // stream: FirebaseFirestore.instance.collection("product").snapshots().map((snapshot) {
-              //          return snapshot.docs.map((doc){
-              //               return ProductModel.fromMap(doc.data());
-              //         }).toList();
-              //         }),
-              //  builder: (context, snapshot) {
-              //   if(!snapshot.hasData){
-              //     return Center(child: CircularProgressIndicator(
-              //       color: Pallette.primaryColor,
-              //     ),);
-              //   }
-              //   List<ProductModel> data=snapshot.data!;
-              //   print(data);
-              //   print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                   ref.watch(datastreamProvider).when(data: (data) {
+              ref.watch(datastreamProvider).when(data: (data) {
                      return  AnimationLimiter(
                        child: GridView.builder(
                          physics: NeverScrollableScrollPhysics(),
