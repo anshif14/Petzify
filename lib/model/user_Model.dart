@@ -67,7 +67,7 @@ class UserModel {
     String? booking,
     String? productadder,
     List? favourites,
-    bool? block
+    bool? block,
   }) {
     return UserModel(
       name: name ?? this.name,

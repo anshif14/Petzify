@@ -4,7 +4,9 @@ import 'dart:core';
 import 'package:another_stepper/dto/stepper_data.dart';
 import 'package:another_stepper/widgets/another_stepper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
@@ -170,6 +172,49 @@ class _orderViewState extends State<orderView> {
               //   "booking":"noOrder"
               // });
               // Navigator.push(context, MaterialPageRoute(builder: (context) =>steper() ,));
+              showDialog(context: context, builder:(context) =>
+                AlertDialog(
+                  surfaceTintColor: Pallette.secondaryBrown,
+                  title: Text("Are you sure to cancel the order",textAlign: TextAlign.center, style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
+                  actions: [
+                    TextButton(onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(width*0.05)
+                              ),
+                              content: Container(
+                                height: height*0.5,
+                                width: width*1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(width*0.03)
+                                ),
+                                child: Column(
+                                  children: [
+                                    Lottie.asset(imageConstants.lottie),
+                                    Text("Successfully Canceled Your Order\n Thank You Visit again!!! ",
+                                      textAlign: TextAlign.center,)
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                      );
+                      Future.delayed(Duration(seconds: 3))
+                          .then((value) => Navigator.pop(context)
+                      );
+                    },
+                        child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),)),
+                    TextButton(onPressed:() {
+                      Navigator.pop(context);
+                    },
+                        child: Text("Cancel",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),)),
+                  ],
+                )
+                );
+
             },
             child: Container(
               height: height*0.06,
