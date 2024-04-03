@@ -3,6 +3,7 @@ class ProductModel{
   List image;
   String description;
   String category;
+  String petcategory;
   double price;
   String sellername;
   String address;
@@ -18,6 +19,7 @@ class ProductModel{
     required this.image,
     required this.description,
     required this.category,
+    required this.petcategory,
     required this.price,
     required this.sellername,
     required this.address,
@@ -34,6 +36,7 @@ class ProductModel{
       "image": this.image,
       "description": this.description,
       "category": this.category,
+      "petcategory": this.petcategory,
       "price": this.price,
       "sellername":this.sellername,
       "address": this.address,
@@ -50,6 +53,7 @@ class ProductModel{
       image: Map["image"] ?? [],
       description: Map["description"] ?? "",
       category: Map["category"] ?? "",
+      petcategory: Map["petcategory"] ?? "",
       price: Map["price"] ?? "",
       sellername: Map["sellername"] ?? "",
       address: Map["address"] ?? "",
@@ -65,6 +69,7 @@ class ProductModel{
     List? image,
     String? description,
     String? category,
+    String? petcategory,
     double? price,
     String? sellername,
     String? address,
@@ -78,6 +83,7 @@ class ProductModel{
       image: image ?? this.image,
       description: description ?? this.description,
       category: category ?? this.category,
+      petcategory: petcategory ?? this.petcategory,
       price: price ?? this.price,
       sellername: sellername ?? this.sellername,
       address: address ?? this.address,

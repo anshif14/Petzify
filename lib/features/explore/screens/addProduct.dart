@@ -78,12 +78,26 @@ class _AddProductState extends ConsumerState<AddProduct> {
 
   }
 
-  
+
   add(){
-    ref.watch(exploreControllerProvider).addingProduct(ProductModel(productname: prdnamecontroller.text,
-        image: pets, description: descriptioncontroller.text, price: double.parse(pricecontroller.text),
-        sellername: namecontroller.text, address: addresscontroller.text, phonenumber: contactcontroller.text,
-        id: '', userid: currentUserModel!.id, favUser: [], category: dropdownvalue.toString()));
+    ref.watch(exploreControllerProvider).addingProduct(
+        ProductModel(
+            productname: prdnamecontroller.text,
+            image: pets,
+            description: descriptioncontroller.text,
+            price: double.parse(pricecontroller.text),
+            sellername: namecontroller.text,
+            address: addresscontroller.text,
+            phonenumber: contactcontroller.text,
+            id: '',
+            userid: currentUserModel!.id,
+            favUser: [],
+            category: dropdownvalue.toString(),
+            petcategory: petdropdownvalue.toString()
+        ));
+    FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
+      "productadder":"add"
+    });
 
   }
   adrup(){
@@ -99,8 +113,17 @@ class _AddProductState extends ConsumerState<AddProduct> {
   TextEditingController contactcontroller=TextEditingController();
 
   String? dropdownvalue;
+  String? petdropdownvalue;
   List pets=[ ];
 
+  var petCategory=[
+    "Dogs",
+    "Cats",
+    "Birds",
+    "Fish",
+    "Small Animals",
+    "Others",
+  ];
   var drop=[
     "Pet",
     "Product"
@@ -305,6 +328,32 @@ class _AddProductState extends ConsumerState<AddProduct> {
                       }),
                 ),
               ),
+              gap,
+              dropdownvalue=="Pet"?Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(width*0.03),
+                  border: Border.all(color: Pallette.primaryColor)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton(
+                    underline: SizedBox(),
+                    isExpanded: true,
+                      hint: Text("Select Pet Category",style: TextStyle(color: CupertinoColors.black),),
+                      icon: Icon(Icons.arrow_drop_down),
+                      value: petdropdownvalue,
+                      items: petCategory.map((String? value){
+                        return DropdownMenuItem(
+                          value: value,
+                            child:Text(value!));
+                      }).toList(),
+                      onChanged: (newvalue){
+                      setState(() {
+                        petdropdownvalue=newvalue;
+                      });
+                      }),
+                ),
+              ):SizedBox(),
               gap,
               TextFormField(
                 textInputAction:TextInputAction.done ,

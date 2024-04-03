@@ -11,7 +11,6 @@ final databannerProvider = StreamProvider((ref) => ref.watch(StreamControllerPro
 class StreamController{
   final Streamrepository _streamrepository;
 
-
   StreamController({required Streamrepository streamrepository }):
         _streamrepository = streamrepository;
 
