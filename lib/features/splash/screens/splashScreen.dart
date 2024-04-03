@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 // import 'package:luna_demo/core/features/home/navbar.dart';
@@ -48,6 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
             context: context,
             builder: (context){
               return AlertDialog(
+                surfaceTintColor: Pallette.secondaryBrown,
+
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(width*0.05)
                 ),

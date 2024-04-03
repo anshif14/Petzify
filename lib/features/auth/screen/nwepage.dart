@@ -9,6 +9,7 @@ import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../commons/color constansts.dart';
 import '../../../main.dart';
 import '../../home/screen/navbar.dart';
 import 'loginPage.dart';
@@ -82,7 +83,8 @@ class sign{
 
         showDialog(context: context, builder: (context) =>
             AlertDialog(
-
+              surfaceTintColor: Pallette.secondaryBrown,
+              
               title: Text("This email has been blocked",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
 
               actions: [

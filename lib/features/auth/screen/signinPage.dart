@@ -245,7 +245,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                       context: context,
                       type: QuickAlertType.error,
                       title: 'Oops...',
-                      text: 'Sorry, please your email',
+                      text: 'Sorry, please Enter your email',
                     );
                     return;
                   }
@@ -256,7 +256,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                       context: context,
                       type: QuickAlertType.error,
                       title: 'Oops...',
-                      text: 'Sorry, please your password',
+                      text: 'Sorry, please Enter your password',
                     );
                     return;
                   }
@@ -270,6 +270,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
 
                     showDialog(context: context, builder: (context) =>
                         AlertDialog(
+                          surfaceTintColor: Pallette.secondaryBrown,
 
                           title: Text("This email has been blocked",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
 

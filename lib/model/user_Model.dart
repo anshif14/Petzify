@@ -34,6 +34,7 @@ class UserModel {
       "number": this.number,
       "gender": this.gender,
       "productadder": this.productadder,
+      "booking": this.booking,
       "favourites": this.favourites,
       "block":this.block
     };
