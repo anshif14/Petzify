@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,9 +31,12 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
     ref.watch(addBookingProvider(bookingdata));
 
   }
-  bookingdata(){
-      ref.read(bookingcontprovid).bookingfun("order");
-  }
+
+  // bookingdata(){
+  //     ref.read(bookingcontprovid).bookingfun([]);
+  // }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +130,7 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
               onTap: () async {
 
               await  add();
-              bookingdata();
+              // bookingdata();
                 showDialog(
                     context: context,
                     builder: (context){

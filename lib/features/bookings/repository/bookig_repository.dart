@@ -18,16 +18,24 @@ class BookingRepository{
   addBooking(BookingModel bookingdata){
     _booking.add(bookingdata.toMap()).then((value) {
       value.update(bookingdata.copyWith(buyerId: value.id).toMap());
+      FirebaseFirestore.instance.collection('users').doc(currentUserModel!.id).update(
+          {
+            "booking":FieldValue.arrayUnion([value.id])
+          });
+
     },);
+    // functionBook(){
+    //
+    // }
   }
   Stream<ProductModel> singleProductStream(productid){
    return  _product.doc(productid).snapshots().map((event) {
       return ProductModel.fromMap(event.data() as Map<String,dynamic>);
     });
   }
-  bookingfun(String booking){
-    _book.doc(currentUserModel!.id).update(currentUserModel!.copyWith(booking: booking).toMap());
-  }
+  // bookingfun(List booking){
+  //   _book.doc(currentUserModel!.id).update(currentUserModel!.copyWith(booking: booking).toMap());
+  // }
   // singleProductStream(productid){
   //   _product.doc(productid).snapshots().map((event) {
   //     return ProductModel.fromMap(event.data() as Map<String,dynamic>);

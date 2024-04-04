@@ -15,9 +15,9 @@ class BookingControllerNotifier extends StateNotifier{
   addBooking({bookingdata}) {
     return _bookingRepository.addBooking(bookingdata);
   }
-  bookingfun(String booking){
-    _bookingRepository.bookingfun(booking);
-  }
+  // bookingfun(List booking){
+  //   _bookingRepository.bookingfun(booking);
+  // }
   Stream SingleProductStream({productid}){
       return _bookingRepository.singleProductStream(productid);
     }

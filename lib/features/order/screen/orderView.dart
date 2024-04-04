@@ -10,16 +10,27 @@ import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/home/screen/navbar.dart';
+import 'package:luna_demo/features/order/screen/myOrder.dart';
+import 'package:luna_demo/model/booking_model.dart';
+import 'package:luna_demo/model/product_Model.dart';
 
 import '../../../main.dart';
 
 class orderView extends StatefulWidget {
-  const orderView({super.key, required this.productName, required this.productImage, required this.price, required this.buyerName, required this.selectindex});
-  final String productName;
-  final String productImage ;
-  final String price ;
-  final String buyerName ;
-  final int selectindex;
+  const orderView({super.key, required this.data,
+    /*required this.productName,
+    required this.productImage,
+    required this.price,
+     required this.buyerName,
+     required this.selectindex*/
+  });
+  final BookingModel data;
+  // final String productName;
+  // final String productImage ;
+  // final String price ;
+  // final String buyerName ;
+  // final int selectindex;
 
   @override
   State<orderView> createState() => _orderViewState();
@@ -99,7 +110,7 @@ class _orderViewState extends State<orderView> {
                       width: width*0.6,
                       height: height*0.1,
                       child: Center(
-                        child: Text(widget.productName,
+                        child: Text(widget.data.productName,
                             style: TextStyle(
 
                           fontSize: width*0.05,
@@ -112,17 +123,17 @@ class _orderViewState extends State<orderView> {
                       width: width*0.23,
                       decoration:  BoxDecoration(
                           color: Colors.white,
-                          image: DecorationImage(image: NetworkImage(widget.productImage),fit: BoxFit.cover),
+                          image: DecorationImage(image: NetworkImage(widget.data.productImage),fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(width*0.02)
                       ),
                       // image: DecorationImage(image: AssetImage(coupons[index]["poster"]),fit: BoxFit.cover),
                     ),
                   ],
                 ),
-                Text(widget.buyerName,style: TextStyle(
+                Text(widget.data.buyerName,style: TextStyle(
                   color: Pallette.grey1
                 ),),
-                Text(widget.price,style: TextStyle(
+                Text(widget.data.price,style: TextStyle(
                   fontSize: width*0.05
                 ),)
 
@@ -134,7 +145,7 @@ class _orderViewState extends State<orderView> {
             stepperList: stepperData,
             stepperDirection: Axis.vertical,
             inverted: false,
-            activeIndex: widget.selectindex,
+            activeIndex: widget.data.selectindex,
             barThickness: width*0.006,
             activeBarColor: Colors.green,
             verticalGap: width*0.07,
@@ -202,9 +213,15 @@ class _orderViewState extends State<orderView> {
                             );
                           },
                       );
+                      FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
+                        "booking":FieldValue.arrayRemove([widget.data.buyerId])
+                      });
+                      FirebaseFirestore.instance.collection("bookings").doc(widget.data.buyerId).delete();
                       Future.delayed(Duration(seconds: 3))
-                          .then((value) => Navigator.pop(context)
+                          .then((value) => Navigator.pushReplacement(context,
+                          CupertinoPageRoute(builder: (context) =>myOrder() ,))
                       );
+
                     },
                         child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),)),
                     TextButton(onPressed:() {

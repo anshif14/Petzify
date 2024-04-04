@@ -102,10 +102,13 @@ class _myOrderState extends ConsumerState<myOrder> {
                     return InkWell(
                       onTap: () {
                         Navigator.push(context, CupertinoPageRoute(builder: (context) =>
-                            orderView(productName: data[index].productName,
-                              productImage: data[index].productImage,
-                              price: data[index].price,
-                              buyerName: data[index].buyerName, selectindex: data[index].selectindex,),
+                            orderView(data: data[index],
+                              // productName: data[index].productName,
+                              // productImage: data[index].productImage,
+                              // price: data[index].price,
+                              // buyerName: data[index].buyerName,
+                              // selectindex: data[index].selectindex,
+                            ),
                         ));
                         setState(() {
 

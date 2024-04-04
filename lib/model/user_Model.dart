@@ -6,7 +6,7 @@ class UserModel {
   String images;
   String number;
   String gender;
-  String booking;
+  List booking;
   String productadder;
   List favourites;
   bool block;
@@ -49,7 +49,7 @@ class UserModel {
       images: Map["images"] ?? "",
       number: Map["number"] ?? "",
       gender: Map["gender"] ?? "",
-      booking: Map["booking"] ?? "",
+      booking: Map["booking"] ?? [],
       productadder: Map["productadder"] ?? "",
       favourites: Map["favourites"] ?? "",
       block: Map["block"] ?? false,
@@ -64,7 +64,7 @@ class UserModel {
     String? images,
     String? number,
     String? gender,
-    String? booking,
+    List? booking,
     String? productadder,
     List? favourites,
     bool? block,
@@ -78,7 +78,7 @@ class UserModel {
       images: images ?? this.images,
       number: number ?? this.number,
       gender: gender ?? this.gender,
-      booking: gender ?? this.booking,
+      booking: booking ?? this.booking,
       productadder: productadder ?? this.productadder,
       favourites: favourites ?? this.favourites,
       block: block ?? this.block,
