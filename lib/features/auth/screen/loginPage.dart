@@ -15,6 +15,7 @@ import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/user_Model.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -44,41 +45,46 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   void initState() {
     // TODO: implement initState
-    chewieController = ChewieController(videoPlayerController: videoPlayerController,
-    aspectRatio: width*1/height*1,
-      autoPlay: true,
-      looping: true,
-      autoInitialize: true,
-      showControls: false,
+    chewieController =
+        ChewieController(videoPlayerController: videoPlayerController,
+          // aspectRatio: 9 / 20,
+          aspectRatio: width*1 / height*1,
+          autoPlay: true,
+          looping: true,
+          autoInitialize: true,
+          showControls: false,
 
 
-    );
-
+        );
+    super.initState();
+  }
     @override
     void dispose() {
       videoPlayerController.dispose();
       chewieController!.dispose();
       super.dispose();
-    }
 
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          Expanded(child: Chewie(controller: chewieController!)),
-          Container(
+          Container(child: Chewie(controller: chewieController!)),
+          // Expanded(child: Chewie(controller: chewieController!)),
+          // Container(
+          //   height: height*1,
             // padding: EdgeInsets.all(width * 0.03),
             // decoration: BoxDecoration(
             //   image: DecorationImage(
             //       image: AssetImage(imageConstants.pageimage),
             //       fit: BoxFit.cover,
             //       opacity: width * 0.00009),
-            // ),
-            child: Column(
+           // ),
+           //  child:
+          Column(
               children: [
                 Container(
                   height: height * 0.15,
@@ -224,7 +230,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 )
               ],
             ),
-          ),
         ],
       ),
     );
