@@ -141,38 +141,6 @@ class petTile extends StatefulWidget {
 class _petTileState extends State<petTile> {
 
   int index = 0;
-  favFunc() async {
-    var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
-    ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    currentUserModel = UserModel.fromMap(data.data()!);
-    List fav=currentUserModel!.favourites;
-    List favUser=productModel.favUser;
-    print(fav);
-    if(fav.contains(widget.id)){
-      fav.remove(widget.id);
-    }else{
-      fav.add(widget.id);
-    }if(favUser.contains(currentUserEmail)){
-      favUser.remove(currentUserEmail);
-    }else{
-      favUser.add(currentUserEmail);
-    }
-
-    FirebaseFirestore.instance.collection("product").doc(widget.id).update({
-      "favUser":favUser
-    });
-    FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-      "favourites": fav
-    });
-    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = UserModel.fromMap(data1.data()!);
-    var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
-    productModel=ProductModel.fromMap(data3.data()!);
-    setState(() {
-
-    });
-  }
 
   @override
   void initState() {
@@ -190,6 +158,10 @@ class _petTileState extends State<petTile> {
               builder: (context) => ProducctSingleScreen(
                 id:widget.id,
                 tag: widget.image[0],
+                fav:StateProvider<bool>((ref) =>false ),
+                like: false,
+                category:true
+
               ),
             ));
       },
@@ -197,43 +169,18 @@ class _petTileState extends State<petTile> {
         padding: const EdgeInsets.all(4.0),
         child: Column(
           children: [
-            Stack(
-              children: [
-                Hero(
-                  tag: widget.image,
-                  child: Container(
-                    height: width * 0.4,
-                    width: width * 0.4,
-                    decoration: BoxDecoration(
-                        color: Pallette.secondaryBrown,
-                        image: DecorationImage(
-                            image: NetworkImage(widget.image[0]),
-                            fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(15)),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.5)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: FavoriteButton(
-                          isFavorite: currentUserModel!.favourites.contains(widget.id),
-                          iconSize: 25,
-                          valueChanged: (_isFavorite) async {
-                            favFunc();
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
+            Hero(
+              tag: widget.image,
+              child: Container(
+                height: width * 0.4,
+                width: width * 0.4,
+                decoration: BoxDecoration(
+                    color: Pallette.secondaryBrown,
+                    image: DecorationImage(
+                        image: NetworkImage(widget.image[0]),
+                        fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(15)),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

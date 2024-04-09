@@ -15,6 +15,7 @@ import 'package:luna_demo/model/user_Model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../main.dart';
+
 import '../controller/booking_controller.dart';
 import 'deliveryAddress.dart';
 
@@ -22,8 +23,11 @@ class ProducctSingleScreen extends ConsumerStatefulWidget {
   // final String image;
   final String tag;
   final String id;
+  final bool like;
+  final bool category;
+  final StateProvider<bool> fav;
   const ProducctSingleScreen(
-      {super.key, required this.tag,required this.id});
+      {super.key, required this.tag,required this.id, required this.fav, required this.like, required this.category });
 
   @override
   ConsumerState<ProducctSingleScreen> createState() => _ProducctSingleScreenState();
@@ -39,11 +43,10 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
     imageConstants.cat,
     imageConstants.bird,
   ];
+  // final favour=StateProvider<bool>((ref) =>false );
   favFunc() async {
-    var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
     var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    currentUserModel = UserModel.fromMap(data.data()!);
     List fav=currentUserModel!.favourites;
     List favUser=productModel.favUser;
     print(fav);
@@ -67,17 +70,12 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
-    setState(() {
 
-    });
   }
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
+    // final favoriteState = ref.watch(favoriteStateProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -93,13 +91,18 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
               color: Colors.black,
             )),
         actions: [
-          FavoriteButton(
-            isFavorite: currentUserModel!.favourites.contains(widget.id),
-            iconSize: 35,
-            valueChanged: (_isFavorite) async {
-              favFunc();
-            },
+          widget.category==true?SizedBox():
+          IconButton(onPressed: (){
+
+            ref.read(widget.fav.notifier).update((state) => !state);
+            favFunc();
+          }
+            , icon: Icon(
+              ref.watch(widget.fav) ? Icons.favorite : Icons.favorite,
+              color: widget.like==true?Colors.red:ref.watch(widget.fav)?Colors.red:Colors.grey,
+            ),
           ),
+
           SizedBox(
             width: width * 0.03,
           )

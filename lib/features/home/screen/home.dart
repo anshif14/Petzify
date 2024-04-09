@@ -19,6 +19,7 @@ import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
 
+import '../../../core/utils/favButton.dart';
 import '../../bookings/screens/productSingle.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -63,7 +64,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   ];
 
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -126,35 +127,35 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               gap,
               ref.watch(databannerProvider).when(
-                  data: (data) {
-                    List banners = data!['images'];
-                    return CarouselSlider(
-                        items: List.generate(
-                            banners.length,
-                                (index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: ClipRRect(
-                                  borderRadius:  BorderRadius.circular(12),
-                                  child: CachedNetworkImage(imageUrl: banners[index],
+                data: (data) {
+                  List banners = data!['images'];
+                  return CarouselSlider(
+                      items: List.generate(
+                          banners.length,
+                              (index) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: ClipRRect(
+                                borderRadius:  BorderRadius.circular(12),
+                                child: CachedNetworkImage(imageUrl: banners[index],
                                   fit: BoxFit.cover,
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    // color: Colors.teal,
                                 ),
                               ),
-                            )),
-                        options:
-                        CarouselOptions(height: height * 0.2, autoPlay: true));
-                  },
-                  error: (error, stackTrace) {
-                    return Text(error.toString());
-                  },
-                  loading: () {
-                    return CircularProgressIndicator();
-                  },),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                // color: Colors.teal,
+                              ),
+                            ),
+                          )),
+                      options:
+                      CarouselOptions(height: height * 0.2, autoPlay: true));
+                },
+                error: (error, stackTrace) {
+                  return Text(error.toString());
+                },
+                loading: () {
+                  return CircularProgressIndicator();
+                },),
               // StreamBuilder<DocumentSnapshot>(
               //    {
               //
@@ -179,32 +180,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: List.generate(
                       category.length,
-                      (index) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(context, CupertinoPageRoute(builder:(context) => PetCategoryPage(
-                                      category:category[index]["name"]
-                                    ), ));
-                                  },
-                                  child: Container(
-                                    height: width * 0.2,
-                                    width: width * 0.2,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                category[index]['image']),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                ),
-                                Text(category[index]['name'])
-                              ],
+                          (index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, CupertinoPageRoute(builder:(context) => PetCategoryPage(
+                                    category:category[index]["name"]
+                                ), ));
+                              },
+                              child: Container(
+                                height: width * 0.2,
+                                width: width * 0.2,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            category[index]['image']),
+                                        fit: BoxFit.cover)),
+                              ),
                             ),
-                          )),
+                            Text(category[index]['name'])
+                          ],
+                        ),
+                      )),
                 ),
               ),
               Row(
@@ -216,41 +217,41 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ],
               ),
               ref.watch(datastreamProvider).when(data: (data) {
-                     return  AnimationLimiter(
-                       child: GridView.builder(
-                         physics: NeverScrollableScrollPhysics(),
-                         shrinkWrap: true,
-                         itemCount: data.length,
-                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                             childAspectRatio: 0.8, crossAxisCount: 2),
-                         itemBuilder: (context, index) {
-                           return AnimationConfiguration.staggeredList(
-                             position: index,
-                             duration:  Duration(milliseconds: 375),
-                             child: SlideAnimation(
-                               verticalOffset: 50.0,
-                               child: FadeInAnimation(
-                                 child: petTile(
-                                     index: index,
-                                     image:data[index].image.toList(),
-                                     name:data[index].productname,
-                                     price:data[index].price,
-                                     category:data[index].category!,
-                                     id:data[index].id
-                                 ),
-                               ),
-                             ),
-                           );
-                         },
-                       ),
-                     );
-                   },
-                       error: (error, stackTrace) {
-                     return Text(error.toString());
-                       },
-                       loading: () {
-                         return CircularProgressIndicator();
-                       },)
+                return  AnimationLimiter(
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 0.8, crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration:  Duration(milliseconds: 375),
+                        child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: petTile(
+                                index: index,
+                                image:data[index].image.toList(),
+                                name:data[index].productname,
+                                price:data[index].price,
+                                category:data[index].category!,
+                                id:data[index].id
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+                error: (error, stackTrace) {
+                  return Text(error.toString());
+                },
+                loading: () {
+                  return CircularProgressIndicator();
+                },)
             ],
           ),
         ),
@@ -259,7 +260,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 }
 
-class petTile extends StatefulWidget {
+class petTile extends ConsumerStatefulWidget {
   final int index;
   final List image;
   final String name;
@@ -277,24 +278,42 @@ class petTile extends StatefulWidget {
   });
 
   @override
-  State<petTile> createState() => _petTileState();
+  ConsumerState<petTile> createState() => _petTileState();
 }
 
-class _petTileState extends State<petTile> {
-
+class _petTileState extends ConsumerState<petTile> {
+  final favour=StateProvider<bool>((ref) =>false );
   int index = 0;
+
+
+  getfun() async {
+    DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    currentUserModel=UserModel.fromMap(data!.data()!);
+    List fav=currentUserModel!.favourites;
+    if(fav!.isNotEmpty){
+      print("ghjkl,,,,");
+      print("cvbnm,");
+      if(fav!.contains(widget.id)){
+        ref.read(favour.notifier).update((state) => true);
+      }
+      else{
+        ref.read(favour.notifier).update((state) => false);
+      }
+    }
+
+  }
   favFunc() async {
-    var data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
     var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    currentUserModel = UserModel.fromMap(data.data()!);
+    currentUserModel=UserModel.fromMap(data!.data()!);
     List fav=currentUserModel!.favourites;
     List favUser=productModel.favUser;
     print(fav);
-    if(fav.contains(widget.id)){
-      fav.remove(widget.id);
+    if(fav!.contains(widget.id)){
+      fav!.remove(widget.id);
     }else{
-      fav.add(widget.id);
+      fav!.add(widget.id);
     }if(favUser.contains(currentUserEmail)){
       favUser.remove(currentUserEmail);
     }else{
@@ -311,13 +330,11 @@ class _petTileState extends State<petTile> {
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
-    setState(() {
-
-    });
   }
 
   @override
   void initState() {
+getfun();
     index = widget.index;
     // TODO: implement initState
     super.initState();
@@ -325,81 +342,88 @@ class _petTileState extends State<petTile> {
 
   Widget build(BuildContext context) {
     return InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProducctSingleScreen(
-                    id:widget.id,
-                    tag: widget.image[0],
-                  ),
-                ));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Column(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProducctSingleScreen(
+                fav: favour,
+                id:widget.id,
+                tag: widget.image[0],
+                like: false,
+                category: false,
+              ),
+            ));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          children: [
+            Stack(
               children: [
-                Stack(
-                  children: [
-                    Hero(
-                      tag: widget.image,
-                      child: Container(
-                        height: width * 0.4,
-                        width: width * 0.4,
-                        decoration: BoxDecoration(
-                            color: Pallette.secondaryBrown,
-                            image: DecorationImage(
-                                image: NetworkImage(widget.image[0]),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(15)),
-                      ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white.withOpacity(0.5)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: FavoriteButton(
-                              isFavorite: currentUserModel!.favourites.contains(widget.id),
-                              iconSize: 25,
-                              valueChanged: (_isFavorite) async {
-                                favFunc();
-                              },
-                            ),
+                Hero(
+                  tag: widget.image,
+                  child: Container(
+                    height: width * 0.4,
+                    width: width * 0.4,
+                    decoration: BoxDecoration(
+                        color: Pallette.secondaryBrown,
+                        image: DecorationImage(
+                            image: NetworkImage(widget.image[0]),
+                            fit: BoxFit.cover),
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      height: width*0.1,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.5)),
+                      child: Center(
+                        child: IconButton(onPressed: (){
+
+                         ref.read(favour.notifier).update((state) => !state);
+                         favFunc();
+                        }
+                          , icon: Icon(
+                            ref.watch(favour) ? Icons.favorite : Icons.favorite,
+                            color: ref.watch(favour) ?Colors.red:Colors.grey,
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        widget.category,
-                        style: TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text('₹ ' + widget.price.toString()),
-                    ],
-                  ),
-                ),
+                )
               ],
             ),
-          ),
-        );
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(
+                    widget.category,
+                    style: TextStyle(fontWeight: FontWeight.w800),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('₹ ' + widget.price.toString()),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

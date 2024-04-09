@@ -10,6 +10,7 @@ import 'package:luna_demo/model/user_Model.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../commons/widgets.dart';
+import '../../../core/utils/favButton.dart';
 import '../../../main.dart';
 import '../../bookings/screens/productSingle.dart';
 
@@ -25,66 +26,66 @@ class _favouriteState extends ConsumerState<favourite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Pallette.white,
-        elevation: 0,
-        toolbarHeight: height*0.01,
-      ),
-        body: Padding(
-      padding:  EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            Container(
-              height: height * 0.08,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.search),
-                      ),
-                      Text(
-                        "Search",
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                  ),
-                  height: height * 0.06,
-                  decoration: BoxDecoration(
-                      color: Pallette.grey,
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-              ),
-            ),
-            gap,
-            ref.watch(datafavstreamProvider).when(
-                data: (data) {
-                  return GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.favourites.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 0.8, crossAxisCount: 2),
-                    itemBuilder: (context, index) {
-                      return petTile(data: data.favourites[index],);
-                    },
-                  );
-                },
-                error: (error, stackTrace) {
-                  return Text(error.toString());
-                },
-                loading: () {
-                  return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
-                },
-            )
-          ],
+        appBar: AppBar(
+          surfaceTintColor: Pallette.white,
+          elevation: 0,
+          toolbarHeight: height*0.01,
         ),
-      ),
-    ));
+        body: Padding(
+          padding:  EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                Container(
+                  height: height * 0.08,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.search),
+                          ),
+                          Text(
+                            "Search",
+                            style: TextStyle(color: Colors.grey),
+                          )
+                        ],
+                      ),
+                      height: height * 0.06,
+                      decoration: BoxDecoration(
+                          color: Pallette.grey,
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ),
+                gap,
+                ref.watch(datafavstreamProvider).when(
+                  data: (data) {
+                    return GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: data.favourites.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 0.8, crossAxisCount: 2),
+                      itemBuilder: (context, index) {
+                        return petTile(data: data.favourites[index],);
+                      },
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return Text(error.toString());
+                  },
+                  loading: () {
+                    return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+                  },
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
 
@@ -97,9 +98,9 @@ class petTile extends ConsumerStatefulWidget {
 }
 
 class _petTileState extends ConsumerState<petTile> {
+  final favour=StateProvider<bool>((ref) =>false );
   favFunc(data) async {
-    var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = UserModel.fromMap(user.data()!);
+
     var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
     List fav=currentUserModel!.favourites;
@@ -124,12 +125,12 @@ class _petTileState extends ConsumerState<petTile> {
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
-    setState(() {
 
-    });
   }
   @override
   Widget build(BuildContext context) {
+    // final favoriteState = ref.watch(favoriteStateProvider);
+
     return
       ref.watch(productfavstreamProvider(widget.data)).when(
         data: (data) {
@@ -160,8 +161,11 @@ class _petTileState extends ConsumerState<petTile> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ProducctSingleScreen(
+                      fav: favour,
+                      like:true,
                       id: data!.id,
                       tag: data.productname,
+                      category: false,
                     ),
                   ));
             },
@@ -189,19 +193,33 @@ class _petTileState extends ConsumerState<petTile> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.5)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: FavoriteButton(
-                                isFavorite: true,
-                                iconSize: 25,
-                                valueChanged: (_isFavorite) async {
-                                  favFunc(data);
-                                },
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(0.5)),
+                              child:
+                              IconButton(onPressed: (){
+                                ref.read(favour.notifier).update((state) => !state);
+                                favFunc(data);
+                              }
+                                , icon: Icon(
+                                  ref.watch(favour) ? Icons.favorite : Icons.favorite,
+                                  color: ref.watch(favour) ?Colors.red:Colors.red,
+                                ),
                               ),
-                            ),
+
+                            // Padding(
+                            //   padding: const EdgeInsets.all(5.0),
+                            //   child: FavoriteButton(
+                            //     isFavorite: true,
+                            //     iconSize: 25,
+                            //     valueChanged: (_isFavorite) async {
+                            //       favFunc(data);
+                            //     },
+                            //   ),
+                            // ),
+
+
+
                           ),
                         ),
                       )
