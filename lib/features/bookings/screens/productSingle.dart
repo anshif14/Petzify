@@ -274,107 +274,84 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                               child: Icon(CupertinoIcons.add)),
                         ],
                       ):SizedBox(),
+                      // gap,
+                      Text("Product Details",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
                       gap,
                       Text(data.description,
                         style: TextStyle(fontSize: width * 0.04),),
+                      gap,
+                      Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
+                      gap,
+                      Container(
+                        height:height*0.16 ,
+                        width: width*1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(width*0.03),
+                          border: Border.all(color: Pallette.primaryColor)
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CircleAvatar(
+                                  radius: width*0.07,
+                                ),
+                                Text("shabhdhjdj@gmail.com",style: TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.04),)
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(width*0.03),
+                              child: Container(
+                                  height: height*0.05,
+                                  width: width*1,
+                                  color: Colors.red,
+                                  child: Text("zvchdgfhdjkfjhghghjbnbhnbvfggyuhjkghjbvgfgvbnhjmnm,nmbnvghsgfhsgfgdfmcbjhvcdshgfhdsjvbjhvbdhvbdjshcvshgcvsghdfasghb ")),
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
 
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Divider(
-                        color: Colors.grey.shade300,
-                        thickness: 2,
-                      ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Product Detail",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: width * 0.045,
-                            ),
-                          ),
-                          Icon(Icons.arrow_forward_ios_outlined)
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
-                      Divider(
-                        color: Colors.grey.shade300,
-                        thickness: 2,
-                      ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Composition",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: width * 0.045,
-                            ),
-                          ),
-                          Icon(Icons.arrow_forward_ios_outlined)
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
-                      Divider(
-                        color: Colors.grey.shade300,
-                        thickness: 2,
-                      ),
-                      SizedBox(
-                        height: height * 0.01,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              BookingModel bookingModelData=BookingModel(
-                                  buyerId:"",
-                                  paymentMethod: "",
-                                  price:data.price.toString(),
-                                  qty:count.toString() ,
-                                  productName: data.productname,
-                                  buyerPhoneNumer: "",
-                                  buyerAddress: "",
-                                  buyerName:"",
-                                  userId: currentUserModel!.id,
-                                  productImage: data.image[0].toString(),
-                                  selectindex: -1
+                      GestureDetector(
+                        onTap: () {
+                          BookingModel bookingModelData=BookingModel(
+                              buyerId:"",
+                              paymentMethod: "",
+                              price:data.price.toString(),
+                              qty:count.toString() ,
+                              productName: data.productname,
+                              buyerPhoneNumer: "",
+                              buyerAddress: "",
+                              buyerName:"",
+                              userId: currentUserModel!.id,
+                              productImage: data.image[0].toString(),
+                              selectindex: -1
 
-                              );
-                              Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData,),));
-                            },
-                            child: Container(
-                              height: height * 0.07,
-                              width: width * 0.45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(width * 0.03),
-                                  color: Pallette.primaryColor),
-                              child: Center(
-                                child: Text(
-                                  "BUY NOW",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: width * 0.04,
-                                      color: Colors.white),
-                                ),
-                              ),
+                          );
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData,id:widget.id),));
+                        },
+                        child: Container(
+                          height: height * 0.07,
+                          width: width * 0.45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(width * 0.03),
+                              color: Pallette.primaryColor),
+                          child: Center(
+                            child: Text(
+                              "BUY NOW",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: width * 0.04,
+                                  color: Colors.white),
                             ),
                           ),
-                        ],
-                      )
+                        ),
+                      ),
                     ],
                   ),
                 ],

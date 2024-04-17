@@ -93,7 +93,8 @@ class _AddProductState extends ConsumerState<AddProduct> {
             userid: currentUserModel!.id,
             favUser: [],
             category: dropdownvalue.toString(),
-            petcategory: petdropdownvalue.toString()
+            petcategory: petdropdownvalue.toString(),
+            review: []
         ));
     FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
       "productadder":"add"

@@ -11,6 +11,7 @@ class ProductModel{
   String id;
   String userid;
   List favUser;
+  List review;
 
 
   ProductModel({
@@ -26,7 +27,8 @@ class ProductModel{
     required this.phonenumber,
     required this.id,
     required this.userid,
-    required this.favUser
+    required this.favUser,
+    required this.review
 
 });
 
@@ -43,7 +45,8 @@ class ProductModel{
       "phonenumber": this.phonenumber,
       "id": this.id,
       "userid":this.userid,
-      "favUser":this.favUser
+      "favUser":this.favUser,
+      "review":this.review
     };
   }
 
@@ -60,7 +63,8 @@ class ProductModel{
       phonenumber: Map["phonenumber"] ?? "",
       id: Map["id"]?? "",
       userid: Map["user id"]??"",
-      favUser: Map["favUser"]??[]
+      favUser: Map["favUser"]??[],
+        review:Map["review"]??[]
     );
   }
 
@@ -76,7 +80,8 @@ class ProductModel{
     String? phonenumber,
     String? id,
     String? userid,
-    List? favUser
+    List? favUser,
+    List? review
 }){
     return ProductModel(
       productname: productname ?? this.productname,
@@ -90,7 +95,8 @@ class ProductModel{
       phonenumber: phonenumber ?? this.phonenumber,
       id: id ?? this.id,
       userid: userid ?? this.userid,
-      favUser: favUser??this.favUser
+      favUser: favUser??this.favUser,
+        review: review??this.review
     );
   }
 

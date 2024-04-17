@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/features/bookings/screens/review_page.dart';
 import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/model/booking_model.dart';
 
@@ -14,7 +15,8 @@ import '../controller/booking_controller.dart';
 
 
 class paymentMethod extends ConsumerStatefulWidget {
-   paymentMethod({super.key,required this.bookingModel1});
+  final String id;
+   paymentMethod({super.key,required this.bookingModel1,required this.id});
   BookingModel bookingModel1;
 
   @override
@@ -147,19 +149,32 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
                           child: Column(
                             children: [
                               Lottie.asset(imageConstants.lottie),
-                              Text("Successfully Ordered!!")
+                              Text("Successfully Ordered!!"),
+                              gap,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ElevatedButton(onPressed: () {
+                                    Navigator.push(context, CupertinoPageRoute(builder:
+                                        (context) => reviewPage(id: widget.id,),));
+                                  }, child: Text("Give a Review",style: TextStyle(color: Pallette.white),),
+                                  style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Pallette.primaryColor)),
+                                  ),
+                                  ElevatedButton(onPressed: () {
+                                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),));
+                                  }, child: Text("Ok",style: TextStyle(color: Pallette.white),),
+                                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Pallette.primaryColor)
+                                    )
+                                  )
+                                ],
+                              )
                             ],
                           ),
                         ),
                       );
                     }
                 );
-                Future.delayed(Duration(seconds: 3))
-                  .then((value) => Navigator.pushReplacement(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => NavBar(),
-                  )));
+
 
               },
               child: Container(
