@@ -7,12 +7,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
+import 'package:luna_demo/features/explore/repository/explore_repository.dart';
+import 'package:luna_demo/features/order/controller/order_stream_controller.dart';
 import 'package:luna_demo/features/profile/screen/editProfile.dart';
 import 'package:luna_demo/features/myads/screen/myAds.dart';
 import 'package:luna_demo/features/order/screen/myOrder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
+import '../../../model/user_Model.dart';
 
 class profileScreen extends StatefulWidget {
   const profileScreen({super.key});
@@ -25,6 +28,7 @@ class _profileScreenState extends State<profileScreen> {
   bool toggle = false;
 
   @override
+
 
 
   @override
@@ -334,8 +338,11 @@ class _profileScreenState extends State<profileScreen> {
                                 textStyle:
                                     TextStyle(color: Pallette.primaryColor),
                                 onPressed: () async {
-                                  SharedPreferences _prefs =
-                                      await SharedPreferences.getInstance();
+                                  SharedPreferences _prefs = await SharedPreferences.getInstance();
+                                  _prefs.remove('email');
+                                  currentUserEmail="";
+                                  // _prefs.remove("login");
+                                  currentUserModel=null;
                                   _prefs.clear();
                                   GoogleSignIn().signOut();
                                   FirebaseAuth.instance.signOut();

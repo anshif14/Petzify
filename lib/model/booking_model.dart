@@ -8,10 +8,11 @@ class BookingModel{
   String buyerName;
   String buyerAddress;
   String buyerPhoneNumer;
-  String buyerId;
+  String bookingId;
   String paymentMethod;
   String userId;
   int selectindex;
+
 
   BookingModel({
     required this.productName,
@@ -21,10 +22,11 @@ class BookingModel{
     required this.buyerName,
     required this.buyerAddress,
     required this.buyerPhoneNumer,
-    required this.buyerId,
+    required this.bookingId,
     required this.paymentMethod,
     required this.userId,
-    required this.selectindex
+    required this.selectindex,
+
 });
 
   Map<String,dynamic>toMap(){
@@ -36,7 +38,7 @@ class BookingModel{
       "buyerName":this.buyerName,
       "buyerAddress":this.buyerAddress,
       "buyerPhoneNumber":this.buyerPhoneNumer,
-      "buyerId":this.buyerId,
+      "bookingId":this.bookingId,
       "paymentMethod":this.paymentMethod,
       "userId":this.userId,
       "selectindex":this.selectindex,
@@ -51,10 +53,11 @@ class BookingModel{
       buyerName: Map["buyerName"]??"",
       buyerAddress: Map["buyerAddress"]??"",
       buyerPhoneNumer: Map["buyerPhoneNumber"]??"",
-      buyerId: Map["buyerId"]??"",
+        bookingId: Map["bookingId"]??"",
       paymentMethod: Map["paymentMethod"]??"",
         userId: Map["userId"] ?? "",
-        selectindex: Map["selectindex"] ?? -1
+        selectindex: Map["selectindex"] ?? -1,
+
     );
   }
   BookingModel copyWith({
@@ -65,7 +68,7 @@ class BookingModel{
     String? buyerName,
     String? buyerAddress,
     String? buyerPhoneNumer,
-    String? buyerId,
+    String? bookingId,
     String? paymentMethod,
     String? userId,
     int? selectindex,
@@ -79,7 +82,7 @@ class BookingModel{
         buyerName: buyerName ?? this.buyerName,
         buyerAddress: buyerAddress ?? this.buyerAddress,
         buyerPhoneNumer: buyerPhoneNumer ?? this.buyerPhoneNumer,
-        buyerId: buyerId?? this.buyerId,
+      bookingId: bookingId?? this.bookingId,
         paymentMethod: paymentMethod ?? this.paymentMethod,
         userId: userId ?? this.userId,
       selectindex: selectindex ?? this.selectindex,

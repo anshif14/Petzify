@@ -12,25 +12,31 @@ final exploreRepositoryProvider=Provider((ref)=>ExploreRepository(firestore:ref.
 
 UserModel? usermodel;
 
-class ExploreRepository{
+class ExploreRepository {
   final FirebaseFirestore _firestore;
-  ExploreRepository({ required FirebaseFirestore firestore}):
-      _firestore = firestore;
+
+  ExploreRepository({ required FirebaseFirestore firestore}) :
+        _firestore = firestore;
 
   CollectionReference get _explore => _firestore.collection('product');
+
   CollectionReference get _user => _firestore.collection('users');
 
 
-
-  addProduct(ProductModel productData){
+  addProduct(ProductModel productData) {
     _explore.add(productData.toMap()).then((value) {
+      List? newOrder = currentUserModel?.productadd;
+      newOrder?.add(value.id);
+
       value.update(productData.copyWith(id: value.id).toMap());
-    },);
-  }
-  adder(String add){
-    // print(currentUserModel?.id);
-    _user.doc(currentUserModel!.id).update(currentUserModel!.copyWith(productadder: add).toMap());
-  }
 
-
+      /// FirebaseFirestore.instance.collection('users')
+      _user.doc(currentUserModel!.id).update(
+          currentUserModel!.copyWith(productadd: newOrder,productCount: newOrder?.length).toMap());
+    });
+  }
 }
+  // adder(String add){
+  //   // print(currentUserModel?.id);
+  //   _user.doc(currentUserModel!.id).update(currentUserModel!.copyWith(productadder: add).toMap());
+  // }

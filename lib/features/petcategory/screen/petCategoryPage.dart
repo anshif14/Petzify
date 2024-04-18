@@ -108,7 +108,8 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
               return Text(error.toString());
             },
             loading: () {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+
             },)
 
           ],

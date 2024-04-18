@@ -15,13 +15,21 @@ class BookingRepository{
   CollectionReference get _booking=> _firestore.collection("bookings");
   CollectionReference get _product=> _firestore.collection("product");
   CollectionReference get _book=> _firestore.collection("users");
+
   addBooking(BookingModel bookingdata){
     _booking.add(bookingdata.toMap()).then((value) {
-      value.update(bookingdata.copyWith(buyerId: value.id).toMap());
-      FirebaseFirestore.instance.collection('users').doc(currentUserModel!.id).update(
-          {
-            "booking":FieldValue.arrayUnion([value.id])
-          });
+      List? newBooking = currentUserModel?.booking;
+      newBooking?.add(value.id);
+
+      value.update(bookingdata.copyWith(bookingId: value.id).toMap());
+      /// FirebaseFirestore.instance.collection('users')
+      _book.doc(currentUserModel!.id).update(
+        currentUserModel!.copyWith(booking: newBooking, bookingCount: newBooking?.length).toMap()
+          // {
+          //   "booking":list,
+          //   "bookingCount":list.length,
+          // }
+          );
 
     },);
     // functionBook(){

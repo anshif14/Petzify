@@ -395,8 +395,7 @@ class _editProfileState extends ConsumerState<editProfile> {
               onTap: () async {
                 UserModel usermodel = currentUserModel!;
                 useredit();
-              //
-              //
+
 
       var value =await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
       currentUserModel = UserModel.fromMap(value.data()!);

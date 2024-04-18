@@ -96,14 +96,14 @@ class _AddProductState extends ConsumerState<AddProduct> {
             petcategory: petdropdownvalue.toString(),
             review: []
         ));
-    FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
-      "productadder":"add"
-    });
+    // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
+    //   "productadder":"add"
+    // });
 
   }
-  adrup(){
-    ref.read(exploreControllerProvider).adder("add");
-  }
+  // adrup(){
+  //   ref.read(exploreControllerProvider).adder("add");
+  // }
 
 
   TextEditingController prdnamecontroller=TextEditingController();
@@ -540,7 +540,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
                   // update();
 
                 add();
-                  adrup();
+                  // adrup();
                   Navigator.pop(context);
 
 

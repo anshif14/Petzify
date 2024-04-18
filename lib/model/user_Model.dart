@@ -7,9 +7,12 @@ class UserModel {
   String number;
   String gender;
   List booking;
-  String productadder;
+  List productadd;
   List favourites;
   bool block;
+  int bookingCount;
+  int productCount;
+
   UserModel({
     required this.name,
     required   this.email,
@@ -19,9 +22,11 @@ class UserModel {
     required this.number,
     required   this.gender,
     required   this.booking,
-    required   this.productadder,
+    required   this.productadd,
     required  this.favourites,
     required this.block,
+    required this.bookingCount,
+    required this.productCount,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,10 +38,12 @@ class UserModel {
       "images": this.images,
       "number": this.number,
       "gender": this.gender,
-      "productadder": this.productadder,
+      "productadd": this.productadd,
       "booking": this.booking,
       "favourites": this.favourites,
-      "block":this.block
+      "block":this.block,
+      "bookingCount":this.bookingCount,
+      "productCount":this.productCount,
     };
   }
 
@@ -50,9 +57,11 @@ class UserModel {
       number: Map["number"] ?? "",
       gender: Map["gender"] ?? "",
       booking: Map["booking"] ?? [],
-      productadder: Map["productadder"] ?? "",
+      productadd: Map["productadd"] ?? [],
       favourites: Map["favourites"] ?? "",
       block: Map["block"] ?? false,
+      bookingCount: Map["bookingCount"] ?? 0,
+      productCount: Map["productCount"] ?? 0,
     );
   }
 
@@ -65,9 +74,11 @@ class UserModel {
     String? number,
     String? gender,
     List? booking,
-    String? productadder,
+    List? productadd,
     List? favourites,
     bool? block,
+    int? bookingCount,
+    int? productCount,
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -79,9 +90,11 @@ class UserModel {
       number: number ?? this.number,
       gender: gender ?? this.gender,
       booking: booking ?? this.booking,
-      productadder: productadder ?? this.productadder,
+      productadd: productadd ?? this.productadd,
       favourites: favourites ?? this.favourites,
       block: block ?? this.block,
+      bookingCount: bookingCount ?? this.bookingCount,
+      productCount: productCount ?? this.productCount,
     );
   }
 }

@@ -47,9 +47,8 @@ class _adsViewState extends State<adsView> {
                 } ),
                 builder: (context, snapshot) {
                   if(!snapshot.hasData){
-                    return Center(child: CircularProgressIndicator(
+                    return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
 
-                    ),);
 
                   }
                   ProductModel data=snapshot.data!;

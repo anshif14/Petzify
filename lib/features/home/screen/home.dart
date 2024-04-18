@@ -18,6 +18,7 @@ import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
+
 import '../../bookings/screens/productSingle.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -152,7 +153,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                   return Text(error.toString());
                 },
                 loading: () {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+
                 },),
               // StreamBuilder<DocumentSnapshot>(
               //    {
@@ -248,7 +250,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                   return Text(error.toString());
                 },
                 loading: () {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+
                 },)
             ],
           ),
@@ -381,7 +384,8 @@ getfun();
                       height: width*0.1,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.5)),
+                          // color: Colors.white.withOpacity(0.4)
+                      ),
                       child: Center(
                         child: IconButton(onPressed: (){
 
@@ -404,7 +408,7 @@ getfun();
               child: Row(
                 children: [
                   Text(
-                    widget.category,
+                    widget.name,
                     style: TextStyle(fontWeight: FontWeight.w800),
                   ),
                 ],

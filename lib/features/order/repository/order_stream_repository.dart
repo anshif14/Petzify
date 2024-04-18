@@ -14,8 +14,9 @@ class OrderStreamRepository{
 
   CollectionReference get _orderStream =>_firestore.collection("bookings");
 
-  orderdata(){
-    return _orderStream.where("userId",isEqualTo: currentUserModel!.id).snapshots().map((event) => event.docs.map((e) =>
+  Stream<List<BookingModel>> orderData({required String usrId}){
+    print(currentUserModel!.id);
+    return _orderStream.where("userId",isEqualTo: usrId).snapshots().map((event) => event.docs.map((e) =>
     BookingModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
 

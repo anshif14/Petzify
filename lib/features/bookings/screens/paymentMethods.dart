@@ -132,11 +132,15 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
               onTap: () async {
 
               await  add();
+              setState(() {
+
+              });
               // bookingdata();
                 showDialog(
                     context: context,
                     builder: (context){
                       return AlertDialog(
+                        surfaceTintColor: Pallette.secondaryBrown,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(width*0.05)
                         ),

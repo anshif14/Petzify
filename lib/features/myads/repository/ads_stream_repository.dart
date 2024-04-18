@@ -21,9 +21,9 @@ class AdsStreamRepository{
 
      return data;
    }
-  updatefun(String remove){
-    _delete.doc(currentUserModel!.id).update(currentUserModel!.copyWith(productadder: remove).toMap());
-  }
+  // updatefun(String remove){
+  //   _delete.doc(currentUserModel!.id).update(currentUserModel!.copyWith(productadder: remove).toMap());
+  // }
 
   // update(String add){
   //   UserModel? usermodel;

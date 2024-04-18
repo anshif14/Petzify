@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
@@ -94,9 +95,12 @@ class _myOrderState extends ConsumerState<myOrder> {
             //     ),
             //   ),
             // ),
-            Expanded(
-              child: ref.watch(orderDataProvider).when(data: (data) {
-                return  ListView.separated(
+
+                Expanded(
+                child: ref.watch(orderDataStreamProvider(currentUserModel!.id)).when(
+                  data: (data) {
+                    return data.isNotEmpty?
+                    ListView.separated(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     return InkWell(
@@ -111,7 +115,7 @@ class _myOrderState extends ConsumerState<myOrder> {
                             ),
                         ));
                         setState(() {
-
+                
                         });
                       },
                       child: Container(
@@ -158,7 +162,7 @@ class _myOrderState extends ConsumerState<myOrder> {
                               Icon(Icons.arrow_forward_ios_outlined,
                                 color: Pallette.primaryColor,
                                 size: width*0.04,
-
+                
                               ),
                             ],
                           ),
@@ -168,12 +172,12 @@ class _myOrderState extends ConsumerState<myOrder> {
                   },
                   separatorBuilder: (context, index) {
                     return Divider(color: Pallette.primaryColor,);
-                  },);
-              }, error: (error, stackTrace) =>  Text(error.toString()),
-                  loading: () {
-                    return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
-                  },)
-            )
+                  },):Center(child: Text("You'r Not Order \n !",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.06),));
+            }, error: (error, stackTrace) => Text(error.toString()), loading: () {
+                  return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+
+                },)
+                )
           ],
 
         ),

@@ -29,9 +29,9 @@ class _myAdsState extends ConsumerState<myAds> {
   late ProductModel productData;
   String? selectedProduct;
 
-  remove(){
-    ref.read(adstreamControllerProvider).updatedatasss("");
-  }
+  // remove(){
+  //   ref.read(adstreamControllerProvider).updatedatasss("");
+  // }
 
   deletFunc(data,index) async {
 
@@ -63,11 +63,39 @@ class _myAdsState extends ConsumerState<myAds> {
               print(userdata);
             });
             FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
+
+
+            FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+              // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
+                {
+                  "productadd":FieldValue.arrayRemove([data[index].id]),
+
+                }).then((value) {
+              List? newproduct = currentUserModel?.productadd;
+              newproduct!.remove(data[index].id);
+              FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+                  {
+                    "productCount":newproduct.length,
+                  });
+            });
           }
         }
       }
     }else{
       FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
+      FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+        // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
+          {
+            "productadd":FieldValue.arrayRemove([data[index].id]),
+
+          }).then((value) {
+        List? newproduct = currentUserModel?.productadd;
+        newproduct!.remove(data[index].id);
+        FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+            {
+              "productCount":newproduct.length,
+            });
+      });
     }
   }
 
@@ -148,7 +176,7 @@ class _myAdsState extends ConsumerState<myAds> {
           child: AnimationLimiter(
             child: ref.watch(adsStreamProvider).when(
                 data: (data) {
-                  return GridView.builder(
+                  return data.isNotEmpty?GridView.builder(
                     itemCount: data.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -230,7 +258,8 @@ class _myAdsState extends ConsumerState<myAds> {
                                                       isDefaultAction: true,
                                                       onPressed: ()  async {
                                                         deletFunc(data,index);
-                                                       await remove();
+
+                                                       // await remove();
                                                       // await  updatedata();
                                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
                                                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -311,7 +340,7 @@ class _myAdsState extends ConsumerState<myAds> {
                         ),
                       );
 
-                    },);
+                    },):Center(child: Text("No Show You Ads \n !",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.06),));
                 },
                 error: (error, stackTrace) {
                   return Text(
@@ -319,7 +348,8 @@ class _myAdsState extends ConsumerState<myAds> {
                   );
                 },
                 loading: () {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+
                 },)
 
 

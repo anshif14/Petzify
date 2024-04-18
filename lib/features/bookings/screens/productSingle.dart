@@ -126,201 +126,211 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
               //   List image=data.image;
         ref.watch(SingleProductStreamProvider(widget.id)).when(
           data: (data) {
+            List review = data!.review;
             return Container(
               height: height*0.84,
               // color: Colors.red,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(children: [
-                        CarouselSlider.builder(
-                          itemCount: data.image.length,
-                          options: CarouselOptions(
-                              viewportFraction: 1,
-                              autoPlay: true,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  currentIndex = index;
-                                });
-                              },
-                              autoPlayAnimationDuration: Duration(seconds: 2)),
-                          itemBuilder: (context, index, realIndex) {
-                            return Hero(
-                              tag: widget.tag,
-                              child: Container(
-                                height: height * 0.25,
-                                width: width * 1,
-                                margin: EdgeInsets.only(left: width * 0.03),
-                                decoration: BoxDecoration(
-                                    color: Colors.yellow,
-                                    borderRadius: BorderRadius.circular(width * 0.03),
-                                    image: DecorationImage(
-                                        image: NetworkImage(data.image[index]),
-                                        fit: BoxFit.cover)),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(children: [
+                          CarouselSlider.builder(
+                            itemCount: data.image.length,
+                            options: CarouselOptions(
+                                viewportFraction: 1,
+                                autoPlay: true,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    currentIndex = index;
+                                  });
+                                },
+                                autoPlayAnimationDuration: Duration(seconds: 2)),
+                            itemBuilder: (context, index, realIndex) {
+                              return Hero(
+                                tag: widget.tag,
+                                child: Container(
+                                  height: height * 0.25,
+                                  width: width * 1,
+                                  margin: EdgeInsets.only(left: width * 0.03),
+                                  decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                      borderRadius: BorderRadius.circular(width * 0.03),
+                                      image: DecorationImage(
+                                          image: NetworkImage(data.image[index]),
+                                          fit: BoxFit.cover)),
+                                ),
+                              );
+                            },
+                          ),
+                          Positioned(
+                            top: height * 0.24,
+                            left: width * 0.37,
+                            child: AnimatedSmoothIndicator(
+                              activeIndex: currentIndex,
+                              count: data.image.length,
+                              effect: ExpandingDotsEffect(
+                                  dotHeight: height * 0.006,
+                                  activeDotColor: Pallette.primaryColor,
+                                  dotColor: Colors.grey.shade300),
+                            ),
+                          ),
+                        ]),
+                        SizedBox(
+                          height: height * 0.015,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width:width*0.5,
+                                child: Text(
+                                  "${data.productname} ",
+                                  overflow: TextOverflow.values[0],
+                                  style: TextStyle(
+                                      color: Pallette.primaryColor,
+                                      fontSize: width * 0.045,
+                                      fontWeight: FontWeight.w800
+                                  ),
+                                ),
                               ),
-                            );
+                              Container(
+                                child: Text(
+                                  "\₹ ${data.price}",
+                                  style: TextStyle(
+                                      fontSize: width * 0.05,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                              ),
+                            ]),
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        RatingStars(
+                          value: value,
+                          onValueChanged: (v) {
+                            //
+                            setState(() {
+                              value = v;
+                            });
                           },
-                        ),
-                        Positioned(
-                          top: height * 0.24,
-                          left: width * 0.37,
-                          child: AnimatedSmoothIndicator(
-                            activeIndex: currentIndex,
-                            count: data.image.length,
-                            effect: ExpandingDotsEffect(
-                                dotHeight: height * 0.006,
-                                activeDotColor: Pallette.primaryColor,
-                                dotColor: Colors.grey.shade300),
+                          starBuilder: (index, color) => Icon(
+                            Icons.ac_unit_outlined,
+                            color: color,
                           ),
+                          starCount: 5,
+                          starSize: 20,
+                          valueLabelColor: const Color(0xff9b9b9b),
+                          valueLabelTextStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 12.0),
+                          valueLabelRadius: 10,
+                          maxValue: 5,
+                          starSpacing: 2,
+                          maxValueVisibility: true,
+                          valueLabelVisibility: true,
+                          animationDuration: Duration(milliseconds: 1000),
+                          valueLabelPadding:
+                          const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                          valueLabelMargin: const EdgeInsets.only(right: 8),
+                          starOffColor: const Color(0xffe7e8ea),
+                          starColor: Pallette.primaryColor,
                         ),
-                      ]),
-                      SizedBox(
-                        height: height * 0.015,
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        SizedBox(
+                          height: height * 0.02,
+                        ),
+                        data.category=="Product"? Row(
                           children: [
-                            Container(
-                              width:width*0.5,
-                              child: Text(
-                                "${data.productname} ",
-                                overflow: TextOverflow.values[0],
-                                style: TextStyle(
-                                    color: Pallette.primaryColor,
-                                    fontSize: width * 0.045,
-                                    fontWeight: FontWeight.w800
-                                ),
-                              ),
+                            InkWell(
+                                onTap: () {
+                                  count <= 0 ? 0 : count--;
+                                  setState(() {});
+                                },
+                                child: Icon(CupertinoIcons.minus)),
+                            SizedBox(
+                              width: width * 0.03,
                             ),
                             Container(
-                              child: Text(
-                                "\₹ ${data.price}",
-                                style: TextStyle(
-                                    fontSize: width * 0.05,
-                                    fontWeight: FontWeight.w800),
-                              ),
+                              height: height * 0.05,
+                              width: width * 0.1,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(width * 0.03),
+                                  border: Border.all(color: Colors.grey.shade300)),
+                              child: Center(child: Text(count.toString())),
                             ),
-                          ]),
-                      SizedBox(
-                        height: height * 0.02,
-                      ),
-                      RatingStars(
-                        value: value,
-                        onValueChanged: (v) {
-                          //
-                          setState(() {
-                            value = v;
-                          });
-                        },
-                        starBuilder: (index, color) => Icon(
-                          Icons.ac_unit_outlined,
-                          color: color,
-                        ),
-                        starCount: 5,
-                        starSize: 20,
-                        valueLabelColor: const Color(0xff9b9b9b),
-                        valueLabelTextStyle: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12.0),
-                        valueLabelRadius: 10,
-                        maxValue: 5,
-                        starSpacing: 2,
-                        maxValueVisibility: true,
-                        valueLabelVisibility: true,
-                        animationDuration: Duration(milliseconds: 1000),
-                        valueLabelPadding:
-                        const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-                        valueLabelMargin: const EdgeInsets.only(right: 8),
-                        starOffColor: const Color(0xffe7e8ea),
-                        starColor: Pallette.primaryColor,
-                      ),
-                      SizedBox(
-                        height: height * 0.02,
-                      ),
-                      data.category=="Product"? Row(
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                count <= 0 ? 0 : count--;
-                                setState(() {});
-                              },
-                              child: Icon(CupertinoIcons.minus)),
-                          SizedBox(
-                            width: width * 0.03,
-                          ),
-                          Container(
-                            height: height * 0.05,
-                            width: width * 0.1,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(width * 0.03),
-                                border: Border.all(color: Colors.grey.shade300)),
-                            child: Center(child: Text(count.toString())),
-                          ),
-                          SizedBox(
-                            width: width * 0.03,
-                          ),
-                          InkWell(
-                              onTap: () {
-                                count++;
-                                setState(() {});
-                              },
-                              child: Icon(CupertinoIcons.add)),
-                        ],
-                      ):SizedBox(),
-                      // gap,
-                      Text("Product Details",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
-                      gap,
-                      Text(data.description,
-                        style: TextStyle(fontSize: width * 0.04),),
-                      gap,
-                      Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
-                      gap,
-                      Container(
-                        height:height*0.16 ,
-                        width: width*1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(width*0.03),
-                          border: Border.all(color: Pallette.primaryColor)
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CircleAvatar(
-                                  radius: width*0.07,
-                                ),
-                                Text("shabhdhjdj@gmail.com",style: TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.04),)
-                              ],
+                            SizedBox(
+                              width: width * 0.03,
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(width*0.03),
-                              child: Container(
-                                  height: height*0.05,
-                                  width: width*1,
-                                  color: Colors.red,
-                                  child: Text("zvchdgfhdjkfjhghghjbnbhnbvfggyuhjkghjbvgfgvbnhjmnm,nmbnvghsgfhsgfgdfmcbjhvcdshgfhdsjvbjhvbdhvbdjshcvshgcvsghdfasghb ")),
-                            )
+                            InkWell(
+                                onTap: () {
+                                  count++;
+                                  setState(() {});
+                                },
+                                child: Icon(CupertinoIcons.add)),
                           ],
-                        ),
-                      )
-                    ],
-                  ),
+                        ):SizedBox(),
+                        // gap,
+                        Text("Product Details",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
+                        SizedBox(height: height*0.015,),
+                        Text(data.description,
+                          style: TextStyle(fontSize: width * 0.04),),
+                        gap,
+                        Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
+                        SizedBox(height: height*0.015,),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
+                        Container(
+                          height:height*0.16,
+                          child:review.isNotEmpty?ListView.builder(
+                            itemCount: 1,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                height:height*0.16 ,
+                                width: width*1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(width*0.03),
+                                    border: Border.all(color: Pallette.primaryColor)
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ListTile(
+                                        leading:CircleAvatar(
+                                          backgroundImage: NetworkImage("https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"),
+                                          radius: width*0.06,
+                                        ),
+                                        title: Text("${review[index]['userid']}",style: TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.04),)
+
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(width*0.03),
+                                      child: SizedBox(
+                                          height: height*0.06,
+                                          width: width*1,
+                                          child: Text(
+                                              overflow: TextOverflow.ellipsis,
+                                              "${review[index]["review"]}")),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          ):SizedBox(),
+                        )
+                      ],
+                    ),
+                gap,
+                    Center(
+                      child: GestureDetector(
                         onTap: () {
                           BookingModel bookingModelData=BookingModel(
-                              buyerId:"",
+                              bookingId:"",
                               paymentMethod: "",
                               price:data.price.toString(),
                               qty:count.toString() ,
@@ -352,9 +362,9 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             );
           },

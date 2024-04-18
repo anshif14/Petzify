@@ -6,6 +6,7 @@ import 'package:another_stepper/widgets/another_stepper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
@@ -17,7 +18,7 @@ import 'package:luna_demo/model/product_Model.dart';
 
 import '../../../main.dart';
 
-class orderView extends StatefulWidget {
+class orderView extends ConsumerStatefulWidget {
   const orderView({super.key, required this.data,
     /*required this.productName,
     required this.productImage,
@@ -33,10 +34,10 @@ class orderView extends StatefulWidget {
   // final int selectindex;
 
   @override
-  State<orderView> createState() => _orderViewState();
+  ConsumerState<orderView> createState() => _orderViewState();
 }
 
-class _orderViewState extends State<orderView> {
+class _orderViewState extends ConsumerState<orderView> {
 
  // int selectindex=0;
   List<StepperData> stepperData = [
@@ -193,6 +194,7 @@ class _orderViewState extends State<orderView> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
+                              surfaceTintColor: Pallette.secondaryBrown,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(width*0.05)
                               ),
@@ -213,10 +215,22 @@ class _orderViewState extends State<orderView> {
                             );
                           },
                       );
-                      FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
-                        "booking":FieldValue.arrayRemove([widget.data.buyerId])
+
+                      FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+                          // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
+                          {
+                        "booking":FieldValue.arrayRemove([widget.data.bookingId]),
+
+                      }).then((value) {
+                        List? newBooking = currentUserModel?.booking;
+                        newBooking!.remove(widget.data.bookingId);
+                        print(newBooking);
+                        FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+                            {
+                              "bookingCount":newBooking.length,
+                            });
                       });
-                      FirebaseFirestore.instance.collection("bookings").doc(widget.data.buyerId).delete();
+                      FirebaseFirestore.instance.collection("bookings").doc(widget.data.bookingId).delete();
                       Future.delayed(Duration(seconds: 3))
                           .then((value) => Navigator.pushReplacement(context,
                           CupertinoPageRoute(builder: (context) =>myOrder() ,))

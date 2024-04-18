@@ -62,7 +62,7 @@ class ProductModel{
       address: Map["address"] ?? "",
       phonenumber: Map["phonenumber"] ?? "",
       id: Map["id"]?? "",
-      userid: Map["user id"]??"",
+      userid: Map["userid"]??"",
       favUser: Map["favUser"]??[],
         review:Map["review"]??[]
     );

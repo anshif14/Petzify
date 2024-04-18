@@ -60,6 +60,7 @@ dependencies:
   flutter_riverpod: ^2.4.10
   chewie: ^1.8.1
   video_player: ^2.8.5
+  shimmer: ^3.0.0
 
 
 
