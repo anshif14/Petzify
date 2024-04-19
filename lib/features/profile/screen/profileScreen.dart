@@ -107,12 +107,16 @@ class _profileScreenState extends State<profileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(currentUserModel!.name,
-                                style: TextStyle(
-                                  fontSize: width * 0.04,
-                                  fontWeight: FontWeight.w600,
-                                  color: Pallette.white,
-                                )),
+                            Container(
+                              width: width*0.5,
+                              child: Text(currentUserModel!.name,
+                                  style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: width * 0.04,
+                                    fontWeight: FontWeight.w600,
+                                    color: Pallette.white,
+                                  )),
+                            ),
                             Text(
                               "Kerala",
                               style: TextStyle(
