@@ -47,6 +47,9 @@ class imageConstants{
   static const boarding='assets/images/boarding.jpg';
   static const training='assets/images/training center.webp';
 
+  static const no_order='assets/images/no_order.png';
+  static const no_ads='assets/images/no_ads.jpg';
+
   //svg
   static const dogSvg='assets/svg/dog.svg';
   //login

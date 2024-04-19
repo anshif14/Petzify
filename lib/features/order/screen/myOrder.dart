@@ -172,7 +172,7 @@ class _myOrderState extends ConsumerState<myOrder> {
                   },
                   separatorBuilder: (context, index) {
                     return Divider(color: Pallette.primaryColor,);
-                  },):Center(child: Text("You'r Not Order \n !",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.06),));
+                  },):Center(child:Image.asset(imageConstants.no_order));
             }, error: (error, stackTrace) => Text(error.toString()), loading: () {
                   return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
 

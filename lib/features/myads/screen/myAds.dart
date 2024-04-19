@@ -340,7 +340,7 @@ class _myAdsState extends ConsumerState<myAds> {
                         ),
                       );
 
-                    },):Center(child: Text("No Show You Ads \n !",textAlign: TextAlign.center,style: TextStyle(fontSize: width*0.06),));
+                    },):Center(child:Image.asset(imageConstants.no_ads));
                 },
                 error: (error, stackTrace) {
                   return Text(
