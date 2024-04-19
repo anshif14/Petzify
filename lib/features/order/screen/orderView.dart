@@ -81,11 +81,14 @@ class _orderViewState extends ConsumerState<orderView> {
           )),
     ),
   ];
+  TextEditingController reviewcontroller=TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Colors.white,
         elevation: 0,
         title:Text("Order Details",style: TextStyle(
         fontSize:width*0.05,
@@ -96,177 +99,230 @@ class _orderViewState extends ConsumerState<orderView> {
 
     body: Padding(
     padding:  EdgeInsets.only(right: width*0.04,left: width*0.04,bottom: width*0.04,),
-    child:  Column(
-        children: [
-          Container(
-            width: width*1,
-            height: height*0.2,
-            // color: Colors.red,
-            child: Column(
+    child:  SingleChildScrollView(
+      child: Column(
+          children: [
+            Container(
+              width: width*1,
+              height: height*0.17,
+              // color: Colors.red,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: width*0.6,
+                        height: height*0.1,
+                        child: Center(
+                          child: Text(widget.data.productName,
+                              style: TextStyle(
+      
+                            fontSize: width*0.05,
+                          )),
+                        ),
+                        // color: Colors.green,
+                      ),
+                      Container(
+                        height: width*0.23,
+                        width: width*0.23,
+                        decoration:  BoxDecoration(
+                            color: Colors.white,
+                            image: DecorationImage(image: NetworkImage(widget.data.productImage),fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(width*0.02)
+                        ),
+                        // image: DecorationImage(image: AssetImage(coupons[index]["poster"]),fit: BoxFit.cover),
+                      ),
+                    ],
+                  ),
+                  Text(widget.data.buyerName,style: TextStyle(
+                    color: Pallette.grey1
+                  ),),
+                  Text(widget.data.price,style: TextStyle(
+                    fontSize: width*0.05
+                  ),)
+      
+                ],
+              ),
+            ),
+      
+            AnotherStepper(
+              stepperList: stepperData,
+              stepperDirection: Axis.vertical,
+              inverted: false,
+              activeIndex: widget.data.selectindex,
+              barThickness: width*0.006,
+              activeBarColor: Colors.green,
+              verticalGap: width*0.07,
+      
+            ),
+      
+      
+            Container(
+             height: height*0.07,
+             width: width*1,
+             decoration: BoxDecoration(
+                 color: Pallette.secondaryBrown,
+               borderRadius: BorderRadius.circular(width*0.015),
+             ),
+              child: Center(child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Container(
+                        height: height*0.03,
+                        child: Image.asset(imageConstants.checkout)),
+                  ),
+                  Text("You can cancel this order till tomorrow 12 PM",
+                  style: TextStyle(
+                    fontSize: width*0.03
+                  )),
+                ],
+              ),),
+            ),
+            gap,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: width*0.6,
-                      height: height*0.1,
-                      child: Center(
-                        child: Text(widget.data.productName,
-                            style: TextStyle(
-
-                          fontSize: width*0.05,
-                        )),
+                Text("Write a Review"),
+                SizedBox(height: height*0.01,),
+                TextFormField(
+                  textInputAction:TextInputAction.newline ,
+                  keyboardType: TextInputType.multiline,
+                  maxLines:4,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: reviewcontroller,
+                  style: TextStyle(
+                      color: CupertinoColors.black
+                  ),
+                  decoration: InputDecoration(
+                      hintText: "How is the product? What do you like? What do you hate?",
+                      hintStyle: TextStyle(
+                          color:CupertinoColors.black.withOpacity(0.5),
+                          fontSize: width*0.037
                       ),
-                      // color: Colors.green,
-                    ),
-                    Container(
-                      height: width*0.23,
-                      width: width*0.23,
-                      decoration:  BoxDecoration(
-                          color: Colors.white,
-                          image: DecorationImage(image: NetworkImage(widget.data.productImage),fit: BoxFit.cover),
-                          borderRadius: BorderRadius.circular(width*0.02)
+                      focusedBorder:OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(width*0.025),
+                          borderSide:BorderSide(color: Pallette.primaryColor)
                       ),
-                      // image: DecorationImage(image: AssetImage(coupons[index]["poster"]),fit: BoxFit.cover),
-                    ),
-                  ],
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(width*0.025),
+                          borderSide: BorderSide(color: Pallette.primaryColor)
+                      )
+                  ),
                 ),
-                Text(widget.data.buyerName,style: TextStyle(
-                  color: Pallette.grey1
-                ),),
-                Text(widget.data.price,style: TextStyle(
-                  fontSize: width*0.05
-                ),)
-
-              ],
-            ),
-          ),
-
-          AnotherStepper(
-            stepperList: stepperData,
-            stepperDirection: Axis.vertical,
-            inverted: false,
-            activeIndex: widget.data.selectindex,
-            barThickness: width*0.006,
-            activeBarColor: Colors.green,
-            verticalGap: width*0.07,
-
-          ),
-
-
-          Container(
-           height: height*0.07,
-           width: width*1,
-           decoration: BoxDecoration(
-               color: Pallette.secondaryBrown,
-             borderRadius: BorderRadius.circular(width*0.015),
-           ),
-            child: Center(child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Container(
-                      height: height*0.03,
-                      child: Image.asset(imageConstants.checkout)),
-                ),
-                Text("You can cancel this order till tomorrow 12 PM",
-                style: TextStyle(
-                  fontSize: width*0.03
-                )),
-              ],
-            ),),
-          ),
-          gap,
-          InkWell(
-            onTap: () {
-              // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
-              //   "booking":"noOrder"
-              // });
-              // Navigator.push(context, MaterialPageRoute(builder: (context) =>steper() ,));
-              showDialog(context: context, builder:(context) =>
-                AlertDialog(
-                  surfaceTintColor: Pallette.secondaryBrown,
-                  title: Text("Are you sure to cancel the order",textAlign: TextAlign.center, style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
-                  actions: [
-                    TextButton(onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              surfaceTintColor: Pallette.secondaryBrown,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(width*0.05)
-                              ),
-                              content: Container(
-                                height: height*0.5,
-                                width: width*1,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(width*0.03)
-                                ),
-                                child: Column(
-                                  children: [
-                                    Lottie.asset(imageConstants.lottie),
-                                    Text("Successfully Canceled Your Order\n Thank You Visit again!!! ",
-                                      textAlign: TextAlign.center,)
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                      );
-
-                      FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
-                          // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
-                          {
-                        "booking":FieldValue.arrayRemove([widget.data.bookingId]),
-
-                      }).then((value) {
-                        List? newBooking = currentUserModel?.booking;
-                        newBooking!.remove(widget.data.bookingId);
-                        print(newBooking);
-                        FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
-                            {
-                              "bookingCount":newBooking.length,
-                            });
-                      });
-                      FirebaseFirestore.instance.collection("bookings").doc(widget.data.bookingId).delete();
-                      Future.delayed(Duration(seconds: 3))
-                          .then((value) => Navigator.pushReplacement(context,
-                          CupertinoPageRoute(builder: (context) =>myOrder() ,))
-                      );
-
-                    },
-                        child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),)),
-                    TextButton(onPressed:() {
-                      Navigator.pop(context);
-                    },
-                        child: Text("Cancel",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),)),
-                  ],
+                SizedBox(height: height*0.015,),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                    FirebaseFirestore.instance.collection('product').doc("kok").update({
+                      "review":FieldValue.arrayUnion([
+                        {
+                          "review": reviewcontroller.text,
+                          "userid":currentUserModel!.id,
+                        }
+                      ]
+                      )
+                    });
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),));
+                  },child: Text("Submit",style: TextStyle(color: Pallette.white,fontSize: width*0.045,fontWeight: FontWeight.w600),),
+                    style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Pallette.primaryColor)),
+                  ),
                 )
-                );
-
-            },
-            child: Container(
-              height: height*0.06,
-              width: width*0.8,
-              decoration: BoxDecoration(
-                color: Pallette.primaryColor,
-             borderRadius: BorderRadius.circular(width*0.02)
-              ),
-              child: Center(
-                child: Text("Cancel",
-                    style: TextStyle(
-                      color: Pallette.white,
-            
-                      fontSize: width*0.04,
-                    )),
-              ),
-            
+              ],
             ),
-          )
-        ],
-      ),
+            gap,
+            InkWell(
+              onTap: () {
+                // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
+                //   "booking":"noOrder"
+                // });
+                showDialog(context: context, builder:(context) =>
+                  AlertDialog(
+                    surfaceTintColor: Pallette.secondaryBrown,
+                    title: Text("Are you sure to cancel the order",textAlign: TextAlign.center, style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
+                    actions: [
+                      TextButton(onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                surfaceTintColor: Pallette.secondaryBrown,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(width*0.05)
+                                ),
+                                content: Container(
+                                  height: height*0.5,
+                                  width: width*1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(width*0.03)
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Lottie.asset(imageConstants.lottie),
+                                      Text("Successfully Canceled Your Order\n Thank You Visit again!!! ",
+                                        textAlign: TextAlign.center,)
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                        );
+      
+                        FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+                            // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
+                            {
+                          "booking":FieldValue.arrayRemove([widget.data.bookingId]),
+      
+                        }).then((value) {
+                          List? newBooking = currentUserModel?.booking;
+                          newBooking!.remove(widget.data.bookingId);
+                          print(newBooking);
+                          FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+                              {
+                                "bookingCount":newBooking.length,
+                              });
+                        });
+                        FirebaseFirestore.instance.collection("bookings").doc(widget.data.bookingId).delete();
+                        Future.delayed(Duration(seconds: 3))
+                            .then((value) => Navigator.pushReplacement(context,
+                            CupertinoPageRoute(builder: (context) =>myOrder() ,))
+                        );
+      
+                      },
+                          child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
+                      TextButton(onPressed:() {
+                        Navigator.pop(context);
+                      },
+                          child: Text("Cancel",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
+                    ],
+                  )
+                  );
+      
+              },
+              child: Container(
+                height: height*0.06,
+                width: width*0.8,
+                decoration: BoxDecoration(
+                  color: Pallette.primaryColor,
+               borderRadius: BorderRadius.circular(width*0.02)
+                ),
+                child: Center(
+                  child: Text("Cancel",
+                      style: TextStyle(
+                        color: Pallette.white,
+              
+                        fontSize: width*0.04,
+                      )),
+                ),
+              
+              ),
+            )
+          ],
+        ),
+    ),
 
     )
     );

@@ -343,7 +343,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                               selectindex: -1
 
                           );
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData,id:widget.id),));
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData),));
                         },
                         child: Container(
                           height: height * 0.07,

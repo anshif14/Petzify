@@ -14,8 +14,7 @@ import '../../../main.dart';
 
 
 class deliveryAddress extends ConsumerStatefulWidget {
-  final String id;
-   deliveryAddress({super.key,required this.bookingdata,required this.id});
+   deliveryAddress({super.key,required this.bookingdata});
   BookingModel bookingdata;
 
 
@@ -35,7 +34,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
       buyerAddress: addresscontroller.text,buyerPhoneNumer: numbercontroller.text);
     // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
 
-    Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel, id: widget.id,) ,));
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
 
   }
 

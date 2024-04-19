@@ -15,8 +15,7 @@ import '../controller/booking_controller.dart';
 
 
 class paymentMethod extends ConsumerStatefulWidget {
-  final String id;
-   paymentMethod({super.key,required this.bookingModel1,required this.id});
+   paymentMethod({super.key,required this.bookingModel1,});
   BookingModel bookingModel1;
 
   @override
@@ -153,31 +152,38 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
                           child: Column(
                             children: [
                               Lottie.asset(imageConstants.lottie),
-                              Text("Successfully Ordered!!"),
-                              gap,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ElevatedButton(onPressed: () {
-                                    Navigator.push(context, CupertinoPageRoute(builder:
-                                        (context) => reviewPage(id: widget.id,),));
-                                  }, child: Text("Give a Review",style: TextStyle(color: Pallette.white),),
-                                  style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Pallette.primaryColor)),
-                                  ),
-                                  ElevatedButton(onPressed: () {
-                                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),));
-                                  }, child: Text("Ok",style: TextStyle(color: Pallette.white),),
-                                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Pallette.primaryColor)
-                                    )
-                                  )
-                                ],
-                              )
+                              Text("Successfully Ordered!!",style: TextStyle(fontSize: width*0.045),),
+
+                              // gap,
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              //   children: [
+                              //     ElevatedButton(onPressed: () {
+                              //       Navigator.push(context, CupertinoPageRoute(builder:
+                              //           (context) => reviewPage(id: widget.id,),));
+                              //     }, child: Text("Give a Review",style: TextStyle(color: Pallette.white),),
+                              //     style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Pallette.primaryColor)),
+                              //     ),
+                              //     ElevatedButton(onPressed: () {
+                              //       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),));
+                              //     }, child: Text("Ok",style: TextStyle(color: Pallette.white),),
+                              //       style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Pallette.primaryColor)
+                              //       )
+                              //     )
+                              //   ],
+                              // )
                             ],
                           ),
                         ),
                       );
                     }
                 );
+              Future.delayed(Duration(seconds: 3))
+                  .then((value) => Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => NavBar(),
+                  )));
 
 
               },
