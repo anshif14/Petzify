@@ -94,7 +94,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                        imageConstants.dogSvg,
+                        ImageConstants.dogSvg,
                         width: width * 0.08,
                         height: height * 0.08,
                       )
@@ -137,7 +137,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Image(
-                                  image: AssetImage(imageConstants.googleicon),
+                                  image: AssetImage(ImageConstants.googleicon),
                                   height: width * 0.07,
                                   width: width * 0.07),
                               Text("Continue with Google"),
@@ -160,7 +160,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Image(
-                                image: AssetImage(imageConstants.appleicon),
+                                image: AssetImage(ImageConstants.appleicon),
                                 height: width * 0.07,
                                 width: width * 0.07),
                             Text("Continue with Apple"),

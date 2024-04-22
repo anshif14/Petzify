@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
@@ -12,6 +13,7 @@ import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/model/booking_model.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
+import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../main.dart';
@@ -39,9 +41,9 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
   bool fav = false;
   int count = 0;
   List images = [
-    imageConstants.rabbit,
-    imageConstants.cat,
-    imageConstants.bird,
+    ImageConstants.rabbit,
+    ImageConstants.cat,
+    ImageConstants.bird,
   ];
   // final favour=StateProvider<bool>((ref) =>false );
   favFunc() async {
@@ -82,6 +84,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Pallette.white,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -112,274 +115,312 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(width * 0.03),
-        child: Column(
-          children: [
-              // stream: FirebaseFirestore.instance.collection("product").doc(widget.id).snapshots().map((snapshot) {
-              //   return ProductModel.fromMap(snapshot.data()!);
-              // } ),
-              // builder: (context, snapshot) {
-              //   if(!snapshot.hasData){
-              //     return Center(child: CircularProgressIndicator(
-              //
-              //     ),);
-              //
-              //   }
-              //   ProductModel data=snapshot.data!;
-              //   List image=data.image;
-        ref.watch(SingleProductStreamProvider(widget.id)).when(
-          data: (data) {
-            List review = data!.review;
-            return Container(
-              height: height*0.84,
-              // color: Colors.red,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(children: [
-                          CarouselSlider.builder(
-                            itemCount: data.image.length,
-                            options: CarouselOptions(
-                                viewportFraction: 1,
-                                autoPlay: true,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    currentIndex = index;
-                                  });
-                                },
-                                autoPlayAnimationDuration: Duration(seconds: 2)),
-                            itemBuilder: (context, index, realIndex) {
-                              return Hero(
-                                tag: widget.tag,
-                                child: Container(
-                                  height: height * 0.25,
-                                  width: width * 1,
-                                  margin: EdgeInsets.only(left: width * 0.03),
-                                  decoration: BoxDecoration(
-                                      color: Colors.yellow,
-                                      borderRadius: BorderRadius.circular(width * 0.03),
-                                      image: DecorationImage(
-                                          image: NetworkImage(data.image[index]),
-                                          fit: BoxFit.cover)),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+                // stream: FirebaseFirestore.instance.collection("product").doc(widget.id).snapshots().map((snapshot) {
+                //   return ProductModel.fromMap(snapshot.data()!);
+                // } ),
+                // builder: (context, snapshot) {
+                //   if(!snapshot.hasData){
+                //     return Center(child: CircularProgressIndicator(
+                //
+                //     ),);
+                //
+                //   }
+                //   ProductModel data=snapshot.data!;
+                //   List image=data.image;
+          ref.watch(SingleProductStreamProvider(widget.id)).when(
+            data: (data) {
+              List review = data!.review;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(children: [
+                        CarouselSlider.builder(
+                          itemCount: data.image.length,
+                          options: CarouselOptions(
+                              viewportFraction: 1,
+                              autoPlay: true,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  currentIndex = index;
+                                });
+                              },
+                              autoPlayAnimationDuration: Duration(seconds: 2)),
+                          itemBuilder: (context, index, realIndex) {
+                            return Hero(
+                              tag: widget.tag,
+                              child: Container(
+                                height: height * 0.25,
+                                width: width * 1,
+                                margin: EdgeInsets.only(left: width * 0.03),
+                                child: ClipRRect(
+                                borderRadius: BorderRadius.circular(width * 0.03),
+                                  child: CachedNetworkImage(imageUrl: data.image[index],fit: BoxFit.cover,),
+                                  // decoration: BoxDecoration(
+                                  //     color: Colors.yellow,
+                                  //     borderRadius: BorderRadius.circular(width * 0.03),
+                                  //     image: DecorationImage(
+                                  //         image: CachedNetworkImage(imageUrl: data.image[index],),
+                                  //         fit: BoxFit.cover)),
+                                                                  ),
                                 ),
-                              );
-                            },
-                          ),
-                          Positioned(
-                            top: height * 0.24,
-                            left: width * 0.37,
-                            child: AnimatedSmoothIndicator(
-                              activeIndex: currentIndex,
-                              count: data.image.length,
-                              effect: ExpandingDotsEffect(
-                                  dotHeight: height * 0.006,
-                                  activeDotColor: Pallette.primaryColor,
-                                  dotColor: Colors.grey.shade300),
-                            ),
-                          ),
-                        ]),
-                        SizedBox(
-                          height: height * 0.015,
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width:width*0.5,
-                                child: Text(
-                                  "${data.productname} ",
-                                  overflow: TextOverflow.values[0],
-                                  style: TextStyle(
-                                      color: Pallette.primaryColor,
-                                      fontSize: width * 0.045,
-                                      fontWeight: FontWeight.w800
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                child: Text(
-                                  "\₹ ${data.price}",
-                                  style: TextStyle(
-                                      fontSize: width * 0.05,
-                                      fontWeight: FontWeight.w800),
-                                ),
-                              ),
-                            ]),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        RatingStars(
-                          value: value,
-                          onValueChanged: (v) {
-                            //
-                            setState(() {
-                              value = v;
-                            });
+                            );
                           },
-                          starBuilder: (index, color) => Icon(
-                            Icons.ac_unit_outlined,
-                            color: color,
+                        ),
+                        Positioned(
+                          top: height * 0.24,
+                          left: width * 0.37,
+                          child: AnimatedSmoothIndicator(
+                            activeIndex: currentIndex,
+                            count: data.image.length,
+                            effect: ExpandingDotsEffect(
+                                dotHeight: height * 0.006,
+                                activeDotColor: Pallette.primaryColor,
+                                dotColor: Colors.grey.shade300),
                           ),
-                          starCount: 5,
-                          starSize: 20,
-                          valueLabelColor: const Color(0xff9b9b9b),
-                          valueLabelTextStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
-                          valueLabelRadius: 10,
-                          maxValue: 5,
-                          starSpacing: 2,
-                          maxValueVisibility: true,
-                          valueLabelVisibility: true,
-                          animationDuration: Duration(milliseconds: 1000),
-                          valueLabelPadding:
-                          const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-                          valueLabelMargin: const EdgeInsets.only(right: 8),
-                          starOffColor: const Color(0xffe7e8ea),
-                          starColor: Pallette.primaryColor,
                         ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        data.category=="Product"? Row(
+                      ]),
+                      SizedBox(
+                        height: height * 0.015,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            InkWell(
-                                onTap: () {
-                                  count <= 0 ? 0 : count--;
-                                  setState(() {});
-                                },
-                                child: Icon(CupertinoIcons.minus)),
-                            SizedBox(
-                              width: width * 0.03,
+                            Container(
+                              width:width*0.5,
+                              child: Text(
+                                "${data.productname} ",
+                                overflow: TextOverflow.values[0],
+                                style: TextStyle(
+                                    color: Pallette.primaryColor,
+                                    fontSize: width * 0.045,
+                                    fontWeight: FontWeight.w800
+                                ),
+                              ),
                             ),
                             Container(
-                              height: height * 0.05,
-                              width: width * 0.1,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(width * 0.03),
-                                  border: Border.all(color: Colors.grey.shade300)),
-                              child: Center(child: Text(count.toString())),
+                              child: Text(
+                                "\₹ ${data.price}",
+                                style: TextStyle(
+                                    fontSize: width * 0.05,
+                                    fontWeight: FontWeight.w800),
+                              ),
                             ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  count++;
-                                  setState(() {});
-                                },
-                                child: Icon(CupertinoIcons.add)),
-                          ],
-                        ):SizedBox(),
-                        // gap,
-                        Text("Product Details",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
-                        SizedBox(height: height*0.015,),
-                        Text(data.description,
-                          style: TextStyle(fontSize: width * 0.04),),
-                        gap,
-                        Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
-                        SizedBox(height: height*0.015,),
-
-                        Container(
-                          height:height*0.16,
-                          child:review.isNotEmpty?ListView.builder(
-                            itemCount: 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                height:height*0.16 ,
-                                width: width*1,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(width*0.03),
-                                    border: Border.all(color: Pallette.primaryColor)
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ListTile(
-                                        leading:CircleAvatar(
-                                          backgroundImage: NetworkImage("https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"),
-                                          radius: width*0.06,
-                                        ),
-                                        title: Text("${review[index]['userid']}",style: TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.04),)
-
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(width*0.03),
-                                      child: SizedBox(
-                                          height: height*0.06,
-                                          width: width*1,
-                                          child: Text(
-                                              overflow: TextOverflow.ellipsis,
-                                              "${review[index]["review"]}")),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                          ):SizedBox(),
-                        )
-                      ],
-                    ),
-                gap,
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          BookingModel bookingModelData=BookingModel(
-                              bookingId:"",
-                              paymentMethod: "",
-                              price:data.price.toString(),
-                              qty:count.toString() ,
-                              productName: data.productname,
-                              buyerPhoneNumer: "",
-                              buyerAddress: "",
-                              buyerName:"",
-                              userId: currentUserModel!.id,
-                              productImage: data.image[0].toString(),
-                              selectindex: -1
-
-                          );
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData),));
+                          ]),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      RatingStars(
+                        value: value,
+                        onValueChanged: (v) {
+                          //
+                          setState(() {
+                            value = v;
+                          });
                         },
-                        child: Container(
-                          height: height * 0.07,
-                          width: width * 0.45,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(width * 0.03),
-                              color: Pallette.primaryColor),
-                          child: Center(
-                            child: Text(
-                              "BUY NOW",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: width * 0.04,
-                                  color: Colors.white),
-                            ),
+                        starBuilder: (index, color) => Icon(
+                          Icons.ac_unit_outlined,
+                          // Icons.star,
+                          color: color,
+                        ),
+                        starCount: 5,
+                        starSize: 20,
+                        valueLabelColor: const Color(0xff9b9b9b),
+                        valueLabelTextStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 12.0),
+                        valueLabelRadius: 10,
+                        maxValue: 5,
+                        starSpacing: 2,
+                        maxValueVisibility: true,
+                        valueLabelVisibility: true,
+                        animationDuration: Duration(milliseconds: 1000),
+                        valueLabelPadding:
+                        const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                        valueLabelMargin: const EdgeInsets.only(right: 8),
+                        starOffColor: const Color(0xffe7e8ea),
+                        starColor: Pallette.primaryColor,
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      data.category=="Product"? Row(
+                        children: [
+                          InkWell(
+                              onTap: () {
+                                count <= 0 ? 0 : count--;
+                                setState(() {});
+                              },
+                              child: Icon(CupertinoIcons.minus)),
+                          SizedBox(
+                            width: width * 0.03,
+                          ),
+                          Container(
+                            height: height * 0.05,
+                            width: width * 0.1,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(width * 0.03),
+                                border: Border.all(color: Colors.grey.shade300)),
+                            child: Center(child: Text(count.toString())),
+                          ),
+                          SizedBox(
+                            width: width * 0.03,
+                          ),
+                          InkWell(
+                              onTap: () {
+                                count++;
+                                setState(() {});
+                              },
+                              child: Icon(CupertinoIcons.add)),
+                        ],
+                      ):SizedBox(),
+                      // gap,
+                      Text("Product Details",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
+                      SizedBox(height: height*0.015,),
+                      Text(data.description,
+                        style: TextStyle(fontSize: width * 0.04),),
+                      gap,
+                      Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
+                      SizedBox(height: height*0.015,),
+          
+                      Container(
+                        height:height*0.26,
+                        child:review.isNotEmpty?ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  // height:height*0.21 ,
+                                  width: width*1,
+
+                                  decoration: BoxDecoration(
+
+
+                                      borderRadius: BorderRadius.circular(width*0.03),
+                                      border: Border.all(color: Pallette.primaryColor)
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ListTile(
+                                          leading:CircleAvatar(
+                                            backgroundColor: Pallette.primaryColor,
+                                            backgroundImage: review[index]["image"]==""?NetworkImage("https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"):
+                                            NetworkImage(review[index]['image'].toString()),
+                                            radius: width*0.06,
+                                          ),
+                                          title: Container(
+                                              height: height*0.05,
+                                              child: Center(child: Text("${review[index]['userid']}",style: TextStyle(
+                                                  overflow: TextOverflow.ellipsis,
+                                                  fontWeight: FontWeight.w600,fontSize: width*0.04),)))
+          
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(width*0.03),
+                                        child: Container(
+                                          height: height*0.085,
+                                                width: width*0.85,
+                                          child: SingleChildScrollView(
+                                            child: ReadMoreText(
+                                       "${review[index]['review']}",
+                                            trimMode: TrimMode.Line,
+                                            trimLines: 2,
+                                            // colorClickableText: Colors.pink,
+                                            trimCollapsedText: 'Show more',
+                                            trimExpandedText: 'Show less',
+                                            lessStyle:TextStyle(fontSize: width*0.035, fontWeight: FontWeight.bold) ,
+                                            moreStyle: TextStyle(fontSize: width*0.035, fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+          
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(width*0.01),
+                                  width: width*0.3,
+                                  height: height*0.04,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Pallette.primaryColor),
+                                      borderRadius: BorderRadius.circular(width * 0.02),),
+                                  child: Center(child: Text("view Review's",style:
+                                  TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.03),)),
+                                )
+                              ],
+                            );
+                          },
+                        ):SizedBox(),
+                      )
+                    ],
+                  ),
+              gap,
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        BookingModel bookingModelData=BookingModel(
+                            bookingId:"",
+                            paymentMethod: "",
+                            price:data.price.toString(),
+                            qty:count.toString() ,
+                            productName: data.productname,
+                            buyerPhoneNumer: "",
+                            buyerAddress: "",
+                            buyerName:"",
+                            userId: currentUserModel!.id,
+                            productId: data.id,
+                            productImage: data.image[0].toString(),
+                            selectindex: -1
+          
+                        );
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData),));
+                      },
+                      child: Container(
+                        height: height * 0.07,
+                        width: width * 0.45,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(width * 0.03),
+                            color: Pallette.primaryColor),
+                        child: Center(
+                          child: Text(
+                            "BUY NOW",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: width * 0.04,
+                                color: Colors.white),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            );
-          },
-          error: (error, stackTrace) {
-            return Text(error.toString());
-          },
-          loading: () {
-            return SingleChildScrollView();
-          },)
-
-
-
-          ],
+                  ),
+                ],
+              );
+            },
+            error: (error, stackTrace) {
+              return Text(error.toString());
+            },
+            loading: () {
+              return SingleChildScrollView();
+            },)
+          
+          
+          
+            ],
+          ),
         ),
       ),
     );

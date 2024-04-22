@@ -109,7 +109,7 @@ backgroundColor: Color(0xfff8f6f4),
           decoration: BoxDecoration(
               color: Color(0xfff8f6f4),
 
-              image: DecorationImage(image: AssetImage(imageConstants.logo),fit: BoxFit.cover)
+              image: DecorationImage(image: AssetImage(ImageConstants.logo),fit: BoxFit.cover)
           ),
           height: MediaQuery.of(context).size.height*0.5,
           width: MediaQuery.of(context).size.width*0.8,

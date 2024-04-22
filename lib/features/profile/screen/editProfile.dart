@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -67,7 +68,7 @@ class _editProfileState extends ConsumerState<editProfile> {
           .showSnackBar(SnackBar(content: Text("image uploaded")));
 
       setState(() {});
-      Navigator.pop(context);
+
     }
 
 
@@ -82,7 +83,7 @@ class _editProfileState extends ConsumerState<editProfile> {
 
   useredit(){
     ref.read(authControllerProvider).userupd(currentUserModel!.copyWith(images: imageurl,
-        name: nameController.text,email: emailController.text,number: numberController.text,gender: gender));
+        name: nameController.text.trim(),number: numberController.text.trim(),gender: gender));
   }
   String phoneNumber = '';
 
@@ -92,7 +93,7 @@ class _editProfileState extends ConsumerState<editProfile> {
     imageurl = currentUserModel!.images;
     nameController.text = currentUserModel!.name.toString();
     emailController.text = currentUserModel!.email.toString();
-    phoneNumber = currentUserModel!.number.toString();
+    numberController.text = currentUserModel!.number.toString();
     gender = currentUserModel!.gender.toString();
     // TODO: implement initState
     super.initState();
@@ -123,9 +124,7 @@ class _editProfileState extends ConsumerState<editProfile> {
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              height: height * 0.22,
               width: width * 1,
-              // color: Colors.red,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -154,6 +153,7 @@ class _editProfileState extends ConsumerState<editProfile> {
                                       CupertinoActionSheetAction(
                                           onPressed: () {
                                             pickFile(ImageSource.gallery);
+                                            Navigator.pop(context);
                                           },
                                           child: Text(
                                             "Photo Gallery",
@@ -165,6 +165,7 @@ class _editProfileState extends ConsumerState<editProfile> {
                                       CupertinoActionSheetAction(
                                           onPressed: () {
                                             pickFile(ImageSource.camera);
+                                            Navigator.pop(context);
                                           },
                                           // isDefaultAction: true,
                                           child: Text(
@@ -210,9 +211,11 @@ class _editProfileState extends ConsumerState<editProfile> {
                       ],
 
                     ),
+                    gap,
                     Column(
                       children: [
                         Text(currentUserModel!.name!,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: width * 0.042,
                                 fontWeight: FontWeight.w600,
@@ -229,6 +232,7 @@ class _editProfileState extends ConsumerState<editProfile> {
                 ),
               ),
             ),
+            gap,
             Container(
               height: height * 0.4,
               // color: Colors.red,
@@ -240,24 +244,21 @@ class _editProfileState extends ConsumerState<editProfile> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(width * 0.02),
                         border: Border.all(color: Pallette.primaryColor),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 3,
-                              spreadRadius: 1,
-                              offset: Offset(0, 3)),
-                        ]),
+
+                    ),
                     child: TextFormField(
                       controller: nameController,
                       textCapitalization: TextCapitalization.words,
                       keyboardType: TextInputType.multiline,
                       textInputAction: TextInputAction.done,
                       cursorColor: Pallette.primaryColor,
+                      maxLength: 50,
                       style: TextStyle(
                         fontSize: width*0.043,
                         fontWeight: FontWeight.w500,
                       ),
                       decoration: InputDecoration(
+                        counterText: "",
                         fillColor: Pallette.white,
                         filled: true,
                         contentPadding: EdgeInsets.all(width*0.04),
@@ -273,19 +274,15 @@ class _editProfileState extends ConsumerState<editProfile> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(width * 0.02),
                         border: Border.all(color: Pallette.primaryColor),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 3,
-                              spreadRadius: 1,
-                              offset: Offset(0, 3)),
-                        ]),
+
+                    ),
                     child: TextFormField(
                       controller: emailController,
                       textCapitalization: TextCapitalization.words,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
                       cursorColor: Pallette.primaryColor,
+                      readOnly: true,
                       style: TextStyle(
                         fontSize: width * 0.043,
                         fontWeight: FontWeight.w500,
@@ -306,13 +303,8 @@ class _editProfileState extends ConsumerState<editProfile> {
                           color: Pallette.white,
                           borderRadius: BorderRadius.circular(width * 0.02),
                           border: Border.all(color: Pallette.primaryColor),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 3,
-                                spreadRadius: 1,
-                                offset: Offset(0, 3)),
-                          ]),
+
+                      ),
                       child: Padding(
                         padding: EdgeInsets.only(left: width * 0.01),
                         child: IntlPhoneField(
@@ -346,13 +338,8 @@ class _editProfileState extends ConsumerState<editProfile> {
                         color: Pallette.white,
                         borderRadius: BorderRadius.circular(width * 0.02),
                         border: Border.all(color: Pallette.primaryColor),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 3,
-                              spreadRadius: 1,
-                              offset: Offset(0, 3)),
-                        ]),
+
+                    ),
                     child: Padding(
                       padding: EdgeInsets.all(width * 0.04),
                       child: DropdownButton(
@@ -393,13 +380,45 @@ class _editProfileState extends ConsumerState<editProfile> {
             gap,
             GestureDetector(
               onTap: () async {
-                UserModel usermodel = currentUserModel!;
-                useredit();
+
+                showCupertinoModalPopup(context: context, builder: (context) {
+                  return CupertinoAlertDialog(
+                    title: Text("Are you sure\nYou want to Update Details?"),
+                    actions: [
+                      Column(
+                        children: [
+                          CupertinoDialogAction(child: Text("Confirm",style:TextStyle(fontSize: 17,color: Pallette.primaryColor),),
+                            onPressed: () async {
+                              if(nameController.text.isEmpty){
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("please Enter your Name")));
+                                return;
+                              }
+
+                              useredit();
+                              var value =await FirebaseFirestore.instance.collection("users").doc(currentUserModel!.email).get();
+                              currentUserModel = UserModel.fromMap(value.data()!);
+
+                              Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
+                            },
+                            isDefaultAction: true,
+                          ),
+                          Divider(color: Colors.black.withOpacity(0.2),thickness: width*0.001,),
+                          CupertinoDialogAction(child: Text("Cancel",style: TextStyle(fontSize: 17,),),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          isDefaultAction: true,
+                            isDestructiveAction: true,
+                          ),
+
+                        ],
+                      )
+                    ],
+                  );
+                },);
 
 
-      var value =await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-      currentUserModel = UserModel.fromMap(value.data()!);
-                Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
+                // UserModel usermodel = currentUserModel!;
               },
               child: Container(
                 height: height * 0.06,
@@ -407,14 +426,6 @@ class _editProfileState extends ConsumerState<editProfile> {
                 decoration: BoxDecoration(
                     color: Pallette.primaryColor,
                     borderRadius: BorderRadius.circular(width * 0.025),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        blurRadius: 4,
-                        spreadRadius: 1,
-                        offset: Offset(0, 4)
-                    ),
-                  ],
                 ),
                 child: Center(
                     child: Text(

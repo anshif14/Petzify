@@ -11,6 +11,7 @@ class BookingModel{
   String bookingId;
   String paymentMethod;
   String userId;
+  String productId;
   int selectindex;
 
 
@@ -25,6 +26,7 @@ class BookingModel{
     required this.bookingId,
     required this.paymentMethod,
     required this.userId,
+    required this.productId,
     required this.selectindex,
 
 });
@@ -41,6 +43,7 @@ class BookingModel{
       "bookingId":this.bookingId,
       "paymentMethod":this.paymentMethod,
       "userId":this.userId,
+      "productId":this.productId,
       "selectindex":this.selectindex,
     };
   }
@@ -56,6 +59,7 @@ class BookingModel{
         bookingId: Map["bookingId"]??"",
       paymentMethod: Map["paymentMethod"]??"",
         userId: Map["userId"] ?? "",
+      productId: Map["productId"] ?? "",
         selectindex: Map["selectindex"] ?? -1,
 
     );
@@ -71,6 +75,7 @@ class BookingModel{
     String? bookingId,
     String? paymentMethod,
     String? userId,
+    String? productId,
     int? selectindex,
 
   }){
@@ -85,6 +90,7 @@ class BookingModel{
       bookingId: bookingId?? this.bookingId,
         paymentMethod: paymentMethod ?? this.paymentMethod,
         userId: userId ?? this.userId,
+      productId: productId ?? this.productId,
       selectindex: selectindex ?? this.selectindex,
     );
   }

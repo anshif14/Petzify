@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,7 +31,6 @@ class _AddProductState extends ConsumerState<AddProduct> {
   var file;
   String imageurl = "";
   bool loading = false;
-
 
   pickFile(ImageSource) async {
     final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
@@ -82,15 +82,15 @@ class _AddProductState extends ConsumerState<AddProduct> {
   add(){
     ref.watch(exploreControllerProvider).addingProduct(
         ProductModel(
-            productname: prdnamecontroller.text,
+            productname: prdnamecontroller.text.trim(),
             image: pets,
-            description: descriptioncontroller.text,
+            description: descriptioncontroller.text.trim(),
             price: double.parse(pricecontroller.text),
-            sellername: namecontroller.text,
-            address: addresscontroller.text,
-            phonenumber: contactcontroller.text,
+            sellername: namecontroller.text.trim(),
+            address: addresscontroller.text.trim(),
+            phonenumber: contactcontroller.text.trim(),
             id: '',
-            userid: currentUserModel!.id,
+            userid: currentUserModel!.id.trim(),
             favUser: [],
             category: dropdownvalue.toString(),
             petcategory: petdropdownvalue.toString(),
@@ -152,17 +152,18 @@ class _AddProductState extends ConsumerState<AddProduct> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                height: height*0.3,
+                height: height*0.28,
                 width: width*1,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(width*0.025),
 
                   color: Pallette.primaryColor,
                 ),
                 child:ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child:    loading?Center(child: CircularProgressIndicator(color: Colors.white,)): pets.isNotEmpty?Image(image: NetworkImage(pets[0]),fit: BoxFit.cover,)
-                      :Image(image: AssetImage(imageConstants.pet9),fit: BoxFit.cover),
+                  borderRadius: BorderRadius.circular(width*0.025),
+                  child:    loading?Center(child: CircularProgressIndicator(color: Colors.white,)): pets.isNotEmpty?
+                  Image(image: CachedNetworkImageProvider(pets[0]),fit: BoxFit.cover,)
+                      :Image(image: AssetImage(ImageConstants.pet9),fit: BoxFit.cover),
                 )
               ),
               gap,
@@ -239,11 +240,14 @@ class _AddProductState extends ConsumerState<AddProduct> {
                                   child: Container(
                                     height: height*0.2,
                                     width: width*0.4,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(image: NetworkImage(pets[index]),fit: BoxFit.cover),
-                                      color: Pallette.secondaryBrown,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(width*0.025),
+                                        child: CachedNetworkImage(imageUrl:pets[index],fit: BoxFit.cover,)),
+                                    // decoration: BoxDecoration(
+                                    //   image: DecorationImage(image: NetworkImage(pets[index]),fit: BoxFit.cover),
+                                    //   color: Pallette.secondaryBrown,
+                                    //   borderRadius: BorderRadius.circular(10),
+                                    // ),
                                   ),
                                 ),
                               )
@@ -258,11 +262,13 @@ class _AddProductState extends ConsumerState<AddProduct> {
                 keyboardType: TextInputType.text,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: prdnamecontroller,
+                maxLength: 50,
                 style: TextStyle(
                   color: CupertinoColors.black
                 ),
                 decoration: InputDecoration(
                   labelText: "Product Name",
+                  counterText: "",
                   labelStyle: TextStyle(
                     color:CupertinoColors.black,
                     fontSize: width*0.04
@@ -283,12 +289,14 @@ class _AddProductState extends ConsumerState<AddProduct> {
                 keyboardType: TextInputType.multiline,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: descriptioncontroller,
+                maxLength: 200,
                 maxLines: 2,
                 style: TextStyle(
                   color: CupertinoColors.black
                 ),
                 decoration: InputDecoration(
                   labelText: "Description",
+                  counterText: "",
                   labelStyle: TextStyle(
                     color:CupertinoColors.black,
                     fontSize: width*0.04
@@ -361,11 +369,15 @@ class _AddProductState extends ConsumerState<AddProduct> {
                 keyboardType: TextInputType.number,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: pricecontroller,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly,],
+                maxLength: 10,
+
                 style: TextStyle(
                   color: CupertinoColors.black
                 ),
                 decoration: InputDecoration(
                   labelText: "Price",
+                  counterText: "",
                   labelStyle: TextStyle(
                     color:CupertinoColors.black,
                     fontSize: width*0.04
@@ -384,97 +396,101 @@ class _AddProductState extends ConsumerState<AddProduct> {
               Text("Personal Information",style: TextStyle(fontSize: width*0.04,fontWeight: FontWeight.w600),),
               gap,
               Container(
-                height: height*0.35,
+
                 width: width*1,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(width*0.04),
-                  border: Border.all(color: Pallette.primaryColor)
+                  // border: Border.all(color: Pallette.primaryColor)
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextFormField(
-                        textInputAction:TextInputAction.next ,
-                        keyboardType: TextInputType.text,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: namecontroller,
-                        style: TextStyle(
-                            color: CupertinoColors.black
-                        ),
-                        decoration: InputDecoration(
-                            labelText: "Name",
-                            labelStyle: TextStyle(
-                                color:CupertinoColors.black,
-                                fontSize: width*0.04
-                            ),
-                            focusedBorder:OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(width*0.03),
-                                borderSide:BorderSide(color: Pallette.primaryColor)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(width*0.03),
-                                borderSide: BorderSide(color: Pallette.primaryColor)
-                            )
-                        ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextFormField(
+                      textInputAction:TextInputAction.next ,
+                      keyboardType: TextInputType.text,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: namecontroller,
+                      maxLength: 50,
+                      style: TextStyle(
+                          color: CupertinoColors.black
                       ),
-                      TextFormField(
-                        textInputAction:TextInputAction.newline ,
-                        keyboardType: TextInputType.multiline,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: addresscontroller,
-                        maxLines: 2,
-                        style: TextStyle(
-                            color: CupertinoColors.black
-                        ),
-                        decoration: InputDecoration(
-                            labelText: "Address",
-                            labelStyle: TextStyle(
-                                color:CupertinoColors.black,
-                                fontSize: width*0.04
-                            ),
-                            focusedBorder:OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(width*0.03),
-                                borderSide:BorderSide(color: Pallette.primaryColor)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(width*0.03),
-                                borderSide: BorderSide(color: Pallette.primaryColor)
-                            )
-                        ),
+                      decoration: InputDecoration(
+                          labelText: "Name",
+                          counterText: "",
+                          labelStyle: TextStyle(
+                              color:CupertinoColors.black,
+                              fontSize: width*0.04
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
                       ),
-                      TextFormField(
-                        textInputAction:TextInputAction.done ,
-                        keyboardType: TextInputType.phone,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: contactcontroller,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        maxLength: 10,
-                        style: TextStyle(
-                            color: CupertinoColors.black
-                        ),
-                        decoration: InputDecoration(
-                            labelText: "Contact Number",
-                            counterText: "",
-                            labelStyle: TextStyle(
-                                color:CupertinoColors.black,
-                                fontSize: width*0.04
-                            ),
-                            focusedBorder:OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(width*0.03),
-                                borderSide:BorderSide(color: Pallette.primaryColor)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(width*0.03),
-                                borderSide: BorderSide(color: Pallette.primaryColor)
-                            )
-                        ),
+                    ),
+                    gap,
+                    TextFormField(
+                      textInputAction:TextInputAction.newline ,
+                      keyboardType: TextInputType.multiline,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: addresscontroller,
+                      maxLines: 2,
+                      maxLength: 200,
+                      style: TextStyle(
+                          color: CupertinoColors.black
                       ),
-                    ],
-                  ),
+                      decoration: InputDecoration(
+                          labelText: "Address",
+                          counterText: "",
+                          labelStyle: TextStyle(
+                              color:CupertinoColors.black,
+                              fontSize: width*0.04
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
+                      ),
+                    ),
+                    gap,
+
+                    TextFormField(
+                      textInputAction:TextInputAction.done ,
+                      keyboardType: TextInputType.phone,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: contactcontroller,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      maxLength: 10,
+                      style: TextStyle(
+                          color: CupertinoColors.black
+                      ),
+                      decoration: InputDecoration(
+                          labelText: "Contact Number",
+                          counterText: "",
+                          labelStyle: TextStyle(
+                              color:CupertinoColors.black,
+                              fontSize: width*0.04
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
+                      ),
+                    ),
+                  ],
                 ),
               ),
               gap,
@@ -558,9 +574,11 @@ class _AddProductState extends ConsumerState<AddProduct> {
                   )
                   ) ,
                   child: Center(
-                    child: Text("Submit",
+                    child: Text("SUBMIT",
                     style: TextStyle(
-                      color: CupertinoColors.black
+                      fontSize: width*0.04,
+                      fontWeight: FontWeight.w600,
+                      color: Pallette.white
                     ),
                     ),
                   ),

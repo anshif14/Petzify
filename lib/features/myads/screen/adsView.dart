@@ -1,17 +1,21 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../commons/image Constants.dart';
 import '../../../commons/widgets.dart';
 import '../../../main.dart';
 import '../../../model/product_Model.dart';
 
 class adsView extends StatefulWidget {
   final String id;
+
   const adsView({super.key,required this.id});
 
   @override
@@ -19,6 +23,9 @@ class adsView extends StatefulWidget {
 }
 
 class _adsViewState extends State<adsView> {
+
+
+
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -81,12 +88,15 @@ class _adsViewState extends State<adsView> {
                                     height: height * 0.25,
                                     width: width * 1,
                                     margin: EdgeInsets.only(left: width * 0.03),
-                                    decoration: BoxDecoration(
-                                        color: Colors.yellow,
+                                    child: ClipRRect(
                                         borderRadius: BorderRadius.circular(width * 0.03),
-                                        image: DecorationImage(
-                                            image: NetworkImage(image[index]),
-                                            fit: BoxFit.cover)),
+                                        child: CachedNetworkImage(imageUrl:image[index],fit: BoxFit.cover,)),
+                                    // decoration: BoxDecoration(
+                                    //     color: Colors.yellow,
+                                    //     borderRadius: BorderRadius.circular(width * 0.03),
+                                    //     image: DecorationImage(
+                                    //         image: NetworkImage(image[index]),
+                                    //         fit: BoxFit.cover)),
                                   );
                                 },
                               ),
@@ -134,12 +144,109 @@ class _adsViewState extends State<adsView> {
                             SizedBox(
                               height: height * 0.02,
                             ),
-                            SizedBox(
-                              height: height * 0.02,
-                            ),
                             gap,
                             Text(data.description,
                               style: TextStyle(fontSize: width * 0.04),),
+                         // Center(
+                         //   child: GestureDetector(
+                         //     onTap: () {
+                         //       showCupertinoModalPopup(
+                         //         barrierColor: Colors.black.withOpacity(0.5),
+                         //         barrierDismissible: false,
+                         //         context: context,
+                         //         builder: (context) {
+                         //           return CupertinoAlertDialog(
+                         //             content: Text("Are you Sure\nYou Want to Remove !",
+                         //                 style: TextStyle(
+                         //                     fontWeight: FontWeight.w400,
+                         //                     fontSize: width * 0.045)),
+                         //             actions: [
+                         //               CupertinoDialogAction(
+                         //                 isDefaultAction: true,
+                         //                 isDestructiveAction: true,
+                         //                 onPressed: () {
+                         //                   Navigator.pop(context);
+                         //                 },
+                         //                 child: Text("Cancel"),
+                         //               ),
+                         //               CupertinoDialogAction(
+                         //                 isDefaultAction: true,
+                         //                 onPressed: ()  async {
+                         //
+                         //                   widget.hello;
+                         //                   // await remove();
+                         //                   // await  updatedata();
+                         //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
+                         //                     crossAxisAlignment: CrossAxisAlignment.end,
+                         //                     mainAxisAlignment: MainAxisAlignment.start,
+                         //                     children: [
+                         //                       SizedBox(
+                         //                         width: width*0.05,
+                         //                       ),
+                         //
+                         //                       Center(
+                         //                         child: Container(
+                         //                             height: height*0.04,
+                         //                             width: width*0.1,
+                         //                             // color: Colors.red,
+                         //                             child: Lottie.asset(ImageConstants.remove,fit: BoxFit.fitHeight)),
+                         //                       ),
+                         //                       SizedBox(
+                         //                         width: width*0.015,
+                         //                       ),
+                         //
+                         //                       Text("Deleted Success",style: TextStyle(
+                         //                           fontSize: width*0.04,
+                         //                           color: Pallette.white
+                         //                       ),)
+                         //                     ],
+                         //
+                         //                   ),backgroundColor: Colors.black.withOpacity(0.85),
+                         //                     behavior: SnackBarBehavior.floating,
+                         //                     showCloseIcon: true,
+                         //                     padding:  EdgeInsets.only(bottom: width*0.012,top: width*0.001),
+                         //                     // duration: Duration(seconds: 2),
+                         //                   ));
+                         //
+                         //                   // Navigator.pop(context);
+                         //                   // Navigator.pop(context);
+                         //
+                         //                 },
+                         //                 child: Text("Confirm",
+                         //                     style: TextStyle(
+                         //                         color: Colors.black
+                         //                     )),
+                         //               ),
+                         //             ],
+                         //           );
+                         //         },
+                         //       );
+                         //     },
+                         //     child: Container(
+                         //          height: height * 0.06,
+                         //          width: width * 0.4,
+                         //          decoration: BoxDecoration(
+                         //            color: Pallette.primaryColor,
+                         //            borderRadius: BorderRadius.circular(width * 0.025),
+                         //          ),
+                         //          child: Row(
+                         //            mainAxisAlignment: MainAxisAlignment.center,
+                         //            children: [
+                         //              Icon(CupertinoIcons.delete,color: Pallette.white,
+                         //                  size: width*0.06),
+                         //              SizedBox(width: width*0.01,),
+                         //              Center(
+                         //                child: Text("Remove",style: TextStyle(
+                         //                    color: Pallette.white,
+                         //                    fontSize: width*0.04
+                         //                ),),
+                         //              ),
+                         //            ],
+                         //          ),
+                         //        ),
+                         //   ),
+                         // ),
+
                           ],
                         ),
 

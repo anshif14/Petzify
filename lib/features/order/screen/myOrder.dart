@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -130,21 +131,31 @@ class _myOrderState extends ConsumerState<myOrder> {
                               Container(
                                 height: width*0.2,
                                 width: width*0.2,
-                                decoration:  BoxDecoration(
-                                    color: Colors.white,
-                                    image: DecorationImage(image: NetworkImage(data[index].productImage),fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.circular(width*0.02)
-                                ),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(width*0.02),
+                                    child: CachedNetworkImage(imageUrl:data[index].productImage,fit: BoxFit.cover,)),
+                                // decoration:  BoxDecoration(
+                                //     color: Colors.white,
+                                //     image: DecorationImage(image: NetworkImage(data[index].productImage),fit: BoxFit.cover),
+                                //     borderRadius: BorderRadius.circular(width*0.02)
+                                // ),
                                 // image: DecorationImage(image: AssetImage(coupons[index]["poster"]),fit: BoxFit.cover),
                               ),
+                              SizedBox(width: width*0.04,),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(data[index].productName,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: width*0.041
+                                  Container(
+                                    width: width*0.5,
+                                    // height: height*0.05,
+                                    // color: Colors.red,
+                                    child: Text(data[index].productName,
+                                      style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                          color: Colors.black,
+                                          fontSize: width*0.041
+                                      ),
                                     ),
                                   ),
                                   SizedBox(height:width*0.02),
@@ -172,7 +183,7 @@ class _myOrderState extends ConsumerState<myOrder> {
                   },
                   separatorBuilder: (context, index) {
                     return Divider(color: Pallette.primaryColor,);
-                  },):Center(child:Image.asset(imageConstants.no_order));
+                  },):Center(child:Image.asset(ImageConstants.no_order));
             }, error: (error, stackTrace) => Text(error.toString()), loading: () {
                   return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
 

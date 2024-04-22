@@ -32,35 +32,35 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
 
   List trending = [
-    imageConstants.trending,
-    imageConstants.trending1,
-    imageConstants.trending,
+    ImageConstants.trending,
+    ImageConstants.trending1,
+    ImageConstants.trending,
   ];
 
   List pets = [
-    {'name': 'food', "image": imageConstants.petfood, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet4, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet1, "price": 1000},
-    {'name': 'supplies', "image": imageConstants.supplies, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet2, "price": 1250},
-    {'name': 'pet', "image": imageConstants.pet5, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet6, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet7, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet8, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet9, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet10, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet11, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet12, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet13, "price": 1000},
-    {'name': 'pet', "image": imageConstants.pet14, "price": 1000},
+    {'name': 'food', "image": ImageConstants.petfood, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet4, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet1, "price": 1000},
+    {'name': 'supplies', "image": ImageConstants.supplies, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet2, "price": 1250},
+    {'name': 'pet', "image": ImageConstants.pet5, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet6, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet7, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet8, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet9, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet10, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet11, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet12, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet13, "price": 1000},
+    {'name': 'pet', "image": ImageConstants.pet14, "price": 1000},
   ];
 
   List category = [
-    {'name': 'Dogs', 'image': imageConstants.dog},
-    {'name': 'Cats', 'image': imageConstants.cat},
-    {'name': 'Birds', 'image': imageConstants.bird},
-    {'name': 'Fish', 'image': imageConstants.fish},
-    {'name': 'Small Animals', 'image': imageConstants.rabbit},
+    {'name': 'Dogs', 'image': ImageConstants.dog},
+    {'name': 'Cats', 'image': ImageConstants.cat},
+    {'name': 'Birds', 'image': ImageConstants.bird},
+    {'name': 'Fish', 'image': ImageConstants.fish},
+    {'name': 'Small Animals', 'image': ImageConstants.rabbit},
   ];
 
 
@@ -95,7 +95,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         fontSize: 30,
                         fontWeight: FontWeight.w800),
                   ),
-                  SvgPicture.asset(imageConstants.dogSvg),
+                  SvgPicture.asset(ImageConstants.dogSvg),
                 ],
               ),
               Row(
@@ -130,6 +130,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 data: (data) {
                   List banners = data!['images'];
                   return CarouselSlider(
+
                       items: List.generate(
                           banners.length,
                               (index) => Padding(
@@ -148,7 +149,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           )),
                       options:
-                      CarouselOptions(height: height * 0.2, autoPlay: true));
+                      CarouselOptions(
+                          viewportFraction: 0.7,
+                          height: height * 0.2,
+                          autoPlay: true,
+                        enlargeCenterPage: true
+                      ));
                 },
                 error: (error, stackTrace) {
                   return Text(error.toString());
@@ -391,34 +397,35 @@ getfun();
                   child:Container(
                     height: width * 0.4,
                     width: width * 0.4,
-                    decoration: BoxDecoration(
-                        color: Pallette.secondaryBrown,
-                        image: DecorationImage(
-                            image: NetworkImage(widget.image[0]),
-                            fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(15)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                        child: CachedNetworkImage(imageUrl:widget.image[0],fit: BoxFit.cover,)),
+                    // decoration: BoxDecoration(
+                    //     color: Pallette.secondaryBrown,
+                    //     image: DecorationImage(
+                    //         image: NetworkImage(widget.image[0]),
+                    //         fit: BoxFit.cover),
+                    //     borderRadius: BorderRadius.circular(15)),
                   ),
                 ),
                 Positioned(
                   right: 0,
                   top: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                      height: width*0.1,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          // color: Colors.white.withOpacity(0.4)
-                      ),
-                      child: Center(
-                        child: IconButton(onPressed: (){
-                         ref.read(favour.notifier).update((state) => !state);
-                         favFunc();
-                        }
-                          , icon: Icon(
-                            ref.watch(favour) ? Icons.favorite : Icons.favorite,
-                            color: ref.watch(favour) ?Colors.red:Colors.grey,
-                          ),
+                  child: Container(
+                    padding:  EdgeInsets.all(width*0.003),
+                    height: width*0.1,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // color: Colors.white.withOpacity(0.4)
+                    ),
+                    child: Center(
+                      child: IconButton(onPressed: (){
+                       ref.read(favour.notifier).update((state) => !state);
+                       favFunc();
+                      }
+                        , icon: Icon(
+                          ref.watch(favour) ? Icons.favorite : Icons.favorite,
+                          color: ref.watch(favour) ?Colors.red:Colors.grey,
                         ),
                       ),
                     ),
@@ -430,9 +437,12 @@ getfun();
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text(
-                    widget.name,
-                    style: TextStyle(fontWeight: FontWeight.w800),
+                  Container(
+                    width: width*0.4,
+                    child: Text(
+                      widget.name,
+                      style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
+                    ),
                   ),
                 ],
               ),

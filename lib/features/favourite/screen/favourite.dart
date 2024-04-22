@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,26 +40,24 @@ class _favouriteState extends ConsumerState<favourite> {
               children: [
                 Container(
                   height: height * 0.08,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(Icons.search),
-                          ),
-                          Text(
-                            "Search",
-                            style: TextStyle(color: Colors.grey),
-                          )
-                        ],
-                      ),
-                      height: height * 0.06,
-                      decoration: BoxDecoration(
-                          color: Pallette.grey,
-                          borderRadius: BorderRadius.circular(10)),
+                  child: Container(
+                    margin: EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.search),
+                        ),
+                        Text(
+                          "Search",
+                          style: TextStyle(color: Colors.grey),
+                        )
+                      ],
                     ),
+                    height: height * 0.06,
+                    decoration: BoxDecoration(
+                        color: Pallette.grey,
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
                 gap,
@@ -142,18 +141,16 @@ class _petTileState extends ConsumerState<petTile> {
           return  data==null?
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: Container(
-                  height: width * 0.4,
-                  width: width * 0.4,
-                  decoration: BoxDecoration(
-                      color: Pallette.secondaryBrown,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: Pallette.primaryColor,
-                    ),
+              Container(
+                height: width * 0.4,
+                width: width * 0.4,
+                margin: EdgeInsets.all(7.0),
+                decoration: BoxDecoration(
+                    color: Pallette.secondaryBrown,
+                    borderRadius: BorderRadius.circular(15)),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Pallette.primaryColor,
                   ),
                 ),
               ),
@@ -185,47 +182,49 @@ class _petTileState extends ConsumerState<petTile> {
                         child: Container(
                           height: width * 0.4,
                           width: width * 0.4,
-                          decoration: BoxDecoration(
-                              color: Pallette.secondaryBrown,
-                              image: DecorationImage(
-                                  image: NetworkImage(data.image[0]),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(15)),
+                      child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: CachedNetworkImage(imageUrl:data.image[0],fit: BoxFit.cover,)),
+                          // decoration: BoxDecoration(
+                          //     color: Pallette.secondaryBrown,
+                          //     image: DecorationImage(
+                          //         image: NetworkImage(data.image[0]),
+                          //         fit: BoxFit.cover),
+                          //     borderRadius: BorderRadius.circular(15)),
                         ),
                       ),
                       Positioned(
                         right: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white.withOpacity(0.5)),
-                              child:
-                              IconButton(onPressed: (){
-                                ref.read(favour.notifier).update((state) => !state);
-                                favFunc(data);
-                              }
-                                , icon: Icon(
-                                  ref.watch(favour) ? Icons.favorite : Icons.favorite,
-                                  color: ref.watch(favour) ?Colors.red:Colors.red,
-                                ),
+                        child: Container(
+                          margin: EdgeInsets.all(5.0),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                // color: Colors.white.withOpacity(0.1)
+                            ),
+                            child:
+                            IconButton(onPressed: (){
+                              ref.read(favour.notifier).update((state) => !state);
+                              favFunc(data);
+                            }
+                              , icon: Icon(
+                                ref.watch(favour) ? Icons.favorite : Icons.favorite,
+                                color: ref.watch(favour) ?Colors.red:Colors.red,
                               ),
+                            ),
 
-                            // Padding(
-                            //   padding: const EdgeInsets.all(5.0),
-                            //   child: FavoriteButton(
-                            //     isFavorite: true,
-                            //     iconSize: 25,
-                            //     valueChanged: (_isFavorite) async {
-                            //       favFunc(data);
-                            //     },
-                            //   ),
-                            // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(5.0),
+                          //   child: FavoriteButton(
+                          //     isFavorite: true,
+                          //     iconSize: 25,
+                          //     valueChanged: (_isFavorite) async {
+                          //       favFunc(data);
+                          //     },
+                          //   ),
+                          // ),
 
 
 
-                          ),
                         ),
                       )
                     ],
