@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
@@ -175,12 +176,15 @@ class _petTileState extends State<petTile> {
               child: Container(
                 height: width * 0.4,
                 width: width * 0.4,
-                decoration: BoxDecoration(
-                    color: Pallette.secondaryBrown,
-                    image: DecorationImage(
-                        image: NetworkImage(widget.image[0]),
-                        fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(15)),
+              child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(imageUrl:widget.image[0],fit: BoxFit.cover,)),
+                // decoration: BoxDecoration(
+                //     color: Pallette.secondaryBrown,
+                //     image: DecorationImage(
+                //         image: NetworkImage(widget.image[0]),
+                //         fit: BoxFit.cover),
+                //     borderRadius: BorderRadius.circular(15)),
               ),
             ),
             Padding(

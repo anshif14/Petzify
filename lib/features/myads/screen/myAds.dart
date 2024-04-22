@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -212,10 +213,13 @@ class _myAdsState extends ConsumerState<myAds> {
                                         Container(
                                           height: height*0.15,
                                           width: width*0.5,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(image: NetworkImage(data[index].image[0]),fit: BoxFit.cover),
-                                              borderRadius: BorderRadius.circular(width*0.01)
-                                          ),
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(width*0.01),
+                                              child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
+                                          // decoration: BoxDecoration(
+                                          //     image: DecorationImage(image: NetworkImage(data[index].image[0]),fit: BoxFit.cover),
+                                          //     borderRadius: BorderRadius.circular(width*0.01)
+                                          // ),
                                         ),
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,7 +245,7 @@ class _myAdsState extends ConsumerState<myAds> {
                                               context: context,
                                               builder: (context) {
                                                 return CupertinoAlertDialog(
-                                                  content: Text("Are you Sure\nYou Want to Exit !",
+                                                  content: Text("Are you Sure\nYou Want to Remove !",
                                                       style: TextStyle(
                                                           fontWeight: FontWeight.w400,
                                                           fontSize: width * 0.045)),
@@ -274,7 +278,7 @@ class _myAdsState extends ConsumerState<myAds> {
                                                                   height: height*0.04,
                                                                   width: width*0.1,
                                                                   // color: Colors.red,
-                                                                  child: Lottie.asset(imageConstants.remove,fit: BoxFit.fitHeight)),
+                                                                  child: Lottie.asset(ImageConstants.remove,fit: BoxFit.fitHeight)),
                                                             ),
                                                             SizedBox(
                                                               width: width*0.015,
@@ -340,7 +344,7 @@ class _myAdsState extends ConsumerState<myAds> {
                         ),
                       );
 
-                    },):Center(child:Image.asset(imageConstants.no_ads));
+                    },):Center(child:Lottie.asset(ImageConstants.noadslottie));
                 },
                 error: (error, stackTrace) {
                   return Text(

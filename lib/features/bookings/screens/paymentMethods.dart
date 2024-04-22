@@ -59,73 +59,81 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              height:height*0.06,
               width: width*1,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width*0.03),
-                border: Border.all(color: Pallette.primaryColor)
-              ),
-              child: ListTile(
-                title: Text("Google Pay",style: TextStyle(color: CupertinoColors.black,),),
-                trailing:Radio(
-                  activeColor: Pallette.primaryColor,
-                  fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
-                  value: "G",
-                  groupValue: cont,
-                  onChanged: (value) {
+              height: height*0.35,
+              child: Image.asset(ImageConstants.payment,fit: BoxFit.cover,),
+            ),
+            Column(
+              children: [
+                Container(
 
-                  },
-                ) ,
-              ),
-            ),
-            gap,
-            Container(
-              height:height*0.06,
-              width: width*1,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width*0.03),
-                border: Border.all(color: Pallette.primaryColor)
-              ),
-              child: ListTile(
-                title: Text("Credit/Debit",style: TextStyle(color: CupertinoColors.black,),),
-                trailing:Radio(
-                  activeColor: Pallette.primaryColor,
-                  fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
-                  value: "C",
-                  groupValue: cont,
-                  onChanged: (value) {
+                  width: width*1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width*0.03),
+                    border: Border.all(color: Pallette.primaryColor)
+                  ),
+                  child: Center(
+                    child: ListTile(
+                      title: Text("Google Pay",style: TextStyle(color: CupertinoColors.black,),),
+                      trailing:Radio(
+                        activeColor: Pallette.primaryColor,
+                        fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
+                        value: "G",
+                        groupValue: cont,
+                        onChanged: (value) {
 
-                  },
-                ) ,
-              ),
+                        },
+                      ) ,
+                    ),
+                  ),
+                ),
+                gap,
+                Container(
+                  width: width*1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width*0.03),
+                    border: Border.all(color: Pallette.primaryColor)
+                  ),
+                  child: ListTile(
+                    title: Text("Credit/Debit",style: TextStyle(color: CupertinoColors.black,),),
+                    trailing:Radio(
+                      activeColor: Pallette.primaryColor,
+                      fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
+                      value: "C",
+                      groupValue: cont,
+                      onChanged: (value) {
+
+                      },
+                    ) ,
+                  ),
+                ),
+                gap,
+                Container(
+                  width: width*1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(width*0.03),
+                    border: Border.all(color: Pallette.primaryColor)
+                  ),
+                  child: ListTile(
+                    title: Text("COD",style: TextStyle(color: CupertinoColors.black,),),
+                    trailing:Radio(
+                      activeColor: Pallette.primaryColor,
+                      fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
+                      value: "COD",
+                      groupValue: cont,
+                      onChanged: (value) {
+                        setState(() {
+                          cont=value!;
+                        });
+                      },
+                    ) ,
+                  ),
+                ),
+              ],
             ),
-            gap,
-            Container(
-              height:height*0.06,
-              width: width*1,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(width*0.03),
-                border: Border.all(color: Pallette.primaryColor)
-              ),
-              child: ListTile(
-                title: Text("COD",style: TextStyle(color: CupertinoColors.black,),),
-                trailing:Radio(
-                  activeColor: Pallette.primaryColor,
-                  fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
-                  value: "COD",
-                  groupValue: cont,
-                  onChanged: (value) {
-                    setState(() {
-                      cont=value!;
-                    });
-                  },
-                ) ,
-              ),
-            ),
-            gap,
             gap,
             InkWell(
               onTap: () async {
@@ -151,7 +159,7 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
                           ),
                           child: Column(
                             children: [
-                              Lottie.asset(imageConstants.lottie),
+                              Lottie.asset(ImageConstants.lottie),
                               Text("Successfully Ordered!!",style: TextStyle(fontSize: width*0.045),),
 
                               // gap,
@@ -178,12 +186,9 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
                       );
                     }
                 );
-              Future.delayed(Duration(seconds: 3))
-                  .then((value) => Navigator.pushReplacement(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => NavBar(),
-                  )));
+              Future.delayed(Duration(seconds: 2))
+                  .then((value) => Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder:
+                  (context) => NavBar(),), (route) => false));
 
 
               },

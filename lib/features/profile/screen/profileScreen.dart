@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/explore/repository/explore_repository.dart';
 import 'package:luna_demo/features/order/controller/order_stream_controller.dart';
@@ -154,7 +155,6 @@ class _profileScreenState extends State<profileScreen> {
             ),
             Container(
               width: width * 1,
-              height: height * 0.3,
               decoration: BoxDecoration(
                 color: Pallette.white,
                 boxShadow: [
@@ -189,11 +189,10 @@ class _profileScreenState extends State<profileScreen> {
                       //   ),
                       // ),
                       leading: Container(
-                        height: height * 0.06,
                         width: width * 0.13,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage(imageConstants.order),
+                                image: AssetImage(ImageConstants.order),
                                 scale: width * 0.035,
                                 alignment: AlignmentDirectional(0.1, 0)),
                             shape: BoxShape.circle,
@@ -209,15 +208,14 @@ class _profileScreenState extends State<profileScreen> {
                       subtitle: Text("Make changes to your order"),
                       subtitleTextStyle: TextStyle(
                           fontSize: width * 0.035, color: Colors.grey.shade600),
-                      trailing: Container(
-                        child: Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          color: Pallette.primaryColor,
-                          size: width * 0.05,
-                        ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        color: Pallette.primaryColor,
+                        size: width * 0.05,
                       ),
                     ),
                   ),
+
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -228,11 +226,10 @@ class _profileScreenState extends State<profileScreen> {
                     },
                     child: ListTile(
                       leading: Container(
-                        height: height * 0.06,
                         width: width * 0.13,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage(imageConstants.ads),
+                                image: AssetImage(ImageConstants.ads),
                                 scale: width * 0.055,
                                 alignment: AlignmentDirectional(0.25, 0)),
                             shape: BoxShape.circle,
@@ -248,15 +245,14 @@ class _profileScreenState extends State<profileScreen> {
                       subtitle: Text("Manage your saved account "),
                       subtitleTextStyle: TextStyle(
                           fontSize: width * 0.035, color: Colors.grey.shade600),
-                      trailing: Container(
-                        child: Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          color: Pallette.primaryColor,
-                          size: width * 0.05,
-                        ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        color: Pallette.primaryColor,
+                        size: width * 0.05,
                       ),
                     ),
                   ),
+                 SizedBox(height: height*0.01,),
                   // ListTile(
                   //   leading:Container(
                   //     height: height*0.06,
@@ -317,6 +313,7 @@ class _profileScreenState extends State<profileScreen> {
                   //     ],
                   //   ),
                   // ),
+
                   GestureDetector(
                     onTap: () {
                       showCupertinoModalPopup(
@@ -324,7 +321,7 @@ class _profileScreenState extends State<profileScreen> {
                         context: context,
                         builder: (context) {
                           return CupertinoAlertDialog(
-                            content: Text("Are you Sure\nYou Want to Exit !",
+                            content: Text("Are you Sure\nYou Want to Log Out !",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: width * 0.045)),
@@ -344,17 +341,12 @@ class _profileScreenState extends State<profileScreen> {
                                 onPressed: () async {
                                   SharedPreferences _prefs = await SharedPreferences.getInstance();
                                   _prefs.remove('email');
-                                  currentUserEmail="";
                                   // _prefs.remove("login");
                                   currentUserModel=null;
                                   _prefs.clear();
                                   GoogleSignIn().signOut();
                                   FirebaseAuth.instance.signOut();
-                                  Navigator.pushReplacement(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) => LoginPage(),
-                                      ));
+                                  Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => LoginPage(),), (route) => false);
                                 },
                                 child: Text("Confirm"),
                               ),
@@ -398,11 +390,12 @@ class _profileScreenState extends State<profileScreen> {
                     // },
                     child: ListTile(
                       leading: Container(
-                        height: height * 0.06,
+
                         width: width * 0.13,
                         decoration: BoxDecoration(
+
                             image: DecorationImage(
-                                image: AssetImage(imageConstants.logout),
+                                image: AssetImage(ImageConstants.logout),
                                 scale: width * 0.045,
                                 alignment: AlignmentDirectional(0.2, 0)),
                             shape: BoxShape.circle,
@@ -422,12 +415,13 @@ class _profileScreenState extends State<profileScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: height*0.01,)
                 ],
               ),
             ),
             Container(
               width: width * 1,
-              height: height * 0.2,
+              height: height * 0.18,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(width * 0.02),
                 boxShadow: [
@@ -449,7 +443,7 @@ class _profileScreenState extends State<profileScreen> {
                       width: width * 0.13,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(imageConstants.customerSupport),
+                            image: AssetImage(ImageConstants.customerSupport),
                             scale: width * 0.035,
                           ),
                           shape: BoxShape.circle,
@@ -474,7 +468,7 @@ class _profileScreenState extends State<profileScreen> {
                       width: width * 0.13,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(imageConstants.aboutapp),
+                            image: AssetImage(ImageConstants.aboutapp),
                             scale: width * 0.035,
                           ),
                           shape: BoxShape.circle,

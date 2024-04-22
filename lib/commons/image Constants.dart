@@ -1,4 +1,4 @@
-class imageConstants{
+class ImageConstants{
   //image
   static const logo='assets/images/logo.png';
   static const banner1='assets/images/banner1.jpg';
@@ -49,8 +49,9 @@ class imageConstants{
 
   static const no_order='assets/images/no_order.png';
   static const no_ads='assets/images/no_ads.jpg';
-  static const delivery='assets/images/deliveryaddress.jpg';
-
+  // static const delivery='assets/images/deliveryaddress.jpg';
+  static const delivery='assets/images/Take Away-pana.png';
+  static const payment='assets/images/E-Wallet-rafiki.png';
   //svg
   static const dogSvg='assets/svg/dog.svg';
   //login
@@ -68,6 +69,8 @@ class imageConstants{
 static const lottie='assets/animation/an.json';
 static const loading='assets/animation/comingsoon.json';
 static const remove='assets/animation/Animation - 1710042872820 (1).json';
+  static const noadslottie="assets/animation/Animation - 1713592810741.json";
+
 
 
 }

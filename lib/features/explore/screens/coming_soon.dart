@@ -24,7 +24,7 @@ class _comingSoonState extends State<comingSoon> {
               height: height*0.4,
               width: width*1,
               child: Center(
-                child:Lottie.asset(imageConstants.loading),
+                child:Lottie.asset(ImageConstants.loading),
               ),
             )
           ],

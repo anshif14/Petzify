@@ -22,18 +22,18 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
 
   List trending =[
-    imageConstants.trending,
-    imageConstants.trending1,
-    imageConstants.trending
+    ImageConstants.trending,
+    ImageConstants.trending1,
+    ImageConstants.trending
     ,
   ];
 
   List items=[
-    {'name':'Pet Veterinary','image': imageConstants.veterinary,},
-    {'name':'Pet Breeding Center','image': imageConstants.breeding,},
-    {'name':'Pet Boardind','image': imageConstants.boarding,},
-    {'name':'Pet Training Center','image':imageConstants.training,},
-    {'name':'Pet Grooming Center','image':imageConstants.grooming},
+    {'name':'Pet Veterinary','image': ImageConstants.veterinary,},
+    {'name':'Pet Breeding Center','image': ImageConstants.breeding,},
+    {'name':'Pet Boardind','image': ImageConstants.boarding,},
+    {'name':'Pet Training Center','image':ImageConstants.training,},
+    {'name':'Pet Grooming Center','image':ImageConstants.grooming},
   ];
   @override
   Widget build(BuildContext context) {
