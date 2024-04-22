@@ -70,7 +70,9 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
+    setState(() {
 
+    });
   }
   @override
   @override

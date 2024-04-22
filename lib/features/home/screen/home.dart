@@ -19,6 +19,7 @@ import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
 
+
 import '../../bookings/screens/productSingle.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -287,14 +288,16 @@ class _petTileState extends ConsumerState<petTile> {
   int index = 0;
 
 
+
+
   getfun() async {
     DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel=UserModel.fromMap(data!.data()!);
+    currentUserModel=UserModel.fromMap(data.data()!);
     List fav=currentUserModel!.favourites;
-    if(fav!.isNotEmpty){
+    if(fav.isNotEmpty){
       print("ghjkl,,,,");
       print("cvbnm,");
-      if(fav!.contains(widget.id)){
+      if(fav.contains(widget.id)){
         ref.read(favour.notifier).update((state) => true);
       }
       else{
@@ -303,23 +306,30 @@ class _petTileState extends ConsumerState<petTile> {
     }
 
   }
+  bool loading = false;
   favFunc() async {
+    loading = true;
+    setState(() {
+
+    });
     DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
     var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    currentUserModel=UserModel.fromMap(data!.data()!);
+    currentUserModel=UserModel.fromMap(data.data()!);
     List fav=currentUserModel!.favourites;
     List favUser=productModel.favUser;
     print(fav);
-    if(fav!.contains(widget.id)){
-      fav!.remove(widget.id);
+    if(fav.contains(widget.id)){
+      fav.remove(widget.id);
+      favUser.removeWhere((element) => element==currentUserEmail);
     }else{
-      fav!.add(widget.id);
-    }if(favUser.contains(currentUserEmail)){
-      favUser.remove(currentUserEmail);
-    }else{
+      fav.add(widget.id);
       favUser.add(currentUserEmail);
     }
+    // if(favUser.contains(currentUserEmail)){
+    // }else{
+    //
+    // }
 
     FirebaseFirestore.instance.collection("product").doc(widget.id).update({
       "favUser":favUser
@@ -331,8 +341,11 @@ class _petTileState extends ConsumerState<petTile> {
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
-  }
+    loading = false;
+    setState(() {
 
+    });
+  }
   @override
   void initState() {
 getfun();
@@ -360,11 +373,22 @@ getfun();
         padding: const EdgeInsets.all(4.0),
         child: Column(
           children: [
+            loading?
+            Container(
+              width: width*0.4,
+              height: width*0.4,
+              child: Padding(
+                padding:  EdgeInsets.all(width*0.15),
+                child: CircularProgressIndicator(
+                  color: Pallette.primaryColor,
+                ),
+              ),
+            ):
             Stack(
               children: [
                 Hero(
                   tag: widget.image,
-                  child: Container(
+                  child:Container(
                     height: width * 0.4,
                     width: width * 0.4,
                     decoration: BoxDecoration(
@@ -388,7 +412,6 @@ getfun();
                       ),
                       child: Center(
                         child: IconButton(onPressed: (){
-
                          ref.read(favour.notifier).update((state) => !state);
                          favFunc();
                         }

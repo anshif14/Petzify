@@ -108,13 +108,16 @@ class _petTileState extends ConsumerState<petTile> {
     print(fav);
     if(fav.contains(data.id)){
       fav.remove(data.id);
+      favUser.removeWhere((element) => element==currentUserEmail);
+
     }else{
       fav.add(data.id);
-    }if(favUser.contains(currentUserEmail)){
-      favUser.remove(currentUserEmail);
-    }else{
       favUser.add(currentUserEmail);
+
     }
+    // if(favUser.contains(currentUserEmail)){
+    // }else{
+    // }
     FirebaseFirestore.instance.collection("product").doc(data.id).update({
       "favUser":favUser
     });
@@ -125,7 +128,9 @@ class _petTileState extends ConsumerState<petTile> {
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
     productModel=ProductModel.fromMap(data3.data()!);
+    setState(() {
 
+    });
   }
   @override
   Widget build(BuildContext context) {
