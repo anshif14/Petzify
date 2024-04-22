@@ -49,6 +49,7 @@ class imageConstants{
 
   static const no_order='assets/images/no_order.png';
   static const no_ads='assets/images/no_ads.jpg';
+  static const delivery='assets/images/deliveryaddress.jpg';
 
   //svg
   static const dogSvg='assets/svg/dog.svg';
