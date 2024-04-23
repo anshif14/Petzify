@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:luna_demo/model/booking_model.dart';
 import '../../../commons/image Constants.dart';
 import '../../../commons/widgets.dart';
 import '../../../main.dart';
+import 'package:http/http.dart' as http;
 
 
 class deliveryAddress extends ConsumerStatefulWidget {
@@ -27,13 +30,19 @@ class deliveryAddress extends ConsumerStatefulWidget {
 class _deliveryAddressState extends ConsumerState<deliveryAddress> {
 
   TextEditingController namecontroller=TextEditingController();
-  TextEditingController addresscontroller=TextEditingController();
   TextEditingController numbercontroller=TextEditingController();
+  TextEditingController housecontroller=TextEditingController();
+  TextEditingController areacontroller=TextEditingController();
+  TextEditingController landmarkcontroller=TextEditingController();
+  TextEditingController pincodecontroller=TextEditingController();
+  TextEditingController pincodepostalcontroller=TextEditingController();
 
   add(){
     //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
     BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text.trim(),
-      buyerAddress: addresscontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
+      state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
+        buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
+        buyercity:pincodepostalcontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
     // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
 
     Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
@@ -73,6 +82,37 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
     "Uttarakhand",
     "West Bengal"
   ];
+
+
+  http.Response? apiData;
+
+  getPostalData({required String pincode}) async {
+    print("object");
+    apiData = await http.get(Uri.tryParse(
+        "https://api.postalpincode.in/pincode/${pincode}")!);
+    print(apiData!.statusCode);
+
+    api = json.decode(apiData!.body);
+    if (apiData != null) {
+      postOffice = api[0]['PostOffice'];
+
+      if (postOffice.isNotEmpty) {
+        pincodepostalcontroller.text=postOffice[0]["District"];
+        setState(() {});
+      }
+    }
+
+    setState(() {});
+  }
+
+  List api = [];
+  List postOffice = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +155,8 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                         counterText: "",
                           labelText: "Name",
                           labelStyle: TextStyle(
-                              color:CupertinoColors.black,
-                              fontSize: width*0.04
+                              color:Colors.black54,
+                              fontSize: width*0.035
                           ),
                           focusedBorder:OutlineInputBorder(
                               borderRadius: BorderRadius.circular(width*0.03),
@@ -134,7 +174,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                      children: [
                        Container(
                          height: height*0.07,
-                         width: width*0.5,
+                         width: width*0.95,
                          decoration: BoxDecoration(
                            borderRadius: BorderRadius.circular(width*0.03),
                            border: Border.all(color: Pallette.primaryColor)
@@ -143,9 +183,10 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                            padding: EdgeInsets.all(width * 0.04),
                            child: DropdownButton(
                              hint: Text(
-                               "States",
+                               "State",
                                style: TextStyle(
-                                 fontSize: width * 0.045,
+                                 color: Colors.black54,
+                                   fontSize: width*0.035
                                ),
                              ),
                              dropdownColor: Pallette.white,
@@ -154,7 +195,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                              underline: gap,
                              style: TextStyle(
                                color: Colors.black,
-                               fontSize: width * 0.043,
+                               fontSize: width*0.035,
                              ),
                              value: state,
                              items: states.map(
@@ -173,40 +214,186 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                            ),
                          ),
                        ),
-                       Container(
-                         height: height*0.07,
-                         width: width*0.4,
-                         child: TextFormField(
-                           textInputAction: TextInputAction.next,
-                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                           keyboardType: TextInputType.text,
-                           controller: namecontroller,
-                           cursorColor: Pallette.primaryColor,
-                           maxLength: 50,
-                           style: TextStyle(
-                               color: CupertinoColors.black
-                           ),
-                           decoration: InputDecoration(
-                               counterText: "",
-                               labelText: "District",
-                               labelStyle: TextStyle(
-                                   color:CupertinoColors.black,
-                                   fontSize: width*0.04
-                               ),
-                               focusedBorder:OutlineInputBorder(
-                                   borderRadius: BorderRadius.circular(width*0.03),
-                                   borderSide:BorderSide(color: Pallette.primaryColor)
-                               ),
-                               enabledBorder: OutlineInputBorder(
-                                   borderRadius: BorderRadius.circular(width*0.03),
-                                   borderSide: BorderSide(color: Pallette.primaryColor)
-                               )
-                           ),
-                         ),
-                       ),
+                       // Container(
+                       //   height: height*0.07,
+                       //   width: width*0.4,
+                       //   child: TextFormField(
+                       //     textInputAction: TextInputAction.next,
+                       //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                       //     keyboardType: TextInputType.text,
+                       //     controller: districtcontroller,
+                       //     cursorColor: Pallette.primaryColor,
+                       //     maxLength: 30,
+                       //     style: TextStyle(
+                       //         color: CupertinoColors.black
+                       //     ),
+                       //     decoration: InputDecoration(
+                       //         counterText: "",
+                       //         labelText: "District",
+                       //         labelStyle: TextStyle(
+                       //             fontSize: width*0.035,
+                       //           color: Colors.black54
+                       //         ),
+                       //         focusedBorder:OutlineInputBorder(
+                       //             borderRadius: BorderRadius.circular(width*0.03),
+                       //             borderSide:BorderSide(color: Pallette.primaryColor)
+                       //         ),
+                       //         enabledBorder: OutlineInputBorder(
+                       //             borderRadius: BorderRadius.circular(width*0.03),
+                       //             borderSide: BorderSide(color: Pallette.primaryColor)
+                       //         )
+                       //     ),
+                       //   ),
+                       // ),
                      ],
                    ),
-
+                    gap,
+                    TextFormField(
+                      textInputAction: TextInputAction.newline,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.multiline,
+                      controller: housecontroller,
+                      cursorColor: Pallette.primaryColor,
+                      maxLength: 50,
+                      style: TextStyle(
+                          color: CupertinoColors.black
+                      ),
+                      decoration: InputDecoration(
+                          counterText: "",
+                          labelText: "Flat,House no,Building,Company,Apartment",
+                          labelStyle: TextStyle(
+                              fontSize: width*0.035,
+                            color: Colors.black54
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
+                      ),
+                    ),
+                    gap,
+                    TextFormField(
+                      textInputAction: TextInputAction.newline,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.multiline,
+                      controller: areacontroller,
+                      cursorColor: Pallette.primaryColor,
+                      maxLength: 50,
+                      style: TextStyle(
+                          color: CupertinoColors.black
+                      ),
+                      decoration: InputDecoration(
+                          counterText: "",
+                          labelText: "Area,Street,Sector,Village",
+                          labelStyle: TextStyle(
+                              fontSize: width*0.035,
+                            color: Colors.black54
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
+                      ),
+                    ),
+                    gap,
+                    TextFormField(
+                      textInputAction: TextInputAction.newline,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.multiline,
+                      controller: landmarkcontroller,
+                      cursorColor: Pallette.primaryColor,
+                      maxLength: 60,
+                      style: TextStyle(
+                          color: CupertinoColors.black
+                      ),
+                      decoration: InputDecoration(
+                          counterText: "",
+                          labelText: "Landmark",
+                          labelStyle: TextStyle(
+                              fontSize: width*0.035,
+                            color: Colors.black54
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
+                      ),
+                    ),
+                    gap,
+                    TextFormField(
+                      textInputAction: TextInputAction.done,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.number,
+                      controller: pincodecontroller,
+                      cursorColor: Pallette.primaryColor,
+                      onEditingComplete: () {
+                        getPostalData(pincode: pincodecontroller.text);
+                      },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      maxLength: 6,
+                      style: TextStyle(
+                          color: CupertinoColors.black
+                      ),
+                      decoration: InputDecoration(
+                        counterText: "",
+                          labelText: "Pincode",
+                          labelStyle: TextStyle(
+                              fontSize: width*0.035,
+                            color: Colors.black54
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
+                      ),
+                    ),
+                    gap,
+                    TextFormField(
+                      textInputAction: TextInputAction.done,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.number,
+                      controller: pincodepostalcontroller,
+                      cursorColor: Pallette.primaryColor,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      style: TextStyle(
+                          color: CupertinoColors.black
+                      ),
+                      decoration: InputDecoration(
+                          labelText: "Town/City",
+                          labelStyle: TextStyle(
+                              fontSize: width*0.035,
+                            color: Colors.black54
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide:BorderSide(color: Pallette.primaryColor)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(width*0.03),
+                              borderSide: BorderSide(color: Pallette.primaryColor)
+                          )
+                      ),
+                    ),
                     gap,
                     // TextFormField(
                     //   textInputAction: TextInputAction.done,
@@ -250,7 +437,9 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                         contentPadding: EdgeInsets.all(width*0.04),
                         counterText: "",
                         labelText: "Phone Number",
-                        labelStyle: TextStyle(color: Colors.black),
+                        labelStyle: TextStyle(color: Colors.black54,
+                        fontSize: width*0.035
+                        ),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Pallette.primaryColor),
                         ),
@@ -280,10 +469,30 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Name")));
                     return;
                   }
-                  // if(addresscontroller.text.isEmpty){
-                  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Address")));
-                  //   return;
-                  // }
+                  if(state==null){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Select Your State")));
+                    return;
+                  }
+                  if(housecontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your House no/flat")));
+                    return;
+                  }
+                  if(areacontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Street/village")));
+                    return;
+                  }
+                  if(landmarkcontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Landmark")));
+                    return;
+                  }
+                  if(pincodecontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Pincode")));
+                    return;
+                  }
+                  if(pincodepostalcontroller.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Town/City")));
+                    return;
+                  }
                   if(numbercontroller.text.isEmpty){
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Phone Number")));
                     return;

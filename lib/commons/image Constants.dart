@@ -49,7 +49,6 @@ class ImageConstants{
 
   static const no_order='assets/images/no_order.png';
   static const no_ads='assets/images/no_ads.jpg';
-  // static const delivery='assets/images/deliveryaddress.jpg';
   static const delivery='assets/images/Take Away-pana.png';
   static const payment='assets/images/E-Wallet-rafiki.png';
   //svg
