@@ -90,14 +90,77 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                       child: SlideAnimation(
                         verticalOffset: 50.0,
                         child: FadeInAnimation(
-                          child: petTile(
-                            index: index,
-                            image:data[index].image.toList(),
-                            name:data[index].productname,
-                            price:data[index].price,
-                            category:data[index].category!,
-                            id:data[index].id
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProducctSingleScreen(
+                                        id:data![index].id,
+                                        tag: data[index].image[0],
+                                        fav: data[index].favUser.contains(currentUserEmail) ? true : false,
+                                        like: false,
+                                        Petcategory:true,
+                                        name:"",
+                                        price: 0,
+                                        category:"",
+                                        image:[]
+
+                                    ),
+                                  ));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Column(
+                                children: [
+                                  Hero(
+                                    tag: data[index].image,
+                                    child: Container(
+                                      height: width * 0.4,
+                                      width: width * 0.4,
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15),
+                                          child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
+                                      // decoration: BoxDecoration(
+                                      //     color: Pallette.secondaryBrown,
+                                      //     image: DecorationImage(
+                                      //         image: NetworkImage(widget.image[0]),
+                                      //         fit: BoxFit.cover),
+                                      //     borderRadius: BorderRadius.circular(15)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          data[index].category,
+                                          style: TextStyle(fontWeight: FontWeight.w800),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text('₹ ' + data[index].price.toString()),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
+                          // petTile(
+                          //   index: index,
+                          //   image:data[index].image.toList(),
+                          //   name:data[index].productname,
+                          //   price:data[index].price,
+                          //   category:data[index].category!,
+                          //   id:data[index].id,
+                          // ),
                         ),
                       ),
                     );
@@ -119,101 +182,4 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
     );
   }
 }
-class petTile extends StatefulWidget {
-  final int index;
-  final List image;
-  final String name;
-  final double price;
-  final String category;
-  final String id;
-  const petTile({
-    super.key,
-    required this.index,
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.category,
-    required this.id
-  });
 
-  @override
-  State<petTile> createState() => _petTileState();
-}
-
-class _petTileState extends State<petTile> {
-
-  int index = 0;
-
-  @override
-  void initState() {
-    index = widget.index;
-    // TODO: implement initState
-    super.initState();
-  }
-
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProducctSingleScreen(
-                id:widget.id,
-                tag: widget.image[0],
-                fav: currentProductModel!.favUser.contains(currentUserEmail) ? true : false,
-                like: false,
-                Petcategory:true,
-                  name:"",
-                  price: 0,
-                  category:"",
-                  image:[]
-
-              ),
-            ));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Column(
-          children: [
-            Hero(
-              tag: widget.image,
-              child: Container(
-                height: width * 0.4,
-                width: width * 0.4,
-              child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: CachedNetworkImage(imageUrl:widget.image[0],fit: BoxFit.cover,)),
-                // decoration: BoxDecoration(
-                //     color: Pallette.secondaryBrown,
-                //     image: DecorationImage(
-                //         image: NetworkImage(widget.image[0]),
-                //         fit: BoxFit.cover),
-                //     borderRadius: BorderRadius.circular(15)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(
-                    widget.category,
-                    style: TextStyle(fontWeight: FontWeight.w800),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('₹ ' + widget.price.toString()),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
