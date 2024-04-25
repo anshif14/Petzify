@@ -100,9 +100,8 @@ class sign{
             ),);
         return;
       }
-
-
-      Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(),), (route) => false);
+      firstTime=false;
+      Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(passindex: 0,),), (route) => false);
 
     }
   }

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
@@ -27,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     login=_prefs.getBool("login") ?? false;
     currentUserName = _prefs.getString('name');
     currentUserEmail = _prefs.getString('email');
+    firstTime = false;
 
     if(currentUserEmail != null ){
 
@@ -42,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
         {
           Future.delayed(Duration(seconds: 3)).then((value) =>
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) =>NavBar())));
+                  context, MaterialPageRoute(builder: (context) =>NavBar(passindex: 0,))));
         }else{
 
         showDialog(
@@ -100,21 +103,26 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return InternetChecker(
+      placeHolder: Container(
+        child: Lottie.asset(ImageConstants.doglottie),
+      ),
+      child: Scaffold(
 
-backgroundColor: Color(0xfff8f6f4),
-      body:Center(
-        child: Container
-          (
-          decoration: BoxDecoration(
-              color: Color(0xfff8f6f4),
+      backgroundColor: Color(0xfff8f6f4),
+        body:Center(
+          child: Container
+            (
+            decoration: BoxDecoration(
+                color: Color(0xfff8f6f4),
 
-              image: DecorationImage(image: AssetImage(ImageConstants.logo),fit: BoxFit.cover)
+                image: DecorationImage(image: AssetImage(ImageConstants.logo),fit: BoxFit.cover)
+            ),
+            height: MediaQuery.of(context).size.height*0.5,
+            width: MediaQuery.of(context).size.width*0.8,
           ),
-          height: MediaQuery.of(context).size.height*0.5,
-          width: MediaQuery.of(context).size.width*0.8,
-        ),
-      )
+        )
+      ),
     );
   }
 }

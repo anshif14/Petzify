@@ -1,13 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
+import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/petcategory/controller/categoryController.dart';
 
 import '../../../commons/color constansts.dart';
+import '../../../commons/image Constants.dart';
 import '../../../main.dart';
 import '../../../model/product_Model.dart';
 import '../../../model/user_Model.dart';
@@ -25,14 +28,18 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        surfaceTintColor: Pallette.white,
-        title:Text("Explore by pets",style: TextStyle(
-            fontSize:width*0.05,
-            fontWeight: FontWeight.w600
-        )),
+    return InternetChecker(
+      placeHolder: Container(
+        child: Lottie.asset(ImageConstants.doglottie),
+      ),
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          surfaceTintColor: Pallette.white,
+          title:Text("Explore by pets",style: TextStyle(
+              fontSize:width*0.05,
+              fontWeight: FontWeight.w600
+          )),
 
       ),
       body: Padding(
@@ -179,7 +186,6 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
           ],
         ),
       ),
-    );
+    ));
   }
 }
-

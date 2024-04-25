@@ -63,6 +63,9 @@ dependencies:
   shimmer: ^3.0.0
   firebase_crashlytics: ^3.5.2
   readmore: ^3.0.0
+  geolocator: ^11.0.0
+  geocoding: ^3.0.0
+  flml_internet_checker: ^0.0.9
 
 
 
@@ -76,20 +79,20 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/apklogo.jpeg"
+  image_path: "assets/images/lunaapklogo.jpg"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/apklogo.jpeg"
+    image_path: "assets/images/lunaapklogo.jpg"
     background_color: "#hexcode"
     theme_color: "#hexcode"
   windows:
     generate: true
-    image_path: "assets/images/apklogo.jpeg"
+    image_path: "assets/images/lunaapklogo.jpg"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/apklogo.jpeg"
+    image_path: "assets/images/lunaapklogo.jpg"
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
