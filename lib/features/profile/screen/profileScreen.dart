@@ -293,7 +293,7 @@ class _profileScreenState extends State<profileScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                             )),
-                        subtitle: Text("Manage your saved account "),
+                        subtitle: Text("Make changes to your ads"),
                         subtitleTextStyle: TextStyle(
                             fontSize: width * 0.035, color: Colors.grey.shade600),
                         trailing: Icon(

@@ -169,7 +169,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
                     borderRadius: BorderRadius.circular(width*0.025),
                     child:    loading?Center(child: CircularProgressIndicator(color: Colors.white,)): pets.isNotEmpty?
                     Image(image: CachedNetworkImageProvider(pets[0]),fit: BoxFit.cover,)
-                        :Image(image: AssetImage(ImageConstants.pet9),fit: BoxFit.cover),
+                        :Image(image: AssetImage(ImageConstants.pet15),fit: BoxFit.cover),
                   )
                 ),
                 gap,
