@@ -166,10 +166,10 @@ class _favouriteState extends ConsumerState<favouritePage> {
                                         id: data!.id,
                                         tag: data.productname,
                                         Petcategory: false,
-                                          name:data[index].productname,
-                                          price:data[index].price,
-                                          category:data[index].category,
-                                        image:data[index].image
+                                          name:data.productname,
+                                          price:data.price,
+                                          category:data.category,
+                                        image:data.image
                                       ),
                                     ));
                               },
