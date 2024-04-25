@@ -160,9 +160,13 @@ class _petTileState extends State<petTile> {
               builder: (context) => ProducctSingleScreen(
                 id:widget.id,
                 tag: widget.image[0],
-                fav:StateProvider<bool>((ref) =>false ),
+                fav: currentProductModel!.favUser.contains(currentUserEmail) ? true : false,
                 like: false,
-                category:true
+                Petcategory:true,
+                  name:"",
+                  price: 0,
+                  category:"",
+                  image:[]
 
               ),
             ));

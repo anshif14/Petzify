@@ -21,7 +21,7 @@ class _NavBarState extends State<NavBar> {
   List pages =[
     HomePage(),
     ExploreScreen(),
-    favourite(),
+    favouritePage(),
     profileScreen()
   ];
 

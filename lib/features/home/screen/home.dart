@@ -29,6 +29,9 @@ class HomePage extends ConsumerStatefulWidget {
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
+List fav=[];
+List favourite=[];
+List favUser=[];
 class _HomePageState extends ConsumerState<HomePage> {
 
   List trending = [
@@ -62,10 +65,86 @@ class _HomePageState extends ConsumerState<HomePage> {
     {'name': 'Fish', 'image': ImageConstants.fish},
     {'name': 'Small Animals', 'image': ImageConstants.rabbit},
   ];
+  // final favour=StateProvider<bool>((ref) =>fav.contains(widget.id) );
 
+
+  bool loading = false;
+
+  getFav() async {
+    DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    Map<String,dynamic> favFB=data.data()!;
+    favourite=favFB["favourites"];
+    for(int i =0;i<favourite.length;i++){
+      fav.add(favourite[i]["id"]);
+    }
+  }
+
+  favFunc(name,id,price,category,image) async {
+    loading = true;
+    setState(() {
+
+    });
+
+    var data2=await FirebaseFirestore.instance.collection("product").doc(id).get();
+    ProductModel productModel = ProductModel.fromMap(data2.data()!);
+
+    favUser=productModel.favUser;
+    if(fav.contains(id)){
+      print(fav);
+      fav.remove(id);
+      print(fav);
+      print(favourite);
+      favourite.removeWhere((element) {
+        print(element["id"]);
+        return element["id"]==id;
+      });
+      print(id);
+      print(favourite);
+      favUser.removeWhere((element) => element==currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": favourite
+      });
+    }else{
+      print("starytttttttttttttttttttttttttttt");
+      fav.add(id);
+      print(fav);
+      Map<String,dynamic> data = {
+        "name":name,
+        "price":price,
+        "category":category,
+        "image":image,
+        "id":id,
+      };
+      favourite.add(data);
+      favUser.add(currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": FieldValue.arrayUnion(favourite)
+      });
+    }
+    // if(favUser.contains(currentUserEmail)){
+    // }else{
+    //
+    // }
+
+    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    currentUserModel = UserModel.fromMap(data1.data()!);
+    var data3=await FirebaseFirestore.instance.collection("product").doc(id).get();
+    productModel=ProductModel.fromMap(data3.data()!);
+    loading = false;
+    setState(() {
+
+    });
+  }
 
   @override
   void initState() {
+      getFav();
     // TODO: implement initState
     super.initState();
   }
@@ -238,14 +317,162 @@ class _HomePageState extends ConsumerState<HomePage> {
                         child: SlideAnimation(
                           verticalOffset: 50.0,
                           child: FadeInAnimation(
-                            child: petTile(
-                                index: index,
-                                image:data[index].image.toList(),
-                                name:data[index].productname,
-                                price:data[index].price,
-                                category:data[index].category!,
-                                id:data[index].id
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProducctSingleScreen(
+                                        fav: fav.contains(data[index].id) ? true : false,
+                                        id:data[index].id,
+                                        tag: data[index].image[0],
+                                        like: false,
+                                        Petcategory: false,
+                                        name:data[index].productname,
+                                        price:data[index].price,
+                                        category:data[index].category,
+                                        image: data[index].image
+
+                                      ),
+                                    ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Column(
+                                  children: [
+                                    loading?
+                                    Stack(
+                                      children: [
+                                        Hero(
+                                          tag: data[index].image,
+                                          child:Container(
+                                            height: width * 0.4,
+                                            width: width * 0.4,
+                                            decoration: BoxDecoration(
+                                                color: Pallette.secondaryBrown,
+                                                image: DecorationImage(
+                                                    image: NetworkImage(data[index].image[0]),
+                                                    fit: BoxFit.cover,opacity:0.6),
+                                                borderRadius: BorderRadius.circular(15)),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 0,
+                                          top: 1,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Container(
+                                              height: width*0.1,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                // color: Colors.white.withOpacity(0.4)
+                                              ),
+                                              child: Center(
+                                                child: IconButton(onPressed: (){
+                                                  // ref.read(favour.notifier).update((state) => !state);
+                                                  favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+                                                }
+                                                  , icon: Icon(
+                                                    fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
+                                                    color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ):
+
+                                    // Container(
+                                    //   width: width*0.4,
+                                    //   height: width*0.4,
+                                    //   child: Padding(
+                                    //     padding:  EdgeInsets.all(width*0.15),
+                                    //     child: CircularProgressIndicator(
+                                    //       color: Pallette.primaryColor,
+                                    //     ),
+                                    //   ),
+                                    // ):
+                                    Stack(
+                                      children: [
+                                        Hero(
+                                          tag: data[index].image,
+                                          child:Container(
+                                            height: width * 0.4,
+                                            width: width * 0.4,
+                                            child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(15),
+                                                child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
+                                            // decoration: BoxDecoration(
+                                            //     color: Pallette.secondaryBrown,
+                                            //     image: DecorationImage(
+                                            //         image: NetworkImage(widget.image[0]),
+                                            //         fit: BoxFit.cover),
+                                            //     borderRadius: BorderRadius.circular(15)),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 0,
+                                          top: 1,
+                                          child: Container(
+                                            padding:  EdgeInsets.all(width*0.003),
+                                            height: width*0.1,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              // color: Colors.white.withOpacity(0.4)
+                                            ),
+                                            child: Center(
+                                              child: IconButton(onPressed: (){
+                                                // ref.read(favour.notifier).update((state) => !state);
+                                                favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+                                              }
+                                                , icon: Icon(
+                                                  fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
+                                                  color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: width*0.4,
+                                            child: Text(
+                                              data[index].productname,
+                                              style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text('₹ ' + data[index].price.toString()),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
+                            // child: petTile(
+                            //     index: index,
+                            //     image:data[index].image.toList(),
+                            //     name:data[index].productname,
+                            //     price:data[index].price,
+                            //     category:data[index].category!,
+                            //     id:data[index].id,
+                            //   fav:fav
+                            // ),
                           ),
                         ),
                       );
@@ -268,197 +495,58 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 }
 
-class petTile extends ConsumerStatefulWidget {
-  final int index;
-  final List image;
-  final String name;
-  final double price;
-  final String category;
-  final String id;
-  const petTile({
-    super.key,
-    required this.index,
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.category,
-    required this.id
-  });
-
-  @override
-  ConsumerState<petTile> createState() => _petTileState();
-}
-
-class _petTileState extends ConsumerState<petTile> {
-  final favour=StateProvider<bool>((ref) =>false );
-  int index = 0;
-
-
-
-
-  getfun() async {
-    DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel=UserModel.fromMap(data.data()!);
-    List fav=currentUserModel!.favourites;
-    if(fav.isNotEmpty){
-      print("ghjkl,,,,");
-      print("cvbnm,");
-      if(fav.contains(widget.id)){
-        ref.read(favour.notifier).update((state) => true);
-      }
-      else{
-        ref.read(favour.notifier).update((state) => false);
-      }
-    }
-
-  }
-  bool loading = false;
-  favFunc() async {
-    loading = true;
-    setState(() {
-
-    });
-    DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
-    ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    currentUserModel=UserModel.fromMap(data.data()!);
-    List fav=currentUserModel!.favourites;
-    List favUser=productModel.favUser;
-    print(fav);
-    if(fav.contains(widget.id)){
-      fav.remove(widget.id);
-      favUser.removeWhere((element) => element==currentUserEmail);
-    }else{
-      fav.add(widget.id);
-      favUser.add(currentUserEmail);
-    }
-    // if(favUser.contains(currentUserEmail)){
-    // }else{
-    //
-    // }
-
-    FirebaseFirestore.instance.collection("product").doc(widget.id).update({
-      "favUser":favUser
-    });
-    FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-      "favourites": fav
-    });
-    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = UserModel.fromMap(data1.data()!);
-    var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
-    productModel=ProductModel.fromMap(data3.data()!);
-    loading = false;
-    setState(() {
-
-    });
-  }
-  @override
-  void initState() {
-getfun();
-    index = widget.index;
-    // TODO: implement initState
-    super.initState();
-  }
-
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProducctSingleScreen(
-                fav: favour,
-                id:widget.id,
-                tag: widget.image[0],
-                like: false,
-                category: false,
-              ),
-            ));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Column(
-          children: [
-            loading?
-            Container(
-              width: width*0.4,
-              height: width*0.4,
-              child: Padding(
-                padding:  EdgeInsets.all(width*0.15),
-                child: CircularProgressIndicator(
-                  color: Pallette.primaryColor,
-                ),
-              ),
-            ):
-            Stack(
-              children: [
-                Hero(
-                  tag: widget.image,
-                  child:Container(
-                    height: width * 0.4,
-                    width: width * 0.4,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                        child: CachedNetworkImage(imageUrl:widget.image[0],fit: BoxFit.cover,)),
-                    // decoration: BoxDecoration(
-                    //     color: Pallette.secondaryBrown,
-                    //     image: DecorationImage(
-                    //         image: NetworkImage(widget.image[0]),
-                    //         fit: BoxFit.cover),
-                    //     borderRadius: BorderRadius.circular(15)),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  top: 1,
-                  child: Container(
-                    padding:  EdgeInsets.all(width*0.003),
-                    height: width*0.1,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        // color: Colors.white.withOpacity(0.4)
-                    ),
-                    child: Center(
-                      child: IconButton(onPressed: (){
-                       ref.read(favour.notifier).update((state) => !state);
-                       favFunc();
-                      }
-                        , icon: Icon(
-                          ref.watch(favour) ? Icons.favorite : Icons.favorite,
-                          color: ref.watch(favour) ?Colors.red:Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: width*0.4,
-                    child: Text(
-                      widget.name,
-                      style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('₹ ' + widget.price.toString()),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class petTile extends ConsumerStatefulWidget {
+//   final int index;
+//   final List image;
+//   final String name;
+//   final double price;
+//   final String category;
+//   final String id;
+//   final List fav;
+//   const petTile({
+//     super.key,
+//     required this.index,
+//     required this.image,
+//     required this.name,
+//     required this.price,
+//     required this.category,
+//     required this.id,
+//     required this.fav
+//   });
+//
+//   @override
+//   ConsumerState<petTile> createState() => _petTileState();
+// }
+//
+// class _petTileState extends ConsumerState<petTile> {
+//   // final favour=StateProvider<bool>((ref) =>fav.contains(widget.id) );
+//   int index = 0;
+//
+//
+//
+//
+//   // getfun() async {
+//   //   DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+//   //   currentUserModel=UserModel.fromMap(data.data()!);
+//   //   List fav=currentUserModel!.favourites;
+//   //   if(fav.isNotEmpty){
+//   //     print("ghjkl,,,,");
+//   //     print("cvbnm,");
+//   //     if(fav.contains(widget.id)){
+//   //       ref.read(favour.notifier).update((state) => true);
+//   //     }
+//   //     else{
+//   //       ref.read(favour.notifier).update((state) => false);
+//   //     }
+//   //   }
+//   //
+//   // }
+//   //
+//
+//
+//
+//
+//   Widget build(BuildContext context) {
+//     return
+//   }
+// }

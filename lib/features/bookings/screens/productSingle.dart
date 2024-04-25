@@ -18,6 +18,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../main.dart';
 
+import '../../home/screen/home.dart';
 import '../controller/booking_controller.dart';
 import 'deliveryAddress.dart';
 
@@ -25,11 +26,26 @@ class ProducctSingleScreen extends ConsumerStatefulWidget {
   // final String image;
   final String tag;
   final String id;
+  final String name;
+  final double price;
+  final String category;
+  final List image;
   final bool like;
-  final bool category;
-  final StateProvider<bool> fav;
+  final bool Petcategory;
+  final bool fav;
+
   const ProducctSingleScreen(
-      {super.key, required this.tag,required this.id, required this.fav, required this.like, required this.category });
+      {super.key,
+        required this.tag,
+        required this.id,
+        required this.fav,
+        required this.like,
+        required this.Petcategory,
+        required this.name,
+        required this.price,
+        required this.category,
+        required this.image
+      });
 
   @override
   ConsumerState<ProducctSingleScreen> createState() => _ProducctSingleScreenState();
@@ -38,7 +54,7 @@ class ProducctSingleScreen extends ConsumerStatefulWidget {
 class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
   double value = 3.5;
   int currentIndex = 0;
-  bool fav = false;
+  // bool fav = false;
   int count = 0;
   List images = [
     ImageConstants.rabbit,
@@ -47,27 +63,55 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
   ];
   // final favour=StateProvider<bool>((ref) =>false );
   favFunc() async {
+
+
     var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    List fav=currentUserModel!.favourites;
-    List favUser=productModel.favUser;
-    print(fav);
-    if(fav.contains(widget.id)){
-      fav.remove(widget.id);
-    }else{
-      fav.add(widget.id);
-    }if(favUser.contains(currentUserEmail)){
-      favUser.remove(currentUserEmail);
-    }else{
-      favUser.add(currentUserEmail);
-    }
 
-    FirebaseFirestore.instance.collection("product").doc(widget.id).update({
-      "favUser":favUser
-    });
-    FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-      "favourites": fav
-    });
+    favUser=productModel.favUser;
+    if(fav.contains(widget.id)){
+      print(fav);
+      fav.remove(widget.id);
+      print(fav);
+      print(favourite);
+      favourite.removeWhere((element) {
+        print(element["id"]);
+        return element["id"]==widget.id;
+      });
+      print(widget.id);
+      print(favourite);
+      favUser.removeWhere((element) => element==currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(widget.id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": favourite
+      });
+    }else{
+      print("starytttttttttttttttttttttttttttt");
+      fav.add(widget.id);
+      print(fav);
+      Map<String,dynamic> data = {
+        "name":widget.name,
+        "price":widget.price,
+        "category":widget.category,
+        "image":widget.image,
+        "id":widget.id,
+      };
+      favourite.add(data);
+      favUser.add(currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(widget.id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": FieldValue.arrayUnion(favourite)
+      });
+    }
+    // if(favUser.contains(currentUserEmail)){
+    // }else{
+    //
+    // }
+
     var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
@@ -76,6 +120,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
 
     });
   }
+
   @override
   @override
   Widget build(BuildContext context) {
@@ -96,18 +141,16 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
               color: Colors.black,
             )),
         actions: [
-          widget.category==true?SizedBox():
+          widget.Petcategory==true?SizedBox():
           IconButton(onPressed: (){
-
-            ref.read(widget.fav.notifier).update((state) => !state);
+            // ref.read(widget.fav.notifier).update((state) => !state);
             favFunc();
           }
             , icon: Icon(
-              ref.watch(widget.fav) ? Icons.favorite : Icons.favorite,
-              color: widget.like==true?Colors.red:ref.watch(widget.fav)?Colors.red:Colors.grey,
+              fav.contains(widget.id) ? Icons.favorite : Icons.favorite,
+              color: fav.contains(widget.id) ?Colors.red:Colors.grey,
             ),
           ),
-
           SizedBox(
             width: width * 0.03,
           )
@@ -347,7 +390,6 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                                           ),
                                         ),
                                       ),
-          
                                     ],
                                   ),
                                 ),

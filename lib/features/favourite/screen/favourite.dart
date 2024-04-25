@@ -14,15 +14,79 @@ import '../../../commons/widgets.dart';
 
 import '../../../main.dart';
 import '../../bookings/screens/productSingle.dart';
+import '../../home/screen/home.dart';
 
-class favourite extends ConsumerStatefulWidget {
-  const favourite({super.key});
+class favouritePage extends ConsumerStatefulWidget {
+  const favouritePage({super.key});
 
   @override
-  ConsumerState<favourite> createState() => _favouriteState();
+  ConsumerState<favouritePage> createState() => _favouriteState();
 }
 
-class _favouriteState extends ConsumerState<favourite> {
+class _favouriteState extends ConsumerState<favouritePage> {
+  bool loading = false;
+  favFunc(name,id,price,category,image) async {
+    loading = true;
+    setState(() {
+
+    });
+
+    var data2=await FirebaseFirestore.instance.collection("product").doc(id).get();
+    ProductModel productModel = ProductModel.fromMap(data2.data()!);
+
+    favUser=productModel.favUser;
+    if(fav.contains(id)){
+      print(fav);
+      fav.remove(id);
+      print(fav);
+      print(favourite);
+      favourite.removeWhere((element) {
+        print(element["id"]);
+        return element["id"]==id;
+      });
+      print(id);
+      print(favourite);
+      favUser.removeWhere((element) => element==currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": favourite
+      });
+    }else{
+      print("starytttttttttttttttttttttttttttt");
+      fav.add(id);
+      print(fav);
+      Map<String,dynamic> data = {
+        "name":name,
+        "price":price,
+        "category":category,
+        "image":image,
+        "id":id,
+      };
+      favourite.add(data);
+      favUser.add(currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": FieldValue.arrayUnion(favourite)
+      });
+    }
+    // if(favUser.contains(currentUserEmail)){
+    // }else{
+    //
+    // }
+
+    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    currentUserModel = UserModel.fromMap(data1.data()!);
+    var data3=await FirebaseFirestore.instance.collection("product").doc(id).get();
+    productModel=ProductModel.fromMap(data3.data()!);
+    loading = false;
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +134,131 @@ class _favouriteState extends ConsumerState<favourite> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 0.8, crossAxisCount: 2),
                       itemBuilder: (context, index) {
-                        return petTile(data: data.favourites[index],);
+                        return ref.watch(productfavstreamProvider(data.favourites[index]["id"])).when(
+                          data: (data) {
+                            return  data==null?
+                            Column(
+                              children: [
+                                Container(
+                                  height: width * 0.4,
+                                  width: width * 0.4,
+                                  margin: EdgeInsets.all(7.0),
+                                  decoration: BoxDecoration(
+                                      color: Pallette.secondaryBrown,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: Pallette.primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+
+                                : InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProducctSingleScreen(
+                                        fav: data!.favUser.contains(currentUserEmail) ? true : false,
+                                        like:true,
+                                        id: data!.id,
+                                        tag: data.productname,
+                                        Petcategory: false,
+                                          name:data[index].productname,
+                                          price:data[index].price,
+                                          category:data[index].category,
+                                        image:data[index].image
+                                      ),
+                                    ));
+                              },
+                              child:Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Column(
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Hero(
+                                          tag: data!.productname,
+                                          child: Container(
+                                            height: width * 0.4,
+                                            width: width * 0.4,
+                                            child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(15),
+                                                child: CachedNetworkImage(imageUrl:data.image[0],fit: BoxFit.cover,)),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: 0,
+                                          child: Container(
+                                            margin: EdgeInsets.all(5.0),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              // color: Colors.white.withOpacity(0.1)
+                                            ),
+                                            child:
+                                            IconButton(onPressed: (){
+                                              // ref.read(favour.notifier).update((state) => !state);
+                                              favFunc(data.productname,data.id, data.price, data.category,data.image);
+                                            }
+                                              , icon: Icon(
+                                                fav.contains(data.id) ? Icons.favorite : Icons.favorite,
+                                                color: fav.contains(data.id) ?Colors.red:Colors.grey,
+                                              ),
+                                            ),
+
+                                            // Padding(
+                                            //   padding: const EdgeInsets.all(5.0),
+                                            //   child: FavoriteButton(
+                                            //     isFavorite: true,
+                                            //     iconSize: 25,
+                                            //     valueChanged: (_isFavorite) async {
+                                            //       favFunc(data);
+                                            //     },
+                                            //   ),
+                                            // ),
+
+
+
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              data.productname,overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(fontWeight: FontWeight.w800),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text('₹ ' + data.price.toString(),overflow: TextOverflow.ellipsis,),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          error: (error, stackTrace) {
+                            return Text(error.toString());
+                          },
+                          loading: () {
+                            return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+                          },);
                       },
                     );
                   },
@@ -88,180 +276,85 @@ class _favouriteState extends ConsumerState<favourite> {
   }
 }
 
-class petTile extends ConsumerStatefulWidget {
-  final dynamic data;
-  const petTile({super.key, required this.data});
+// class petTile extends ConsumerStatefulWidget {
+//   final String data;
+//   final int index;
+//   const petTile({super.key, required this.data, required this.index});
+//
+//   @override
+//   ConsumerState<petTile> createState() => _petTileState();
+// }
 
-  @override
-  ConsumerState<petTile> createState() => _petTileState();
-}
-
-class _petTileState extends ConsumerState<petTile> {
-  final favour=StateProvider<bool>((ref) =>false );
-  favFunc(data) async {
-
-    var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
-    ProductModel productModel = ProductModel.fromMap(data2.data()!);
-    List fav=currentUserModel!.favourites;
-    List favUser=productModel.favUser;
-    print(fav);
-    if(fav.contains(data.id)){
-      fav.remove(data.id);
-      favUser.removeWhere((element) => element==currentUserEmail);
-
-    }else{
-      fav.add(data.id);
-      favUser.add(currentUserEmail);
-
-    }
-    // if(favUser.contains(currentUserEmail)){
-    // }else{
-    // }
-    FirebaseFirestore.instance.collection("product").doc(data.id).update({
-      "favUser":favUser
-    });
-    FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-      "favourites": fav
-    });
-    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-    currentUserModel = UserModel.fromMap(data1.data()!);
-    var data3=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
-    productModel=ProductModel.fromMap(data3.data()!);
-    setState(() {
-
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    // final favoriteState = ref.watch(favoriteStateProvider);
-
-    return
-      ref.watch(productfavstreamProvider(widget.data)).when(
-        data: (data) {
-          return  data==null?
-          Column(
-            children: [
-              Container(
-                height: width * 0.4,
-                width: width * 0.4,
-                margin: EdgeInsets.all(7.0),
-                decoration: BoxDecoration(
-                    color: Pallette.secondaryBrown,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: Pallette.primaryColor,
-                  ),
-                ),
-              ),
-            ],
-          )
-
-              : InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProducctSingleScreen(
-                      fav: favour,
-                      like:true,
-                      id: data!.id,
-                      tag: data.productname,
-                      category: false,
-                    ),
-                  ));
-            },
-            child:Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      Hero(
-                        tag: data!.productname,
-                        child: Container(
-                          height: width * 0.4,
-                          width: width * 0.4,
-                      child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: CachedNetworkImage(imageUrl:data.image[0],fit: BoxFit.cover,)),
-                          // decoration: BoxDecoration(
-                          //     color: Pallette.secondaryBrown,
-                          //     image: DecorationImage(
-                          //         image: NetworkImage(data.image[0]),
-                          //         fit: BoxFit.cover),
-                          //     borderRadius: BorderRadius.circular(15)),
-                        ),
-                      ),
-                      Positioned(
-                        right: 0,
-                        child: Container(
-                          margin: EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                // color: Colors.white.withOpacity(0.1)
-                            ),
-                            child:
-                            IconButton(onPressed: (){
-                              ref.read(favour.notifier).update((state) => !state);
-                              favFunc(data);
-                            }
-                              , icon: Icon(
-                                ref.watch(favour) ? Icons.favorite : Icons.favorite,
-                                color: ref.watch(favour) ?Colors.red:Colors.red,
-                              ),
-                            ),
-
-                          // Padding(
-                          //   padding: const EdgeInsets.all(5.0),
-                          //   child: FavoriteButton(
-                          //     isFavorite: true,
-                          //     iconSize: 25,
-                          //     valueChanged: (_isFavorite) async {
-                          //       favFunc(data);
-                          //     },
-                          //   ),
-                          // ),
-
-
-
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            data.productname,overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(fontWeight: FontWeight.w800),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('₹ ' + data.price.toString(),overflow: TextOverflow.ellipsis,),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-        error: (error, stackTrace) {
-          return Text(error.toString());
-        },
-        loading: () {
-          return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
-        },);
-  }
-}
+// class _petTileState extends ConsumerState<petTile> {
+//   final favour=StateProvider<bool>((ref) =>true );
+//   List fav=[];
+//   List favourite=[];
+//   List favUser=[];
+//   bool loading = false;
+//   // favFunc(data) async {
+//   //   loading = true;
+//   //   setState(() {
+//   //
+//   //   });
+//   //
+//   //   var data2=await FirebaseFirestore.instance.collection("product").doc(widget.data).get();
+//   //   ProductModel productModel = ProductModel.fromMap(data2.data()!);
+//   //
+//   //   favUser=productModel.favUser;
+//   //   print(fav);
+//   //   if(fav.contains(widget.data)){
+//   //     fav.remove(widget.data);
+//   //     favourite.removeWhere((element) => element["id"]==widget.data);
+//   //     favUser.removeWhere((element) => element==currentUserEmail);
+//   //     FirebaseFirestore.instance.collection("product").doc(widget.data).update({
+//   //       "favUser":favUser
+//   //     });
+//   //     FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+//   //       "favourites": favourite
+//   //     });
+//   //   }else{
+//   //     fav.add(widget.data);
+//   //     Map<String,dynamic> Productdata = {
+//   //       "name":data.productname,
+//   //       "price":data.price,
+//   //       "category":data.category,
+//   //       "image":data.image,
+//   //       "id":data.id,
+//   //     };
+//   //     favourite.add(Productdata);
+//   //     favUser.add(currentUserEmail);
+//   //     FirebaseFirestore.instance.collection("product").doc(widget.data).update({
+//   //       "favUser":favUser
+//   //     });
+//   //     FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+//   //       "favourites": favourite
+//   //     });
+//   //   }
+//   //   // if(favUser.contains(currentUserEmail)){
+//   //   // }else{
+//   //   //
+//   //   // }
+//   //
+//   //   var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+//   //   currentUserModel = UserModel.fromMap(data1.data()!);
+//   //   var data3=await FirebaseFirestore.instance.collection("product").doc(widget.data).get();
+//   //   productModel=ProductModel.fromMap(data3.data()!);
+//   //   loading = false;
+//   //   setState(() {
+//   //
+//   //   });
+//   // }
+//   @override
+//   void initState() {
+//     int index=widget.index;
+//     // TODO: implement initState
+//     super.initState();
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     // final favoriteState = ref.watch(favoriteStateProvider);
+//
+//     return
+//
+//   }
+// }
