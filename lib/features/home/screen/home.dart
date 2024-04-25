@@ -147,7 +147,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         "favourites": favourite
       });
     }else{
-      print("starytttttttttttttttttttttttttttt");
       fav.add(id);
       print(fav);
       Map<String,dynamic> data = {
