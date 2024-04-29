@@ -58,7 +58,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
   double value = 3.5;
   int currentIndex = 0;
   // bool fav = false;
-  int count = 0;
+  int count = 1;
   List images = [
     ImageConstants.rabbit,
     ImageConstants.cat,
@@ -449,7 +449,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                               userId: currentUserModel!.id,
                               productId: data.id,
                               productImage: data.image[0].toString(),
-                              selectindex: -1
+                              selectindex: 0
 
                           );
                           Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData),));

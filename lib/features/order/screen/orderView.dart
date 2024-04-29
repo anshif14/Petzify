@@ -152,6 +152,12 @@ class _orderViewState extends ConsumerState<orderView> {
 
                 ],
               ),
+                  // StreamBuilder(
+                  // stream: FirebaseFirestore.instance.collection("bookings").where("userId",isEqualTo: currentUserModel!.id).snapshots().
+                  // map((event) => event.docs.map((e) =>
+                  // BookingModel.fromMap(e.data() as Map<String,dynamic>)).toList()),
+                  // builder: (context, snapshot) {
+                  // List<BookingModel> data = snapshot.data!;
 
               AnotherStepper(
                 stepperList: stepperData,

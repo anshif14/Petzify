@@ -80,7 +80,7 @@ class BookingModel{
       paymentMethod: Map["paymentMethod"]??"",
         userId: Map["userId"] ?? "",
       productId: Map["productId"] ?? "",
-        selectindex: Map["selectindex"] ?? -1,
+        selectindex: Map["selectindex"] ?? 0,
 
     );
   }
