@@ -41,6 +41,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   late bool servicePermission=false;
   late  LocationPermission permission;
   String _currentAdress ="";
+  TextEditingController searchController = TextEditingController();
+
+
   Future<Position> _getCurrentLocation() async {
     servicePermission =await Geolocator.isLocationServiceEnabled();
     if(!servicePermission){
@@ -53,6 +56,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
     return await Geolocator.getCurrentPosition();
   }
+
   _getAddressFromCoordinates() async{
     try{
       List<Placemark> placemark =await placemarkFromCoordinates(_currentLocation!.latitude, _currentLocation!.longitude);
@@ -77,24 +81,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     ImageConstants.trending,
     ImageConstants.trending1,
     ImageConstants.trending,
-  ];
-
-  List pets = [
-    {'name': 'food', "image": ImageConstants.petfood, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet4, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet1, "price": 1000},
-    {'name': 'supplies', "image": ImageConstants.supplies, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet2, "price": 1250},
-    {'name': 'pet', "image": ImageConstants.pet5, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet6, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet7, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet8, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet9, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet10, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet11, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet12, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet13, "price": 1000},
-    {'name': 'pet', "image": ImageConstants.pet14, "price": 1000},
   ];
 
   List category = [
@@ -147,6 +133,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         "favourites": favourite
       });
     }else{
+      print("starytttttttttttttttttttttttttttt");
       fav.add(id);
       print(fav);
       Map<String,dynamic> data = {
@@ -165,11 +152,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         "favourites": FieldValue.arrayUnion(favourite)
       });
     }
-    // if(favUser.contains(currentUserEmail)){
-    // }else{
-    //
-    // }
-
     var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
     currentUserModel = UserModel.fromMap(data1.data()!);
     var data3=await FirebaseFirestore.instance.collection("product").doc(id).get();
@@ -245,25 +227,37 @@ class _HomePageState extends ConsumerState<HomePage> {
                 //   ],
                 // ),
                 Container(
-                  height: height * 0.08,
-                  child: Container(
-                    margin: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.search),
-                        ),
-                        Text(
-                          "Search",
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
+                  height: height * 0.055,
+                  decoration: BoxDecoration(
+                      color: Pallette.secondaryBrown,
+                      borderRadius: BorderRadius.circular(width*0.03)),
+                  child: TextFormField(
+                    controller: searchController,
+                    textCapitalization: TextCapitalization.words,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.search,
+                    cursorColor: Pallette.primaryColor,
+                    cursorHeight: width*0.055,
+                    cursorWidth: width*0.003,
+                    style: TextStyle(
+                      fontSize: width * 0.04,
+                      fontWeight: FontWeight.w500,
                     ),
-                    height: height * 0.06,
-                    decoration: BoxDecoration(
-                        color: Pallette.grey,
-                        borderRadius: BorderRadius.circular(10)),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: width*0.03),
+                      prefixIcon:Icon(Icons.search),
+                      fillColor: Pallette.grey,
+                      filled: true,
+                      hintText: "Search",
+                      hintStyle: TextStyle(
+                        fontSize: width * 0.04,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(width * 0.03),
+                          borderSide: BorderSide.none),
+                    ),
                   ),
                 ),
                 gap,

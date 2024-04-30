@@ -47,62 +47,40 @@ class _myOrderState extends ConsumerState<myOrder> {
           child: Column(
             children: [
               Container(
-                height: height * 0.07,
+                height: height * 0.055,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(width * 0.02),
-                    border: Border.all(color: Pallette.primaryColor),
-                ),
+                    color: Pallette.secondaryBrown,
+                    borderRadius: BorderRadius.circular(width*0.03)),
                 child: TextFormField(
                   controller: searchController,
                   textCapitalization: TextCapitalization.words,
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.search,
                   cursorColor: Pallette.primaryColor,
+                  cursorHeight: width*0.055,
+                  cursorWidth: width*0.003,
                   style: TextStyle(
-                    fontSize: width * 0.05,
+                    fontSize: width * 0.04,
                     fontWeight: FontWeight.w500,
                   ),
                   decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: width*0.03),
                     prefixIcon:Icon(Icons.search),
-                    fillColor: Pallette.white,
+                    fillColor: Pallette.grey,
                     filled: true,
                     hintText: "Search",
                     hintStyle: TextStyle(
-                      fontSize: width * 0.05,
+                      fontSize: width * 0.04,
                       color: Colors.grey,
                       fontWeight: FontWeight.w500,
                     ),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(width * 0.02),
+                        borderRadius: BorderRadius.circular(width * 0.03),
                         borderSide: BorderSide.none),
                   ),
                 ),
               ),
-              // Container(
-              //   height: height * 0.08,
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Container(
-              //       child: Row(
-              //         children: [
-              //           Padding(
-              //             padding: const EdgeInsets.all(8.0),
-              //             child: Icon(Icons.search),
-              //           ),
-              //           Text(
-              //             "Search",
-              //             style: TextStyle(color: Colors.grey),
-              //           )
-              //         ],
-              //       ),
-              //       height: height * 0.06,
-              //       decoration: BoxDecoration(
-              //           color: Pallette.grey,
-              //           borderRadius: BorderRadius.circular(10)),
-              //     ),
-              //   ),
-              // ),
-
+                  gap,
                   Expanded(
                   child: ref.watch(orderDataStreamProvider(currentUserModel!.id)).when(
                     data: (data) {

@@ -37,6 +37,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
     {'name':'Pet Training Center','image':ImageConstants.training,},
     {'name':'Pet Grooming Center','image':ImageConstants.grooming},
   ];
+
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 
@@ -64,28 +67,40 @@ class _ExploreScreenState extends State<ExploreScreen> {
               children: [
                 gap,
                 gap,
-                Padding(
-                  padding:  EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding:  EdgeInsets.all(8.0),
-                          child: Icon(Icons.search),
-                        ),
-                        Text(
-                          "Search",
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
+                Container(
+                  height: height * 0.055,
+                  decoration: BoxDecoration(
+                      color: Pallette.secondaryBrown,
+                      borderRadius: BorderRadius.circular(width*0.03)),
+                  child: TextFormField(
+                    controller: searchController,
+                    textCapitalization: TextCapitalization.words,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.search,
+                    cursorColor: Pallette.primaryColor,
+                    cursorHeight: width*0.055,
+                    cursorWidth: width*0.003,
+                    style: TextStyle(
+                      fontSize: width * 0.04,
+                      fontWeight: FontWeight.w500,
                     ),
-                    height: height * 0.06,
-                    decoration: BoxDecoration(
-                        color: Pallette.grey,
-                        borderRadius: BorderRadius.circular(10)),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: width*0.03),
+                      prefixIcon:Icon(Icons.search),
+                      fillColor: Pallette.grey,
+                      filled: true,
+                      hintText: "Search",
+                      hintStyle: TextStyle(
+                        fontSize: width * 0.04,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(width * 0.03),
+                          borderSide: BorderSide.none),
+                    ),
                   ),
                 ),
-                gap,
                 gap,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

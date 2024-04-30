@@ -51,9 +51,12 @@ class _myAdsState extends ConsumerState<myAds> {
             var fav1=await FirebaseFirestore.instance.collection("users").doc(fav).get();
             UserModel userdata=UserModel.fromMap(fav1.data()!);
             var fav2=userdata.favourites;
-            if(fav2.contains(data[index].id)){
+            var fav3=fav2[index]["id"];
+            if(fav3==data[index].id){
               print(fav2);
-              fav2.remove(data[index].id);
+              fav2.removeWhere((element) {
+                return element["id"]==fav3;
+              });
             }
             print(fav2);
             FirebaseFirestore.instance.collection("users").doc(fav).update(
@@ -146,33 +149,35 @@ class _myAdsState extends ConsumerState<myAds> {
       child: Column(
         children: [
           Container(
-            height: height * 0.07,
+            height: height * 0.055,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(width * 0.02),
-              border: Border.all(color: Pallette.primaryColor),
-            ),
+                color: Pallette.secondaryBrown,
+                borderRadius: BorderRadius.circular(width*0.03)),
             child: TextFormField(
               controller: searchController,
               textCapitalization: TextCapitalization.words,
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.search,
               cursorColor: Pallette.primaryColor,
+              cursorHeight: width*0.055,
+              cursorWidth: width*0.003,
               style: TextStyle(
-                fontSize: width * 0.05,
+                fontSize: width * 0.04,
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(top: width*0.03),
                 prefixIcon:Icon(Icons.search),
-                fillColor: Pallette.white,
+                fillColor: Pallette.grey,
                 filled: true,
                 hintText: "Search",
                 hintStyle: TextStyle(
-                  fontSize: width * 0.05,
+                  fontSize: width * 0.04,
                   color: Colors.grey,
                   fontWeight: FontWeight.w500,
                 ),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(width * 0.02),
+                    borderRadius: BorderRadius.circular(width * 0.03),
                     borderSide: BorderSide.none),
               ),
             ),

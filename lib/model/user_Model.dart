@@ -58,7 +58,7 @@ class UserModel {
       gender: Map["gender"] ?? "",
       booking: Map["booking"] ?? [],
       productadd: Map["productadd"] ?? [],
-      favourites: Map["favourites"] ?? "",
+      favourites: Map["favourites"] ?? [],
       block: Map["block"] ?? false,
       bookingCount: Map["bookingCount"] ?? 0,
       productCount: Map["productCount"] ?? 0,
