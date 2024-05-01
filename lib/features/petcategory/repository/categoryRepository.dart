@@ -11,8 +11,13 @@ class CategoryStreamRepository{
   
   CollectionReference get categoryStream=> _firestore.collection("product");
   
-  Stream CategoryStream(category){
-    return categoryStream.where("petcategory",isEqualTo: category).snapshots().map((event) => event.docs.map((e) =>
+  Stream CategoryStream(String category ,String search){
+
+
+
+    return search==''? categoryStream.where("petcategory",isEqualTo: category).snapshots().map((event) => event.docs.map((e) =>
+        ProductModel.fromMap(e.data() as Map<String,dynamic>)).toList()):
+    categoryStream.where("petcategory",isEqualTo: category).where('search',arrayContains: search).snapshots().map((event) => event.docs.map((e) =>
         ProductModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
   

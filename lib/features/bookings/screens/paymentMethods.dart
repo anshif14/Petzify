@@ -10,6 +10,7 @@ import 'package:luna_demo/features/bookings/screens/review_page.dart';
 import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/model/booking_model.dart';
 
+import '../../../commons/seachParam.dart';
 import '../../../commons/widgets.dart';
 import '../../../main.dart';
 import '../controller/booking_controller.dart';
@@ -28,6 +29,7 @@ class _paymentMethodState extends ConsumerState<paymentMethod> {
   add(){
     BookingModel bookingdata=widget.bookingModel1.copyWith(
       paymentMethod: cont,
+      search: setSearchParam(widget.bookingModel1.productName)
 
     );
     ref.watch(addBookingProvider(bookingdata));

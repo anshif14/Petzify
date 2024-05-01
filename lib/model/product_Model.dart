@@ -12,6 +12,7 @@ class ProductModel{
   String userid;
   List favUser;
   List review;
+  List search;
 
 
   ProductModel({
@@ -28,7 +29,8 @@ class ProductModel{
     required this.id,
     required this.userid,
     required this.favUser,
-    required this.review
+    required this.review,
+    required this.search
 
 });
 
@@ -46,7 +48,8 @@ class ProductModel{
       "id": this.id,
       "userid":this.userid,
       "favUser":this.favUser,
-      "review":this.review
+      "review":this.review,
+      "search":this.search
     };
   }
 
@@ -64,7 +67,8 @@ class ProductModel{
       id: Map["id"]?? "",
       userid: Map["userid"]??"",
       favUser: Map["favUser"]??[],
-        review:Map["review"]??[]
+        review:Map["review"]??[],
+      search: Map["seach"]??[]
     );
   }
 
@@ -81,7 +85,8 @@ class ProductModel{
     String? id,
     String? userid,
     List? favUser,
-    List? review
+    List? review,
+    List? search
 }){
     return ProductModel(
       productname: productname ?? this.productname,
@@ -96,7 +101,8 @@ class ProductModel{
       id: id ?? this.id,
       userid: userid ?? this.userid,
       favUser: favUser??this.favUser,
-        review: review??this.review
+        review: review??this.review,
+      search: search??this.search
     );
   }
 

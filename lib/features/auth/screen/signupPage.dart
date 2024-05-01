@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/commons/seachParam.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/repository/auth_repository.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
@@ -106,7 +107,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   add(){
     ref.read(authRepositoryProvider).addUser(UserModel(name: usernameController.text.trim(),
         email: emailController.text.trim(), password: passwordController.text.trim(), id:emailController.text.trim(), images:imageurl,
-        number: "", gender: "male", favourites: [], productadd: [], block: false, booking: [], bookingCount: 0, productCount: 0));
+        number: "", gender: "male", favourites: [], productadd: [], block: false, booking: [], bookingCount: 0, productCount: 0, search:setSearchParam(usernameController.text.trim()) ));
   }
 
   @override

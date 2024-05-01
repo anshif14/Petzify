@@ -20,6 +20,7 @@ import 'package:luna_demo/features/explore/controller/explore_controller.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
+import '../../../commons/seachParam.dart';
 import '../../../main.dart';
 
 class AddProduct extends ConsumerStatefulWidget {
@@ -96,7 +97,8 @@ class _AddProductState extends ConsumerState<AddProduct> {
             favUser: [],
             category: dropdownvalue.toString(),
             petcategory: petdropdownvalue.toString(),
-            review: []
+            review: [],
+          search: setSearchParam(prdnamecontroller.text)
         ));
     // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
     //   "productadder":"add"

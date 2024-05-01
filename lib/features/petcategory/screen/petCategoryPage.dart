@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/widgets.dart';
+import 'package:luna_demo/core/constproviders/searcProvider.dart';
 import 'package:luna_demo/features/petcategory/controller/categoryController.dart';
 
 import '../../../commons/color constansts.dart';
@@ -15,6 +19,7 @@ import '../../../main.dart';
 import '../../../model/product_Model.dart';
 import '../../../model/user_Model.dart';
 import '../../bookings/screens/productSingle.dart';
+import '../../home/screen/home.dart';
 
 class PetCategoryPage extends ConsumerStatefulWidget {
   final String category;
@@ -25,7 +30,68 @@ class PetCategoryPage extends ConsumerStatefulWidget {
 }
 
 class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
+  final search=StateProvider<String>((ref) => '');
+
   TextEditingController searchController = TextEditingController();
+  bool loading = false;
+  favFunc(name,id,price,category,image) async {
+    loading = true;
+    setState(() {
+
+    });
+
+    var data2=await FirebaseFirestore.instance.collection("product").doc(id).get();
+    ProductModel productModel = ProductModel.fromMap(data2.data()!);
+
+    favUser=productModel.favUser;
+    if(fav.contains(id)){
+      print(fav);
+      fav.remove(id);
+      print(fav);
+      print(favourite);
+      favourite.removeWhere((element) {
+        print(element["id"]);
+        return element["id"]==id;
+      });
+      print(id);
+      print(favourite);
+      favUser.removeWhere((element) => element==currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": favourite
+      });
+    }else{
+      print("starytttttttttttttttttttttttttttt");
+      fav.add(id);
+      print(fav);
+      Map<String,dynamic> data = {
+        "name":name,
+        "price":price,
+        "category":category,
+        "image":image,
+        "id":id,
+      };
+      favourite.add(data);
+      favUser.add(currentUserEmail);
+      FirebaseFirestore.instance.collection("product").doc(id).update({
+        "favUser":favUser
+      });
+      FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+        "favourites": FieldValue.arrayUnion(favourite)
+      });
+    }
+    var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+    currentUserModel = UserModel.fromMap(data1.data()!);
+    var data3=await FirebaseFirestore.instance.collection("product").doc(id).get();
+    productModel=ProductModel.fromMap(data3.data()!);
+    loading = false;
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return InternetChecker(
@@ -52,6 +118,13 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                   color: Pallette.secondaryBrown,
                   borderRadius: BorderRadius.circular(width*0.03)),
               child: TextFormField(
+                onChanged: (value) {
+                  
+                  
+                  ref.read(search.notifier).update((state) => value.toString().toUpperCase());
+                  
+              
+                },
                 controller: searchController,
                 textCapitalization: TextCapitalization.words,
                 keyboardType: TextInputType.multiline,
@@ -81,7 +154,10 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
               ),
             ),
         gap,
-        ref.watch(CategoryStreamProvider(widget.category)).when(
+        ref.watch(CategoryStreamProvider(jsonEncode({
+          "category":widget.category,
+          "search":ref.watch(search)
+        }))).when(
             data: (data) {
               return AnimationLimiter(
                 child: GridView.builder(
@@ -103,15 +179,15 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ProducctSingleScreen(
-                                        id:data![index].id,
+                                        fav: fav.contains(data[index].id) ? true : false,
+                                        id:data[index].id,
                                         tag: data[index].image[0],
-                                        fav: data[index].favUser.contains(currentUserEmail) ? true : false,
                                         like: false,
-                                        Petcategory:true,
-                                        name:"",
-                                        price: 0,
-                                        category:"",
-                                        image:[]
+                                        Petcategory: false,
+                                        name:data[index].productname,
+                                        price:data[index].price,
+                                        category:data[index].category,
+                                        image: data[index].image
 
                                     ),
                                   ));
@@ -120,28 +196,98 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                               padding: const EdgeInsets.all(4.0),
                               child: Column(
                                 children: [
-                                  Hero(
-                                    tag: data[index].image,
-                                    child: Container(
-                                      height: width * 0.4,
-                                      width: width * 0.4,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(15),
-                                          child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
-                                      // decoration: BoxDecoration(
-                                      //     color: Pallette.secondaryBrown,
-                                      //     image: DecorationImage(
-                                      //         image: NetworkImage(widget.image[0]),
-                                      //         fit: BoxFit.cover),
-                                      //     borderRadius: BorderRadius.circular(15)),
-                                    ),
+                                  loading?
+                                  Stack(
+                                    children: [
+                                      Hero(
+                                        tag: data[index].image,
+                                        child:Container(
+                                          height: width * 0.4,
+                                          width: width * 0.4,
+                                          decoration: BoxDecoration(
+                                              color: Pallette.secondaryBrown,
+                                              image: DecorationImage(
+                                                  image: NetworkImage(data[index].image[0]),
+                                                  fit: BoxFit.cover,opacity:0.6),
+                                              borderRadius: BorderRadius.circular(15)),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        top: 1,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Container(
+                                            height: width*0.1,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              // color: Colors.white.withOpacity(0.4)
+                                            ),
+                                            child: Center(
+                                              child: IconButton(onPressed: (){
+                                                // ref.read(favour.notifier).update((state) => !state);
+                                                favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+                                              }
+                                                , icon: Icon(
+                                                  fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
+                                                  color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ):
+                                  Stack(
+                                    children: [
+                                      Hero(
+                                        tag: data[index].image,
+                                        child:Container(
+                                          height: width * 0.4,
+                                          width: width * 0.4,
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(15),
+                                              child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
+                                          // decoration: BoxDecoration(
+                                          //     color: Pallette.secondaryBrown,
+                                          //     image: DecorationImage(
+                                          //         image: NetworkImage(widget.image[0]),
+                                          //         fit: BoxFit.cover),
+                                          //     borderRadius: BorderRadius.circular(15)),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        top: 1,
+                                        child: Container(
+                                          padding:  EdgeInsets.all(width*0.003),
+                                          height: width*0.1,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            // color: Colors.white.withOpacity(0.4)
+                                          ),
+                                          child: Center(
+                                            child: IconButton(onPressed: (){
+                                              // ref.read(favour.notifier).update((state) => !state);
+                                              favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+                                            }
+                                              , icon: Icon(
+                                                fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
+                                                color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                       children: [
                                         Text(
-                                          data[index].category,
+                                          data[index].productname,
                                           style: TextStyle(fontWeight: FontWeight.w800),
                                         ),
                                       ],

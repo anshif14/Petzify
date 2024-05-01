@@ -14,10 +14,12 @@ class OrderStreamRepository{
 
   CollectionReference get _orderStream =>_firestore.collection("bookings");
 
-  Stream<List<BookingModel>> orderData({required String usrId}){
+  Stream<List<BookingModel>> orderData( String usrId, String search){
     print(currentUserModel!.id);
-    return _orderStream.where("userId",isEqualTo: usrId).snapshots().map((event) => event.docs.map((e) =>
-    BookingModel.fromMap(e.data() as Map<String,dynamic>)).toList());
+    return search==""?_orderStream.where("userId",isEqualTo: usrId).snapshots().map((event) => event.docs.map((e) =>
+    BookingModel.fromMap(e.data() as Map<String,dynamic>)).toList()):
+    _orderStream.where("userId",isEqualTo: usrId).where('search',arrayContains: search).snapshots().map((event) => event.docs.map((e) =>
+        BookingModel.fromMap(e.data() as Map<String,dynamic>)).toList());
   }
 
 }

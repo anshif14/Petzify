@@ -12,6 +12,7 @@ class UserModel {
   bool block;
   int bookingCount;
   int productCount;
+  List search;
 
   UserModel({
     required this.name,
@@ -27,6 +28,7 @@ class UserModel {
     required this.block,
     required this.bookingCount,
     required this.productCount,
+    required this.search
   });
 
   Map<String, dynamic> toMap() {
@@ -44,6 +46,8 @@ class UserModel {
       "block":this.block,
       "bookingCount":this.bookingCount,
       "productCount":this.productCount,
+      "search":this.search
+
     };
   }
 
@@ -62,6 +66,7 @@ class UserModel {
       block: Map["block"] ?? false,
       bookingCount: Map["bookingCount"] ?? 0,
       productCount: Map["productCount"] ?? 0,
+      search: Map["search"]?? []
     );
   }
 
@@ -79,6 +84,7 @@ class UserModel {
     bool? block,
     int? bookingCount,
     int? productCount,
+    List? search
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -95,6 +101,7 @@ class UserModel {
       block: block ?? this.block,
       bookingCount: bookingCount ?? this.bookingCount,
       productCount: productCount ?? this.productCount,
+      search: search?? this.search
     );
   }
 }

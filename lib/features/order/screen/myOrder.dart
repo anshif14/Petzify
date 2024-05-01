@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
@@ -24,6 +26,8 @@ class myOrder extends ConsumerStatefulWidget {
 
 class _myOrderState extends ConsumerState<myOrder> {
   TextEditingController searchController = TextEditingController();
+  final search=StateProvider<String>((ref) => '');
+
   @override
   Widget build(BuildContext context) {
     return InternetChecker(
@@ -52,10 +56,14 @@ class _myOrderState extends ConsumerState<myOrder> {
                     color: Pallette.secondaryBrown,
                     borderRadius: BorderRadius.circular(width*0.03)),
                 child: TextFormField(
+                  onChanged: (value) {
+                    ref.read(search.notifier).update((state) => value.toString().toUpperCase());
+                  },
                   controller: searchController,
                   textCapitalization: TextCapitalization.words,
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.search,
+
                   cursorColor: Pallette.primaryColor,
                   cursorHeight: width*0.055,
                   cursorWidth: width*0.003,
@@ -81,8 +89,12 @@ class _myOrderState extends ConsumerState<myOrder> {
                 ),
               ),
                   gap,
+
                   Expanded(
-                  child: ref.watch(orderDataStreamProvider(currentUserModel!.id)).when(
+                  child: ref.watch(orderDataStreamProvider(jsonEncode({
+                    "usrId":currentUserModel!.id,
+                    "search":ref.watch(search)
+                  }))).when(
                     data: (data) {
                       return data.isNotEmpty?
                       ListView.separated(

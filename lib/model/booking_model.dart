@@ -18,6 +18,7 @@ class BookingModel{
   String userId;
   String productId;
   int selectindex;
+  List search;
 
 
   BookingModel({
@@ -38,6 +39,7 @@ class BookingModel{
     required this.userId,
     required this.productId,
     required this.selectindex,
+    required this.search
 
 });
 
@@ -60,6 +62,7 @@ class BookingModel{
       "userId":this.userId,
       "productId":this.productId,
       "selectindex":this.selectindex,
+      "search":this.search
     };
   }
   factory BookingModel.fromMap(Map<String,dynamic>Map){
@@ -81,6 +84,7 @@ class BookingModel{
         userId: Map["userId"] ?? "",
       productId: Map["productId"] ?? "",
         selectindex: Map["selectindex"] ?? 0,
+      search: Map["search"]??[]
 
     );
   }
@@ -102,6 +106,7 @@ class BookingModel{
     String? userId,
     String? productId,
     int? selectindex,
+    List? search
 
   }){
     return BookingModel(
@@ -122,6 +127,7 @@ class BookingModel{
         userId: userId ?? this.userId,
       productId: productId ?? this.productId,
       selectindex: selectindex ?? this.selectindex,
+      search: search?? this.search
     );
   }
 }

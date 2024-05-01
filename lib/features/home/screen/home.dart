@@ -14,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
+import 'package:luna_demo/commons/seachParam.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/home/controller/stream_controller.dart';
 import 'package:luna_demo/features/petcategory/screen/petCategoryPage.dart';
@@ -204,28 +205,6 @@ class _HomePageState extends ConsumerState<HomePage> {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                // SizedBox(
-                //   height: height * 0.05,
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     // SvgPicture.asset(imageConstants.dogSvg),
-                //     Text(
-                //       "LUNA",
-                //       style: GoogleFonts.cormorantGaramond(
-                //           color: Pallette.primaryColor,
-                //           wordSpacing: 2,
-                //           fontSize: 30,
-                //           fontWeight: FontWeight.w800),
-                //     ),
-                //     SvgPicture.asset(ImageConstants.dogSvg),
-                //   ],
-                // ),
-                // Row(
-                //   children: [Icon(Icons.location_on_outlined),_currentAdress.isNotEmpty?Text(_currentAdress.toString()):Text("Kerala")
-                //   ],
-                // ),
                 Container(
                   height: height * 0.055,
                   decoration: BoxDecoration(
@@ -260,6 +239,31 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                   ),
                 ),
+                gap,
+                // InkWell(
+                //   onTap: () {
+                //     // print(setSearchParam('shadil'));
+                //
+                //     FirebaseFirestore.instance.collection('product').get().then((value) {
+                //
+                //       for(var docs in value.docs){
+                //        FirebaseFirestore.instance.collection('product').doc(docs.id).update({
+                //          'search':setSearchParam(docs['productName'])
+                //        });
+                //       }
+                //
+                //     });
+                //
+                //   },
+                //   child: Container(
+                //     width: width*0.2,
+                //     height: width*0.08,
+                //     color: Pallette.primaryColor,
+                //     child: Center(child: Text("get",style: TextStyle(
+                //       color: Colors.white
+                //     ),)),
+                //   ),
+                // ),
                 gap,
                 ref.watch(databannerProvider).when(
                   data: (data) {
@@ -298,13 +302,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                     return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
 
                   },),
-                // StreamBuilder<DocumentSnapshot>(
-                //    {
-                //
-                //     var data = snapshot.data;
-                //
-                //
-                //   }
                 gap,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -432,6 +429,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   child: IconButton(onPressed: (){
                                                     // ref.read(favour.notifier).update((state) => !state);
                                                     favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+
                                                   }
                                                     , icon: Icon(
                                                       fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,

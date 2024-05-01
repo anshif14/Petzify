@@ -148,7 +148,6 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                 color: Colors.black,
               )),
           actions: [
-            widget.Petcategory==true?SizedBox():
             IconButton(onPressed: (){
               // ref.read(widget.fav.notifier).update((state) => !state);
               favFunc();
@@ -449,7 +448,8 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                               userId: currentUserModel!.id,
                               productId: data.id,
                               productImage: data.image[0].toString(),
-                              selectindex: 0
+                              selectindex: 0,
+                              search: []
 
                           );
                           Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData),));

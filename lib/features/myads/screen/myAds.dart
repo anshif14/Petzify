@@ -102,6 +102,9 @@ class _myAdsState extends ConsumerState<myAds> {
             });
       });
     }
+    setState(() {
+
+    });
   }
 
   // updatedata(){
