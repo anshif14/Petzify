@@ -98,7 +98,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
             category: dropdownvalue.toString(),
             petcategory: petdropdownvalue.toString(),
             review: [],
-          search: setSearchParam(prdnamecontroller.text)
+          search: setSearchParam(prdnamecontroller.text+' '+petdropdownvalue.toString()+' '+dropdownvalue.toString())
         ));
     // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
     //   "productadder":"add"

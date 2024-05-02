@@ -5,6 +5,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,7 @@ import 'package:luna_demo/commons/seachParam.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/home/controller/stream_controller.dart';
 import 'package:luna_demo/features/petcategory/screen/petCategoryPage.dart';
+import 'package:luna_demo/features/search/screen/home_page_search.dart';
 
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/product_Model.dart';
@@ -211,6 +213,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                       color: Pallette.secondaryBrown,
                       borderRadius: BorderRadius.circular(width*0.03)),
                   child: TextFormField(
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
+                    },
+                    onChanged: (value) {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
+                    },
                     controller: searchController,
                     textCapitalization: TextCapitalization.words,
                     keyboardType: TextInputType.multiline,
@@ -239,7 +247,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                   ),
                 ),
-                gap,
+                // gap,
                 // InkWell(
                 //   onTap: () {
                 //     // print(setSearchParam('shadil'));
@@ -248,7 +256,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 //
                 //       for(var docs in value.docs){
                 //        FirebaseFirestore.instance.collection('product').doc(docs.id).update({
-                //          'search':setSearchParam(docs['productName'])
+                //          'search':setSearchParam(docs['productname']+' '+docs["category"]+' '+docs["petcategory"])
                 //        });
                 //       }
                 //
