@@ -6,7 +6,7 @@ import 'package:luna_demo/model/user_Model.dart';
 
 
 
-final datafavstreamProvider = StreamProvider((ref) => ref.watch(StreamFavControllerProvider.notifier).userfavstream());
+final datafavstreamProvider = StreamProvider.family((ref,String id) => ref.watch(StreamFavControllerProvider.notifier).userfavstream(id));
 
 final productfavstreamProvider =StreamProvider.autoDispose.family((ref,dataFavIndex) => ref.watch(StreamFavControllerProvider.notifier).productfavstream(dataFavIndex: dataFavIndex));
 
@@ -19,8 +19,8 @@ class StreamFavControllerNotifier extends StateNotifier{
   StreamFavControllerNotifier({required StreamFavRepository streamfavrepository }) :_streamfavrepository = streamfavrepository, super(null);
 
 
-  Stream userfavstream(){
-    return _streamfavrepository.favouriteDataStream();
+  Stream userfavstream(String id){
+    return _streamfavrepository.favouriteDataStream(id);
   }
 
   Stream productfavstream({dataFavIndex}){

@@ -46,7 +46,7 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
     favUser=productModel.favUser;
     if(fav.contains(id)){
       print(fav);
-      fav.remove(id);
+      fav.removeWhere((element) => element==id,);;
       print(fav);
       print(favourite);
       favourite.removeWhere((element) {

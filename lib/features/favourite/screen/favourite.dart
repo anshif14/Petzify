@@ -29,6 +29,15 @@ class _favouriteState extends ConsumerState<favouritePage> {
   bool loading = false;
   TextEditingController searchController = TextEditingController();
 
+  // getFav() async {
+  //   DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+  //   Map<String,dynamic> favFB=data.data()!;
+  //   favourite=favFB["favourites"];
+  //   for(int i =0;i<favourite.length;i++){
+  //     fav.add(favourite[i]["id"]);
+  //   }
+  // }
+
   favFunc(name,id,price,category,image) async {
     loading = true;
     setState(() {
@@ -41,7 +50,7 @@ class _favouriteState extends ConsumerState<favouritePage> {
     favUser=productModel.favUser;
     if(fav.contains(id)){
       print(fav);
-      fav.remove(id);
+      fav.removeWhere((element) => element==id,);;
       print(fav);
       print(favourite);
       favourite.removeWhere((element) {
@@ -92,6 +101,12 @@ class _favouriteState extends ConsumerState<favouritePage> {
     });
   }
 
+  @override
+  void initState() {
+    // getFav();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return InternetChecker(
@@ -145,8 +160,10 @@ class _favouriteState extends ConsumerState<favouritePage> {
                     ),
                   ),
                   gap,
-                  ref.watch(datafavstreamProvider).when(
+                  ref.watch(datafavstreamProvider(currentUserModel!.id)).when(
                     data: (data) {
+                      print(data.id);
+                      print("hhhhhhhhhhhhhhhhhhhhhh");
                       return GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

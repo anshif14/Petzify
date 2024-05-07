@@ -74,7 +74,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
     favUser=productModel.favUser;
     if(fav.contains(widget.id)){
       print(fav);
-      fav.remove(widget.id);
+      fav.removeWhere((element) => element==widget.id,);;
       print(fav);
       print(favourite);
       favourite.removeWhere((element) {
