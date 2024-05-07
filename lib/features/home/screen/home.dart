@@ -93,8 +93,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     {'name': 'Fish', 'image': ImageConstants.fish},
     {'name': 'Small Animals', 'image': ImageConstants.rabbit},
   ];
-  // final favour=StateProvider<bool>((ref) =>fav.contains(widget.id) );
-
 
   bool loading = false;
 
@@ -112,14 +110,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     setState(() {
 
     });
-
     var data2=await FirebaseFirestore.instance.collection("product").doc(id).get();
     ProductModel productModel = ProductModel.fromMap(data2.data()!);
 
     favUser=productModel.favUser;
     if(fav.contains(id)){
       print(fav);
-      fav.remove(id);
+      fav.removeWhere((element) => element==id,);
       print(fav);
       print(favourite);
       favourite.removeWhere((element) {
@@ -168,6 +165,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     fetch();
+
       getFav();
     // TODO: implement initState
     super.initState();

@@ -13,6 +13,7 @@ import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/explore/repository/explore_repository.dart';
+import 'package:luna_demo/features/home/screen/home.dart';
 import 'package:luna_demo/features/order/controller/order_stream_controller.dart';
 import 'package:luna_demo/features/profile/screen/editProfile.dart';
 import 'package:luna_demo/features/myads/screen/myAds.dart';
@@ -86,6 +87,7 @@ class _profileScreenState extends State<profileScreen> {
         child: Lottie.asset(ImageConstants.doglottie),
       ),
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,
@@ -394,6 +396,7 @@ class _profileScreenState extends State<profileScreen> {
                                     _prefs.remove('email');
                                     // _prefs.remove("login");
                                     currentUserModel=null;
+                                    fav=[];
                                     _prefs.clear();
                                     GoogleSignIn().signOut();
                                     FirebaseAuth.instance.signOut();
