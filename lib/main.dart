@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:lottie/lottie.dart';
+import 'package:luna_demo/features/bookings/screens/conformation.dart';
 import 'package:luna_demo/features/profile/screen/profileScreen.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
@@ -57,7 +58,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.from(
                 colorScheme: ColorScheme.light(),
                 // backgroundColor: Colors.white,
-
                 textTheme: GoogleFonts.poppinsTextTheme())
             .copyWith(
           pageTransitionsTheme: const PageTransitionsTheme(
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: SplashScreen()
+        home: confirmation()
       ),
     );
   }

@@ -153,105 +153,105 @@ class _adsViewState extends State<adsView> {
                               gap,
                               Text(data.description,
                                 style: TextStyle(fontSize: width * 0.04),),
-                           gap,
-                           Center(
-                             child: GestureDetector(
-                               onTap: () {
-                                 showCupertinoModalPopup(
-                                   barrierColor: Colors.black.withOpacity(0.5),
-                                   barrierDismissible: false,
-                                   context: context,
-                                   builder: (context) {
-                                     return CupertinoAlertDialog(
-                                       content: Text("Are you Sure\nYou Want to Remove !",
-                                           style: TextStyle(
-                                               fontWeight: FontWeight.w400,
-                                               fontSize: width * 0.045)),
-                                       actions: [
-                                         CupertinoDialogAction(
-                                           isDefaultAction: true,
-                                           isDestructiveAction: true,
-                                           onPressed: () {
-                                             Navigator.pop(context);
-                                           },
-                                           child: Text("Cancel"),
-                                         ),
-                                         CupertinoDialogAction(
-                                           isDefaultAction: true,
-                                           onPressed: (){
-                                             // widget.fun;
-                                             // await remove();
-                                             // await  updatedata();
-                                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
-                                               crossAxisAlignment: CrossAxisAlignment.end,
-                                               mainAxisAlignment: MainAxisAlignment.start,
-                                               children: [
-                                                 SizedBox(
-                                                   width: width*0.05,
-                                                 ),
-
-                                                 Center(
-                                                   child: Container(
-                                                       height: height*0.04,
-                                                       width: width*0.1,
-                                                       // color: Colors.red,
-                                                       child: Lottie.asset(ImageConstants.remove,fit: BoxFit.fitHeight)),
-                                                 ),
-                                                 SizedBox(
-                                                   width: width*0.015,
-                                                 ),
-
-                                                 Text("Deleted Success",style: TextStyle(
-                                                     fontSize: width*0.04,
-                                                     color: Pallette.white
-                                                 ),)
-                                               ],
-
-                                             ),backgroundColor: Colors.black.withOpacity(0.85),
-                                               behavior: SnackBarBehavior.floating,
-                                               showCloseIcon: true,
-                                               padding:  EdgeInsets.only(bottom: width*0.012,top: width*0.001),
-                                               // duration: Duration(seconds: 2),
-                                             ));
-
-                                             // Navigator.pop(context);
-                                             // Navigator.pop(context);
-
-                                           },
-                                           child: Text("Confirm",
-                                               style: TextStyle(
-                                                   color: Colors.black
-                                               )),
-                                         ),
-                                       ],
-                                     );
-                                   },
-                                 );
-                               },
-                               child: Container(
-                                    height: height * 0.06,
-                                    width: width * 0.4,
-                                    decoration: BoxDecoration(
-                                      color: Pallette.primaryColor,
-                                      borderRadius: BorderRadius.circular(width * 0.025),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(CupertinoIcons.delete,color: Pallette.white,
-                                            size: width*0.06),
-                                        SizedBox(width: width*0.01,),
-                                        Center(
-                                          child: Text("Remove",style: TextStyle(
-                                              color: Pallette.white,
-                                              fontSize: width*0.04
-                                          ),),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                             ),
-                           ),
+                           // gap,
+                           // Center(
+                           //   child: GestureDetector(
+                           //     onTap: () {
+                           //       showCupertinoModalPopup(
+                           //         barrierColor: Colors.black.withOpacity(0.5),
+                           //         barrierDismissible: false,
+                           //         context: context,
+                           //         builder: (context) {
+                           //           return CupertinoAlertDialog(
+                           //             content: Text("Are you Sure\nYou Want to Remove !",
+                           //                 style: TextStyle(
+                           //                     fontWeight: FontWeight.w400,
+                           //                     fontSize: width * 0.045)),
+                           //             actions: [
+                           //               CupertinoDialogAction(
+                           //                 isDefaultAction: true,
+                           //                 isDestructiveAction: true,
+                           //                 onPressed: () {
+                           //                   Navigator.pop(context);
+                           //                 },
+                           //                 child: Text("Cancel"),
+                           //               ),
+                           //               CupertinoDialogAction(
+                           //                 isDefaultAction: true,
+                           //                 onPressed: (){
+                           //                   // widget.fun;
+                           //                   // await remove();
+                           //                   // await  updatedata();
+                           //                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
+                           //                     crossAxisAlignment: CrossAxisAlignment.end,
+                           //                     mainAxisAlignment: MainAxisAlignment.start,
+                           //                     children: [
+                           //                       SizedBox(
+                           //                         width: width*0.05,
+                           //                       ),
+                           //
+                           //                       Center(
+                           //                         child: Container(
+                           //                             height: height*0.04,
+                           //                             width: width*0.1,
+                           //                             // color: Colors.red,
+                           //                             child: Lottie.asset(ImageConstants.remove,fit: BoxFit.fitHeight)),
+                           //                       ),
+                           //                       SizedBox(
+                           //                         width: width*0.015,
+                           //                       ),
+                           //
+                           //                       Text("Deleted Success",style: TextStyle(
+                           //                           fontSize: width*0.04,
+                           //                           color: Pallette.white
+                           //                       ),)
+                           //                     ],
+                           //
+                           //                   ),backgroundColor: Colors.black.withOpacity(0.85),
+                           //                     behavior: SnackBarBehavior.floating,
+                           //                     showCloseIcon: true,
+                           //                     padding:  EdgeInsets.only(bottom: width*0.012,top: width*0.001),
+                           //                     // duration: Duration(seconds: 2),
+                           //                   ));
+                           //
+                           //                   // Navigator.pop(context);
+                           //                   // Navigator.pop(context);
+                           //
+                           //                 },
+                           //                 child: Text("Confirm",
+                           //                     style: TextStyle(
+                           //                         color: Colors.black
+                           //                     )),
+                           //               ),
+                           //             ],
+                           //           );
+                           //         },
+                           //       );
+                           //     },
+                           //     child: Container(
+                           //          height: height * 0.06,
+                           //          width: width * 0.4,
+                           //          decoration: BoxDecoration(
+                           //            color: Pallette.primaryColor,
+                           //            borderRadius: BorderRadius.circular(width * 0.025),
+                           //          ),
+                           //          child: Row(
+                           //            mainAxisAlignment: MainAxisAlignment.center,
+                           //            children: [
+                           //              Icon(CupertinoIcons.delete,color: Pallette.white,
+                           //                  size: width*0.06),
+                           //              SizedBox(width: width*0.01,),
+                           //              Center(
+                           //                child: Text("Remove",style: TextStyle(
+                           //                    color: Pallette.white,
+                           //                    fontSize: width*0.04
+                           //                ),),
+                           //              ),
+                           //            ],
+                           //          ),
+                           //        ),
+                           //   ),
+                           // ),
 
                             ],
                           ),

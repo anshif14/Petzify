@@ -343,11 +343,8 @@ class _review_detailState extends State<review_detail> {
                               }
                             ])
                           });
-                          Navigator.pushReplacement(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => NavBar(passindex: 3,),
-                              ));
+                          Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) =>NavBar(passindex: 3) ,), (route) => false);
+
                         },
                         child: Center(
                           child: Container(

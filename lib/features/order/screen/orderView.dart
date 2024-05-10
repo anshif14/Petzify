@@ -359,11 +359,13 @@ class _orderViewState extends ConsumerState<orderView> {
                                 "review": reviewcontroller.text,
                                 "userid":currentUserModel!.id,
                                 "image":currentUserModel!.images,
+                                "productImage":[]
                               }
                             ]
                             )
                           });
-                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(passindex: 3,),));
+                          // Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(passindex: 3,),));
+                          Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) =>NavBar(passindex: 3) ,), (route) => false);
                         },
                         child: Container(
                           height: height*0.06,

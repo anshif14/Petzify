@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
@@ -105,17 +106,33 @@ class _SplashScreenState extends State<SplashScreen> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
     backgroundColor: Color(0xfff8f6f4),
-      body:Center(
-        child: Container
-          (
-          decoration: BoxDecoration(
-              color: Color(0xfff8f6f4),
+    //     backgroundColor: Colors.grey,
 
-              image: DecorationImage(image: AssetImage(ImageConstants.logo),fit: BoxFit.cover)
+      body:Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Color(0xfff8f6f4),
+
+
+                  image: DecorationImage(image: AssetImage(ImageConstants.logo1),fit: BoxFit.cover)
+              ),
+              height: height*0.25,
+              width: width*0.67,
+
+            ),
           ),
-          height: MediaQuery.of(context).size.height*0.5,
-          width: MediaQuery.of(context).size.width*0.8,
-        ),
+          Column(
+            children: [
+              Text("PETZIFY",style: GoogleFonts.cormorantGaramond(
+                  fontWeight: FontWeight.w600,
+              fontSize: width*0.11,color: Pallette.primaryColor),),
+              Text("Revolutionizing pet industry",style: GoogleFonts.cormorantGaramond(fontSize: width*0.05, fontWeight: FontWeight.w600,color: Pallette.primaryColor),)
+            ],
+          ),
+        ],
       )
     );
   }

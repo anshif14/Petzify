@@ -1,6 +1,9 @@
 class ImageConstants{
   //image
-  static const logo='assets/images/logo.png';
+  // static const logo='assets/images/logo.png';
+  static const logo="assets/images/PETZIFYlogo.png";
+  // static const logo1="assets/images/petzify.png";
+  static const logo1="assets/images/newlogo.png";
   static const banner1='assets/images/banner1.jpg';
   static const banner2='assets/images/banner2.jpg';
   static const banner3='assets/images/banner3.jpg';

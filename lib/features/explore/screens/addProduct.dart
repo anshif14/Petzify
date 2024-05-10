@@ -98,7 +98,8 @@ class _AddProductState extends ConsumerState<AddProduct> {
             category: dropdownvalue.toString(),
             petcategory: petdropdownvalue.toString(),
             review: [],
-          search: setSearchParam(prdnamecontroller.text+' '+petdropdownvalue.toString()+' '+dropdownvalue.toString())
+          search: setSearchParam(prdnamecontroller.text+' '+petdropdownvalue.toString()+' '+dropdownvalue.toString()),
+            deliverycharge: 0
         ));
     // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
     //   "productadder":"add"
@@ -379,7 +380,6 @@ class _AddProductState extends ConsumerState<AddProduct> {
                   controller: pricecontroller,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly,],
                   maxLength: 10,
-
                   style: TextStyle(
                     color: CupertinoColors.black
                   ),

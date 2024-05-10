@@ -338,12 +338,14 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                         Text(data.description,
                           style: TextStyle(fontSize: width * 0.04),),
                         gap,
-                        Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
+                        review.isNotEmpty?Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),):SizedBox(),
                         SizedBox(height: height*0.015,),
 
-                        Container(
-                          height:height*0.26,
-                          child:review.isNotEmpty?ListView.builder(
+                        review.isNotEmpty? Container(
+                          height:height*0.25,
+                         
+
+                          child:ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: 1,
                             itemBuilder: (BuildContext context, int index) {
@@ -423,11 +425,11 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                                 ],
                               );
                             },
-                          ):SizedBox(),
-                        )
+                          ),
+                        ):SizedBox(height: height*0.15,)
                       ],
                     ),
-                gap,
+                    SizedBox(height: height*0.001,),
                     Center(
                       child: GestureDetector(
                         onTap: () {

@@ -87,7 +87,7 @@ class _profileScreenState extends State<profileScreen> {
         child: Lottie.asset(ImageConstants.doglottie),
       ),
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,

@@ -184,7 +184,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           elevation: 2,
           title:ListTile(
             title:  Text(
-              "LUNA",
+              "PETZIFY",
               style: GoogleFonts.cormorantGaramond(
                   color: Pallette.primaryColor,
                   wordSpacing: 2,

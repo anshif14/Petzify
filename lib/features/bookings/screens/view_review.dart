@@ -59,7 +59,7 @@ class _View_reviewState extends State<View_review> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-           tap==false?Container(
+            images.isNotEmpty?tap==false?Container(
                 height: height * 0.15,
                 width: width*1,
                 child: ListView.builder(
@@ -68,7 +68,7 @@ class _View_reviewState extends State<View_review> {
                   itemBuilder: (BuildContext context, int index) {
 
                     return  index==(tap == false && images.length>3 ? images.sublist(0,3).length : images.length) ?
-                    GestureDetector(
+             GestureDetector(
                       onTap: () {
                         tap=!tap;
                         setState(() {
@@ -114,8 +114,8 @@ class _View_reviewState extends State<View_review> {
                itemCount: images.length+1,
                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                    childAspectRatio: 1.8,
-                   mainAxisSpacing: width * 0.02,
-                   crossAxisSpacing: width * 0.02,
+                   mainAxisSpacing: width * 0.025,
+                   crossAxisSpacing: width * 0.025,
                    mainAxisExtent: width * 0.3,
                    crossAxisCount: 3),
                itemBuilder: (context, index) {
@@ -128,7 +128,7 @@ class _View_reviewState extends State<View_review> {
                      });
                    },
                    child: Container(
-                     margin: EdgeInsets.all(width*0.02),
+                     padding: EdgeInsets.all(width*0.02),
                      height: height * 0.13,
                      width: width * 0.8,
                      child: Center(child: Text("See Less",style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white,fontSize: width*0.04),)),
@@ -151,7 +151,7 @@ class _View_reviewState extends State<View_review> {
                },
              ),
              // color: Colors.red,
-           ),
+           ):SizedBox(),
                 SizedBox(height: height*0.01,),
                 Text("Customer Reviews",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
                 SizedBox(height: height*0.01,),
