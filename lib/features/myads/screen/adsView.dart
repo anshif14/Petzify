@@ -33,7 +33,7 @@ class _adsViewState extends State<adsView> {
   Widget build(BuildContext context) {
     return InternetChecker(
       placeHolder: Container(
-        child: Lottie.asset(ImageConstants.doglottie),
+        child: Lottie.asset(ImageConstants.netdog),
       ),
       child: Scaffold(
         resizeToAvoidBottomInset: false,

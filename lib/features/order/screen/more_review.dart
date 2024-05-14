@@ -84,7 +84,7 @@ class _review_detailState extends State<review_detail> {
 
     return InternetChecker(
       placeHolder: Container(
-        child: Lottie.asset(ImageConstants.doglottie),
+        child: Lottie.asset(ImageConstants.netdog),
       ),
       child: Scaffold(
           appBar: AppBar(

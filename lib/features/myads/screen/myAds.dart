@@ -119,7 +119,7 @@ class _myAdsState extends ConsumerState<myAds> {
   Widget build(BuildContext context) {
     return InternetChecker(
       placeHolder: Container(
-        child: Lottie.asset(ImageConstants.doglottie),
+        child: Lottie.asset(ImageConstants.netdog),
       ),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -307,6 +307,7 @@ class _myAdsState extends ConsumerState<myAds> {
                                                           ),backgroundColor: Colors.black.withOpacity(0.85),
                                                             behavior: SnackBarBehavior.floating,
                                                             showCloseIcon: true,
+                                                            duration: Duration(seconds: 1),
                                                             padding:  EdgeInsets.only(bottom: width*0.012,top: width*0.001),
                                                             // duration: Duration(seconds: 2),
                                                           ));

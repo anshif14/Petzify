@@ -49,7 +49,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
   Widget build(BuildContext context) {
     return InternetChecker(
       placeHolder: Container(
-        child: Lottie.asset(ImageConstants.doglottie),
+        child: Lottie.asset(ImageConstants.netdog),
       ),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -313,6 +313,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                           //nav
                         }else{
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("wrong password")));
+
                           //wromg
                         }
 
@@ -324,6 +325,8 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                         currentUserModel = UserModel.fromMap(data!.data()!);
 
                       }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User doesn't Exits")));
+
                         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>SignupPage(sign: false) ,));
                         //user reg
                       }

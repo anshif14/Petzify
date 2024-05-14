@@ -16,7 +16,7 @@ class _comingSoonState extends State<comingSoon> {
   Widget build(BuildContext context) {
     return InternetChecker(
       placeHolder: Container(
-        child: Lottie.asset(ImageConstants.doglottie),
+        child: Lottie.asset(ImageConstants.netdog),
       ),
       child: Scaffold(
         appBar: AppBar(),

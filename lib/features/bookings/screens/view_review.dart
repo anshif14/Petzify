@@ -46,7 +46,7 @@ class _View_reviewState extends State<View_review> {
   Widget build(BuildContext context) {
     return InternetChecker(
       placeHolder: Container(
-        child: Lottie.asset(ImageConstants.doglottie),
+        child: Lottie.asset(ImageConstants.netdog),
       ),
       child: Scaffold(
         appBar: AppBar(

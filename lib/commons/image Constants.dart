@@ -75,6 +75,7 @@ static const loading='assets/animation/comingsoon.json';
 static const remove='assets/animation/Animation - 1710042872820 (1).json';
   static const noadslottie="assets/animation/Animation - 1713592810741.json";
   static const doglottie="assets/animation/dog.json";
+  static const netdog="assets/animation/a6FXJx0DCf.json";
 
 
 

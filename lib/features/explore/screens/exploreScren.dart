@@ -45,7 +45,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
     return InternetChecker(
       placeHolder: Container(
-        child: Lottie.asset(ImageConstants.doglottie),
+        child: Lottie.asset(ImageConstants.netdog),
       ),
       child: Scaffold(
         floatingActionButton: FloatingActionButton.extended(
