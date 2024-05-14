@@ -70,6 +70,7 @@ class BookingModel{
       productName: Map["productName"] ?? "",
         productImage: Map["productImage"] ?? "",
       price: Map["price"]??"",
+        // price: Map["price"].toDouble() ?? "",
       qty: Map["qty"]??"",
       buyerName: Map["buyerName"]??"",
       state: Map["state"]??"",

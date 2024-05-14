@@ -88,7 +88,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
             productname: prdnamecontroller.text.trim(),
             image: pets,
             description: descriptioncontroller.text.trim(),
-            price: double.parse(pricecontroller.text),
+            price: double.parse(pricecontroller.text.trim()),
             sellername: namecontroller.text.trim(),
             address: addresscontroller.text.trim(),
             phonenumber: contactcontroller.text.trim(),
@@ -99,7 +99,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
             petcategory: petdropdownvalue.toString(),
             review: [],
           search: setSearchParam(prdnamecontroller.text+' '+petdropdownvalue.toString()+' '+dropdownvalue.toString()),
-            deliverycharge: 0
+            deliverycharge: 0.0
         ));
     // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
     //   "productadder":"add"
@@ -120,7 +120,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
 
   String? dropdownvalue;
   String? petdropdownvalue;
-  List pets=[ ];
+  List pets=[];
 
   var petCategory=[
     "Dogs",

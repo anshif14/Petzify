@@ -396,7 +396,7 @@ class _profileScreenState extends State<profileScreen> {
                                     _prefs.remove('email');
                                     // _prefs.remove("login");
                                     currentUserModel=null;
-                                    fav=[];
+                                    fav.clear();
                                     _prefs.clear();
                                     GoogleSignIn().signOut();
                                     FirebaseAuth.instance.signOut();

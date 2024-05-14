@@ -166,7 +166,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     fetch();
 
-      getFav();
+    getFav();
     // TODO: implement initState
     super.initState();
   }
@@ -298,7 +298,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             viewportFraction: 0.7,
                             height: height * 0.2,
                             autoPlay: true,
-                          enlargeCenterPage: true
+                            enlargeCenterPage: true
                         ));
                   },
                   error: (error, stackTrace) {
@@ -387,15 +387,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ProducctSingleScreen(
-                                          fav: fav.contains(data[index].id) ? true : false,
-                                          id:data[index].id,
-                                          tag: data[index].image[0],
-                                          like: false,
-                                          Petcategory: false,
-                                          name:data[index].productname,
-                                          price:data[index].price,
-                                          category:data[index].category,
-                                          image: data[index].image
+                                            fav: fav.contains(data[index].id) ? true : false,
+                                            id:data[index].id,
+                                            tag: data[index].image[0],
+                                            like: false,
+                                            Petcategory: false,
+                                            name:data[index].productname,
+                                            price:data[index].price,
+                                            category:data[index].category,
+                                            image: data[index].image
 
                                         ),
                                       ));

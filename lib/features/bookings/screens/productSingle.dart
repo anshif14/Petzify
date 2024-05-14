@@ -436,7 +436,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                           BookingModel bookingModelData=BookingModel(
                               bookingId:"",
                               paymentMethod: "",
-                              price:data.price.toString(),
+                              price:"",
                               qty:count.toString() ,
                               productName: data.productname,
                               buyerPhoneNumer: "",
@@ -454,7 +454,8 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                               search: []
 
                           );
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData),));
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData,
+                            dcharge: data.deliverycharge, price: data.price,),));
                         },
                         child: Container(
                           height: height * 0.07,

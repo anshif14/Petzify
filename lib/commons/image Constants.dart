@@ -54,9 +54,10 @@ class ImageConstants{
   static const no_order='assets/images/no_order.png';
   static const no_ads='assets/images/no_ads.jpg';
   static const delivery='assets/images/Take Away-pana.png';
-  static const payment='assets/images/E-Wallet-rafiki.png';
+  static const payment='assets/images/E-Wallet-pana.png';
   //svg
   static const dogSvg='assets/svg/dog.svg';
+  static const deliverycar='assets/svg/delivery-svgrepo-com.svg';
   //login
 
   //login

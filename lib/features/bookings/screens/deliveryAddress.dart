@@ -21,9 +21,13 @@ import '../../../commons/widgets.dart';
 import '../../../main.dart';
 import 'package:http/http.dart' as http;
 
+import 'conformation.dart';
+
 
 class deliveryAddress extends ConsumerStatefulWidget {
-  deliveryAddress({super.key,required this.bookingdata});
+  deliveryAddress({super.key,required this.bookingdata,required this.dcharge,required this.price});
+  final double dcharge;
+  final double price;
   final BookingModel bookingdata;
 
 
@@ -49,7 +53,9 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
         buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
     // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
 
-    Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
+    // Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>confirmation(bookingModel1: bookingModel,
+      dcharge: widget.dcharge, price: widget.price,) ,));
 
   }
 
