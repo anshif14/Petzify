@@ -164,7 +164,18 @@ class _favouriteState extends ConsumerState<favouritePage> {
                     data: (data) {
                       print(data.id);
                       print("hhhhhhhhhhhhhhhhhhhhhh");
-                      return GridView.builder(
+                      return data.favourites.isEmpty ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset(ImageConstants.nofavourite,height: height*0.3),
+                          gap,
+                          Text("No Favourites Found",style: TextStyle(
+                            fontSize: width*0.05,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          )
+                        ],
+                      ) : GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: data.favourites.length,
@@ -173,26 +184,7 @@ class _favouriteState extends ConsumerState<favouritePage> {
                         itemBuilder: (context, index) {
                           return ref.watch(productfavstreamProvider(data.favourites[index]["id"])).when(
                             data: (data) {
-                              return  data==null?
-                              Column(
-                                children: [
-                                  Container(
-                                    height: width * 0.4,
-                                    width: width * 0.4,
-                                    margin: EdgeInsets.all(7.0),
-                                    decoration: BoxDecoration(
-                                        color: Pallette.secondaryBrown,
-                                        borderRadius: BorderRadius.circular(15)),
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        color: Pallette.primaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-
-                                  : InkWell(
+                              return InkWell(
                                 onTap: () {
                                   Navigator.push(
                                       context,
