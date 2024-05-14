@@ -261,7 +261,9 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                                   (valueItem) {
                                 return DropdownMenuItem(
                                   value: valueItem,
-                                  child: Text(valueItem),
+                                  child: Text(valueItem,style: TextStyle(
+                                    fontSize: width*0.04
+                                  ),),
                                 );
                               },
                             ).toList(),

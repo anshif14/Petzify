@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,28 +21,30 @@ class confirmation extends ConsumerStatefulWidget {
   BookingModel bookingModel1;
   final double dcharge;
   final double price;
-  confirmation({super.key,required this.bookingModel1,required this.dcharge,required this.price});
+  confirmation(
+      {super.key,
+      required this.bookingModel1,
+      required this.dcharge,
+      required this.price});
   // final Map<String, dynamic> slotbooking;
-
 
   @override
   ConsumerState<confirmation> createState() => _confirmationState();
 }
 
 class _confirmationState extends ConsumerState<confirmation> {
+  String cont = "Cash on delivery";
 
-  String cont="COD";
-
-  add(){
-    BookingModel bookingdata=widget.bookingModel1.copyWith(
+  add() {
+    BookingModel bookingdata = widget.bookingModel1.copyWith(
         paymentMethod: cont,
-        price: (double.parse(widget.price.toString()) + double.parse(widget.dcharge.toString())).toStringAsFixed(2),
-        search: setSearchParam(widget.bookingModel1.productName)
-
-    );
+        price: (double.parse(widget.price.toString()) +
+                double.parse(widget.dcharge.toString()))
+            .toStringAsFixed(2),
+        search: setSearchParam(widget.bookingModel1.productName));
     ref.watch(addBookingProvider(bookingdata));
-
   }
+
   String tik = "";
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,11 @@ class _confirmationState extends ConsumerState<confirmation> {
                 CupertinoIcons.back,
                 color: Colors.black,
               )),
-          title: Text("Payment",style: TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.05),),
+          title: Text(
+            "Payment",
+            style:
+                TextStyle(fontWeight: FontWeight.w600, fontSize: width * 0.05),
+          ),
         ),
         body: Padding(
             padding: EdgeInsets.only(
@@ -85,13 +89,24 @@ class _confirmationState extends ConsumerState<confirmation> {
                         // ),
                         Text(
                           "Details",
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 20),
                         ),
-                        SizedBox(height: height*0.012,),
+                        SizedBox(
+                          height: height * 0.012,
+                        ),
 
                         InkWell(
                           onTap: () {
-Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bookingModel1: widget.bookingModel1,),));
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => orderDetails(
+                                    bookingModel1: widget.bookingModel1,
+                                    price: widget.price.toString(),
+                                    paymentMethod: cont,
+                                  ),
+                                ));
                           },
                           child: Container(
                             height: height * 0.12,
@@ -99,10 +114,9 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                             decoration: BoxDecoration(
                                 color: Pallette.secondaryBrown,
                                 borderRadius:
-                                BorderRadius.circular(width * 0.015)),
+                                    BorderRadius.circular(width * 0.015)),
                             child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
@@ -112,8 +126,11 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                                         height: height * 0.245,
                                         width: width * 0.22,
                                         child: ClipRRect(
-                                          borderRadius:  BorderRadius.circular(width * 0.015),
-                                          child: CachedNetworkImage(imageUrl: widget.bookingModel1.productImage,
+                                          borderRadius: BorderRadius.circular(
+                                              width * 0.015),
+                                          child: CachedNetworkImage(
+                                            imageUrl: widget
+                                                .bookingModel1.productImage,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -124,12 +141,12 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          width: width*0.48,
+                                          width: width * 0.48,
                                           child: Text(
                                               widget.bookingModel1.productName,
                                               style: TextStyle(
@@ -140,12 +157,14 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                                               )),
                                         ),
                                         Container(
-                                          width: width*0.45,
-                                          child: Text(widget.bookingModel1.buyerName,
+                                          width: width * 0.45,
+                                          child: Text(
+                                              widget.bookingModel1.buyerName,
                                               style: TextStyle(
-                                                  overflow: TextOverflow.ellipsis,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: width * 0.038,)),
+                                                overflow: TextOverflow.ellipsis,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: width * 0.038,
+                                              )),
                                         ),
                                         Text(
                                           "\₹ ${widget.price}",
@@ -156,7 +175,7 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                                               height: width * 0.003),
                                         ),
                                         Text(
-                                         widget.bookingModel1.state,
+                                          widget.bookingModel1.state,
                                           style: TextStyle(
                                               fontSize: width * 0.035,
                                               fontWeight: FontWeight.w400,
@@ -169,10 +188,10 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                                 ),
                                 Padding(
                                   padding:
-                                  EdgeInsets.only(right: width * 0.055),
+                                      EdgeInsets.only(right: width * 0.055),
                                   child: Icon(
                                     Icons.arrow_forward_ios,
-                                    color:Colors.black,
+                                    color: Colors.black,
                                     size: width * 0.05,
                                   ),
                                 )
@@ -193,46 +212,59 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                                 fontSize: 20,
                               ),
                             ),
-
                             Column(
                               children: [
                                 ListTile(
-                                  title: Text("Google Pay",style: TextStyle(color: CupertinoColors.black,fontSize: 17),),
-                                  trailing:Radio(
+                                  title: Text(
+                                    "Google Pay",
+                                    style: TextStyle(
+                                        color: CupertinoColors.black,
+                                        fontSize: 17),
+                                  ),
+                                  trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
-                                    value: "G",
+                                    fillColor: MaterialStatePropertyAll(
+                                        Pallette.primaryColor),
+                                    value: "Google Pay",
                                     groupValue: cont,
-                                    onChanged: (value) {
-
-                                    },
-                                  ) ,
+                                    onChanged: (value) {},
+                                  ),
                                 ),
                                 ListTile(
-                                  title: Text("Credit/Debit",style: TextStyle(color: CupertinoColors.black,fontSize: 17),),
-                                  trailing:Radio(
+                                  title: Text(
+                                    "Credit/Debit",
+                                    style: TextStyle(
+                                        color: CupertinoColors.black,
+                                        fontSize: 17),
+                                  ),
+                                  trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
-                                    value: "C",
+                                    fillColor: MaterialStatePropertyAll(
+                                        Pallette.primaryColor),
+                                    value: "Credit/Debit",
                                     groupValue: cont,
-                                    onChanged: (value) {
-
-                                    },
-                                  ) ,
+                                    onChanged: (value) {},
+                                  ),
                                 ),
                                 ListTile(
-                                  title: Text("Cash on delivery",style: TextStyle(color: CupertinoColors.black,fontSize: 17),),
-                                  trailing:Radio(
+                                  title: Text(
+                                    "Cash on delivery",
+                                    style: TextStyle(
+                                        color: CupertinoColors.black,
+                                        fontSize: 17),
+                                  ),
+                                  trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: MaterialStatePropertyAll(Pallette.primaryColor),
-                                    value: "COD",
+                                    fillColor: MaterialStatePropertyAll(
+                                        Pallette.primaryColor),
+                                    value: "Cash on delivery",
                                     groupValue: cont,
                                     onChanged: (value) {
                                       setState(() {
-                                        cont=value!;
+                                        cont = value!;
                                       });
                                     },
-                                  ) ,
+                                  ),
                                 ),
                                 // Row(
                                 //   mainAxisAlignment:
@@ -305,15 +337,26 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                         Row(
                           children: [
                             Container(
-                                height: height*0.05,
-                                width: width*0.1,
-                                child: SvgPicture.asset(ImageConstants.deliverycar)),
-                            SizedBox(width: width*0.03,),
-                        widget.dcharge>0?Text("Delivery Charge : ${widget.dcharge}",style: TextStyle(
-                              fontSize: width*0.038,fontWeight: FontWeight.w600
-                            ),): Text("Free Delivery",style: TextStyle(
-                                fontSize: width*0.038,fontWeight: FontWeight.w600
-                            ),)
+                                height: height * 0.05,
+                                width: width * 0.1,
+                                child: SvgPicture.asset(
+                                    ImageConstants.deliverycar)),
+                            SizedBox(
+                              width: width * 0.03,
+                            ),
+                            widget.dcharge > 0
+                                ? Text(
+                                    "Delivery Charge : ${widget.dcharge}",
+                                    style: TextStyle(
+                                        fontSize: width * 0.038,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                : Text(
+                                    "Free Delivery",
+                                    style: TextStyle(
+                                        fontSize: width * 0.038,
+                                        fontWeight: FontWeight.w600),
+                                  )
                           ],
                         )
                       ],
@@ -356,30 +399,31 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                     ),
                     InkWell(
                       onTap: () async {
-
-                        await  add();
-                        setState(() {
-
-                        });
+                        await add();
+                        setState(() {});
                         // bookingdata();
                         showDialog(
                             context: context,
-                            builder: (context){
+                            builder: (context) {
                               return AlertDialog(
                                 surfaceTintColor: Pallette.secondaryBrown,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(width*0.05)
-                                ),
+                                    borderRadius:
+                                        BorderRadius.circular(width * 0.05)),
                                 content: Container(
-                                  height: height*0.5,
-                                  width: width*1,
+                                  height: height * 0.5,
+                                  width: width * 1,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(width*0.03)
-                                  ),
+                                      borderRadius:
+                                          BorderRadius.circular(width * 0.03)),
                                   child: Column(
                                     children: [
                                       Lottie.asset(ImageConstants.lottie),
-                                      Text("Successfully Ordered!!",style: TextStyle(fontSize: width*0.045),),
+                                      Text(
+                                        "Successfully Ordered!!",
+                                        style:
+                                            TextStyle(fontSize: width * 0.045),
+                                      ),
 
                                       // gap,
                                       // Row(
@@ -403,28 +447,32 @@ Navigator.push(context, CupertinoPageRoute(builder: (context) => orderDetails(bo
                                   ),
                                 ),
                               );
-                            }
-                        );
+                            });
                         Future.delayed(Duration(seconds: 2))
-                            .then((value) => Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder:
-                            (context) => NavBar(passindex: 0,),), (route) => false));
-
-
+                            .then((value) => Navigator.pushAndRemoveUntil(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => NavBar(
+                                    passindex: 0,
+                                  ),
+                                ),
+                                (route) => false));
                       },
                       child: Center(
                         child: Container(
-                          height: height*0.06,
-                          width: width*0.7,
+                          height: height * 0.06,
+                          width: width * 0.7,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(width*0.3),
-                              color:Pallette.primaryColor
-                          ),
+                              borderRadius: BorderRadius.circular(width * 0.3),
+                              color: Pallette.primaryColor),
                           child: Center(
-                            child: Text("Continue",style: TextStyle(
-                                color: Pallette.white,
-                                fontSize: width*0.04,
-                                fontWeight: FontWeight.w600
-                            ),),
+                            child: Text(
+                              "Continue",
+                              style: TextStyle(
+                                  color: Pallette.white,
+                                  fontSize: width * 0.04,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ),
