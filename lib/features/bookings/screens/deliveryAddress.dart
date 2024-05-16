@@ -51,9 +51,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
       state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
         buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
         buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
-    // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
 
-    // Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
     Navigator.push(context, CupertinoPageRoute(builder: (context) =>confirmation(bookingModel1: bookingModel,
       dcharge: widget.dcharge, price: widget.price,) ,));
 

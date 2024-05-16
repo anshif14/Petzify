@@ -250,12 +250,6 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                                             child: ClipRRect(
                                                 borderRadius: BorderRadius.circular(15),
                                                 child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
-                                            // decoration: BoxDecoration(
-                                            //     color: Pallette.secondaryBrown,
-                                            //     image: DecorationImage(
-                                            //         image: NetworkImage(widget.image[0]),
-                                            //         fit: BoxFit.cover),
-                                            //     borderRadius: BorderRadius.circular(15)),
                                           ),
                                         ),
                                         Positioned(
@@ -272,8 +266,8 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                                               child: IconButton(onPressed: (){
                                                 // ref.read(favour.notifier).update((state) => !state);
                                                 favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
-                                              }
-                                                , icon: Icon(
+                                              },
+                                                icon: Icon(
                                                   fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
                                                   color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
                                                 ),
@@ -287,9 +281,12 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
                                         children: [
-                                          Text(
-                                            data[index].productname,
-                                            style: TextStyle(fontWeight: FontWeight.w800),
+                                          Container(
+                                            width: width*0.4,
+                                            child: Text(
+                                              data[index].productname,
+                                              style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
+                                            ),
                                           ),
                                         ],
                                       ),
