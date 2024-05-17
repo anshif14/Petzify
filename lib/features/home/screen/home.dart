@@ -203,360 +203,352 @@ class _HomePageState extends ConsumerState<HomePage> {
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Container(
-                  height: height * 0.055,
-                  decoration: BoxDecoration(
-                      color: Pallette.secondaryBrown,
-                      borderRadius: BorderRadius.circular(width*0.03)),
-                  child: TextFormField(
-                    onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
-                    },
-                    onChanged: (value) {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
-                    },
-                    controller: searchController,
-                    textCapitalization: TextCapitalization.words,
-                    keyboardType: TextInputType.multiline,
-                    textInputAction: TextInputAction.search,
-                    cursorColor: Pallette.primaryColor,
-                    cursorHeight: width*0.055,
-                    cursorWidth: width*0.003,
-                    style: TextStyle(
-                      fontSize: width * 0.04,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(top: width*0.03),
-                      prefixIcon:Icon(Icons.search),
-                      fillColor: Pallette.grey,
-                      filled: true,
-                      hintText: "Search",
-                      hintStyle: TextStyle(
+            child: AnimationLimiter(
+              child: Column(
+                children:  AnimationConfiguration.toStaggeredList(
+                  duration: const Duration(milliseconds: 500),
+                  childAnimationBuilder: (widget) => SlideAnimation(
+                    horizontalOffset: 50.0,
+                    child: FadeInAnimation(
+
+                    child: widget,
+                  )
+                ),
+                     children:[
+                  Container(
+                    height: height * 0.055,
+                    decoration: BoxDecoration(
+                        color: Pallette.secondaryBrown,
+                        borderRadius: BorderRadius.circular(width*0.03)),
+                    child: TextFormField(
+                      onTap: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
+                      },
+                      onChanged: (value) {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
+                      },
+                      controller: searchController,
+                      textCapitalization: TextCapitalization.words,
+                      keyboardType: TextInputType.multiline,
+                      textInputAction: TextInputAction.search,
+                      cursorColor: Pallette.primaryColor,
+                      cursorHeight: width*0.055,
+                      cursorWidth: width*0.003,
+                      style: TextStyle(
                         fontSize: width * 0.04,
-                        color: Colors.grey,
                         fontWeight: FontWeight.w500,
                       ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(width * 0.03),
-                          borderSide: BorderSide.none),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(top: width*0.03),
+                        prefixIcon:Icon(Icons.search),
+                        fillColor: Pallette.grey,
+                        filled: true,
+                        hintText: "Search",
+                        hintStyle: TextStyle(
+                          fontSize: width * 0.04,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(width * 0.03),
+                            borderSide: BorderSide.none),
+                      ),
                     ),
                   ),
-                ),
-                // gap,
-                // InkWell(
-                //   onTap: () {
-                //     // print(setSearchParam('shadil'));
-                //
-                //     FirebaseFirestore.instance.collection('product').get().then((value) {
-                //
-                //       for(var docs in value.docs){
-                //        FirebaseFirestore.instance.collection('product').doc(docs.id).update({
-                //          'search':setSearchParam(docs['productname']+' '+docs["category"]+' '+docs["petcategory"])
-                //        });
-                //       }
-                //
-                //     });
-                //
-                //   },
-                //   child: Container(
-                //     width: width*0.2,
-                //     height: width*0.08,
-                //     color: Pallette.primaryColor,
-                //     child: Center(child: Text("get",style: TextStyle(
-                //       color: Colors.white
-                //     ),)),
-                //   ),
-                // ),
-                gap,
-                ref.watch(databannerProvider).when(
-                  data: (data) {
-                    List banners = data!['images'];
-                    return CarouselSlider(
+                  // gap,
+                  // InkWell(
+                  //   onTap: () {
+                  //     // print(setSearchParam('shadil'));
+                  //
+                  //     FirebaseFirestore.instance.collection('product').get().then((value) {
+                  //
+                  //       for(var docs in value.docs){
+                  //        FirebaseFirestore.instance.collection('product').doc(docs.id).update({
+                  //          'search':setSearchParam(docs['productname']+' '+docs["category"]+' '+docs["petcategory"])
+                  //        });
+                  //       }
+                  //
+                  //     });
+                  //
+                  //   },
+                  //   child: Container(
+                  //     width: width*0.2,
+                  //     height: width*0.08,
+                  //     color: Pallette.primaryColor,
+                  //     child: Center(child: Text("get",style: TextStyle(
+                  //       color: Colors.white
+                  //     ),)),
+                  //   ),
+                  // ),
+                  gap,
+                  ref.watch(databannerProvider).when(
+                    data: (data) {
+                      List banners = data!['images'];
+                      return CarouselSlider(
 
-                        items: List.generate(
-                            banners.length,
-                                (index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: ClipRRect(
-                                  borderRadius:  BorderRadius.circular(12),
-                                  child: CachedNetworkImage(imageUrl: banners[index],
-                                    fit: BoxFit.cover,
+                          items: List.generate(
+                              banners.length,
+                                  (index) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  child: ClipRRect(
+                                    borderRadius:  BorderRadius.circular(12),
+                                    child: CachedNetworkImage(imageUrl: banners[index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    // color: Colors.teal,
                                   ),
                                 ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  // color: Colors.teal,
-                                ),
-                              ),
-                            )),
-                        options:
-                        CarouselOptions(
-                            viewportFraction: 0.7,
-                            height: height * 0.2,
-                            autoPlay: true,
-                            enlargeCenterPage: true
-                        ));
-                  },
-                  error: (error, stackTrace) {
-                    return Text(error.toString());
-                  },
-                  loading: () {
-                    return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+                              )),
+                          options:
+                          CarouselOptions(
+                              viewportFraction: 0.7,
+                              height: height * 0.2,
+                              autoPlay: true,
+                              enlargeCenterPage: true
+                          ));
+                    },
+                    error: (error, stackTrace) {
+                      return Text(error.toString());
+                    },
+                    loading: () {
+                      return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
 
-                  },),
-                gap,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Explore by pets",
-                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
-                    ),
-                  ],
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: List.generate(
-                        category.length,
-                            (index) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context, CupertinoPageRoute(builder:(context) => PetCategoryPage(
-                                      category:category[index]["name"]
-                                  ), ));
-                                },
-                                child: Container(
-                                  height: width * 0.2,
-                                  width: width * 0.2,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              category[index]['image']),
-                                          fit: BoxFit.cover)),
-                                ),
-                              ),
-                              Text(category[index]['name'])
-                            ],
-                          ),
-                        )),
+                    },),
+                  gap,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Explore by pets",
+                        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22),
+                      ),
+                    ],
                   ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Explore popular",
-                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: List.generate(
+                          category.length,
+                              (index) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(context, CupertinoPageRoute(builder:(context) => PetCategoryPage(
+                                        category:category[index]["name"]
+                                    ), ));
+                                  },
+                                  child: Container(
+                                    height: width * 0.2,
+                                    width: width * 0.2,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                category[index]['image']),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                ),
+                                Text(category[index]['name'])
+                              ],
+                            ),
+                          )),
                     ),
-                  ],
-                ),
-                ref.watch(datastreamProvider).when(data: (data) {
-                  if(firstTime==false){
-                    data.shuffle();
-                  }
-                  // firstTime==false ? data.shuffle() : null;
-                  firstTime=true;
-                  return AnimationLimiter(
-                    child: GridView.builder(
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Explore popular",
+                        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  ref.watch(datastreamProvider).when(data: (data) {
+                    if(firstTime==false){
+                      data.shuffle();
+                    }
+                    // firstTime==false ? data.shuffle() : null;
+                    firstTime=true;
+                    return GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: data.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 0.8, crossAxisCount: 2),
                       itemBuilder: (context, index) {
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          duration:  Duration(milliseconds: 375),
-                          child: SlideAnimation(
-                            verticalOffset: 50.0,
-                            child: FadeInAnimation(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProducctSingleScreen(
-                                            fav: fav.contains(data[index].id) ? true : false,
-                                            id:data[index].id,
-                                            tag: data[index].image[0],
-                                            like: false,
-                                            Petcategory: false,
-                                            name:data[index].productname,
-                                            price:data[index].price,
-                                            category:data[index].category,
-                                            image: data[index].image
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProducctSingleScreen(
+                                      fav: fav.contains(data[index].id) ? true : false,
+                                      id:data[index].id,
+                                      tag: data[index].image[0],
+                                      like: false,
+                                      Petcategory: false,
+                                      name:data[index].productname,
+                                      price:data[index].price,
+                                      category:data[index].category,
+                                      image: data[index].image
 
+                                  ),
+                                ));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(
+                              children: [
+                                loading?
+                                Stack(
+                                  children: [
+                                    Hero(
+                                      tag: data[index].image,
+                                      child:Container(
+                                        height: width * 0.4,
+                                        width: width * 0.4,
+                                        decoration: BoxDecoration(
+                                            color: Pallette.secondaryBrown,
+                                            image: DecorationImage(
+                                                image: NetworkImage(data[index].image[0]),
+                                                fit: BoxFit.cover,opacity:0.6),
+                                            borderRadius: BorderRadius.circular(15)),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Container(
+                                          height: width*0.1,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            // color: Colors.white.withOpacity(0.4)
+                                          ),
+                                          child: Center(
+                                            child: IconButton(onPressed: (){
+                                              // ref.read(favour.notifier).update((state) => !state);
+                                              favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+
+                                            }
+                                              , icon: Icon(
+                                                fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
+                                                color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
+                                      ),
+                                    )
+                                  ],
+                                ):
+
+                                // Container(
+                                //   width: width*0.4,
+                                //   height: width*0.4,
+                                //   child: Padding(
+                                //     padding:  EdgeInsets.all(width*0.15),
+                                //     child: CircularProgressIndicator(
+                                //       color: Pallette.primaryColor,
+                                //     ),
+                                //   ),
+                                // ):
+                                Stack(
+                                  children: [
+                                    Hero(
+                                      tag: data[index].image,
+                                      child:Container(
+                                        height: width * 0.4,
+                                        width: width * 0.4,
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(15),
+                                            child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
+                                        // decoration: BoxDecoration(
+                                        //     color: Pallette.secondaryBrown,
+                                        //     image: DecorationImage(
+                                        //         image: NetworkImage(widget.image[0]),
+                                        //         fit: BoxFit.cover),
+                                        //     borderRadius: BorderRadius.circular(15)),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 1,
+                                      child: Container(
+                                        padding:  EdgeInsets.all(width*0.003),
+                                        height: width*0.1,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          // color: Colors.white.withOpacity(0.4)
+                                        ),
+                                        child: Center(
+                                          child: IconButton(onPressed: (){
+                                            // ref.read(favour.notifier).update((state) => !state);
+                                            favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+                                          }
+                                            , icon: Icon(
+                                              fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
+                                              color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
                                     children: [
-                                      loading?
-                                      Stack(
-                                        children: [
-                                          Hero(
-                                            tag: data[index].image,
-                                            child:Container(
-                                              height: width * 0.4,
-                                              width: width * 0.4,
-                                              decoration: BoxDecoration(
-                                                  color: Pallette.secondaryBrown,
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(data[index].image[0]),
-                                                      fit: BoxFit.cover,opacity:0.6),
-                                                  borderRadius: BorderRadius.circular(15)),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            right: 0,
-                                            top: 1,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: Container(
-                                                height: width*0.1,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  // color: Colors.white.withOpacity(0.4)
-                                                ),
-                                                child: Center(
-                                                  child: IconButton(onPressed: (){
-                                                    // ref.read(favour.notifier).update((state) => !state);
-                                                    favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
-
-                                                  }
-                                                    , icon: Icon(
-                                                      fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
-                                                      color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ):
-
-                                      // Container(
-                                      //   width: width*0.4,
-                                      //   height: width*0.4,
-                                      //   child: Padding(
-                                      //     padding:  EdgeInsets.all(width*0.15),
-                                      //     child: CircularProgressIndicator(
-                                      //       color: Pallette.primaryColor,
-                                      //     ),
-                                      //   ),
-                                      // ):
-                                      Stack(
-                                        children: [
-                                          Hero(
-                                            tag: data[index].image,
-                                            child:Container(
-                                              height: width * 0.4,
-                                              width: width * 0.4,
-                                              child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(15),
-                                                  child: CachedNetworkImage(imageUrl:data[index].image[0],fit: BoxFit.cover,)),
-                                              // decoration: BoxDecoration(
-                                              //     color: Pallette.secondaryBrown,
-                                              //     image: DecorationImage(
-                                              //         image: NetworkImage(widget.image[0]),
-                                              //         fit: BoxFit.cover),
-                                              //     borderRadius: BorderRadius.circular(15)),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            right: 0,
-                                            top: 1,
-                                            child: Container(
-                                              padding:  EdgeInsets.all(width*0.003),
-                                              height: width*0.1,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                // color: Colors.white.withOpacity(0.4)
-                                              ),
-                                              child: Center(
-                                                child: IconButton(onPressed: (){
-                                                  // ref.read(favour.notifier).update((state) => !state);
-                                                  favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
-                                                }
-                                                  , icon: Icon(
-                                                    fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
-                                                    color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              width: width*0.4,
-                                              child: Text(
-                                                data[index].productname,
-                                                style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Text('₹ ' + data[index].price.toString()),
-                                          ],
+                                      Container(
+                                        width: width*0.4,
+                                        child: Text(
+                                          data[index].productname,
+                                          style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                              // child: petTile(
-                              //     index: index,
-                              //     image:data[index].image.toList(),
-                              //     name:data[index].productname,
-                              //     price:data[index].price,
-                              //     category:data[index].category!,
-                              //     id:data[index].id,
-                              //   fav:fav
-                              // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text('₹ ' + data[index].price.toString()),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         );
                       },
-                    ),
-                  );
-                },
-                  error: (error, stackTrace) {
-                    return Text(error.toString());
+                    );
                   },
-                  loading: () {
-                    return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+                    error: (error, stackTrace) {
+                      return Text(error.toString());
+                    },
+                    loading: () {
+                      return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
 
-                  },)
-              ],
+                    },)
+                ],
+              ),
             ),
           ),
         ),
       ),
+    ),
     );
   }
 }

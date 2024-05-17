@@ -17,7 +17,7 @@ import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/user_Model.dart';
-
+import 'dart:io'as platform;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -136,7 +136,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               width * 0.05,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: Pallette.secondaryBrown,
                                 borderRadius: BorderRadius.circular(width * 0.1),
                                 ),
                             child: Row(
@@ -152,7 +152,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ),
                           ),
                         ),
-                        Container(
+                        platform.Platform.isIOS?Container(
                           width: width * 1,
                           height: height * 0.065,
                           margin: EdgeInsets.only(
@@ -161,7 +161,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(width * 0.1),
-                              color: Colors.grey),
+                            color: Pallette.secondaryBrown,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -173,7 +174,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               SizedBox()
                             ],
                           ),
-                        ),
+                        ):Text(""),
                       ],
                     ),
                   ),

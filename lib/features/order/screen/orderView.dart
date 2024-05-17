@@ -266,9 +266,9 @@ class _orderViewState extends ConsumerState<orderView> {
                   ),
                   SizedBox(height: height*0.015,),
                 reviewcontroller.text.isNotEmpty?Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
+                  widget.data.selectindex!=2?GestureDetector(
                         onTap: () {
                           showDialog(context: context, builder:(context) =>
                               AlertDialog(
@@ -350,7 +350,7 @@ class _orderViewState extends ConsumerState<orderView> {
                           ),
 
                         ),
-                      ),
+                      ):SizedBox(),
                       GestureDetector(
                         onTap: () {
                           FirebaseFirestore.instance.collection('product').doc(widget.data.productId).update({
@@ -386,7 +386,7 @@ class _orderViewState extends ConsumerState<orderView> {
                         ),
                       ),
                     ],
-                  ):GestureDetector(
+                  ):widget.data.selectindex!=2?GestureDetector(
                   onTap: () {
                     showDialog(context: context, builder:(context) =>
                         AlertDialog(
@@ -470,7 +470,7 @@ class _orderViewState extends ConsumerState<orderView> {
 
                     ),
                   ),
-                ),
+                ):Text(""),
 
                   // Center(
                   //   child: ElevatedButton(

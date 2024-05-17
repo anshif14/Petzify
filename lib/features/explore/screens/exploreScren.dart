@@ -2,6 +2,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
 // import 'c';
 import 'package:luna_demo/commons/image%20Constants.dart';
@@ -137,41 +138,85 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     )),
                   ),
                 ),
-                GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1,
-                      crossAxisCount: 2,
+                AnimationLimiter(
+                  child: GridView.count(
+                    physics: NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    childAspectRatio: 1,
                     crossAxisSpacing: 19,
-                    mainAxisSpacing: 19
-
-
-                  ),
-                  itemBuilder: (context, index) {
-                    return    Column(
-
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context, CupertinoPageRoute(builder: (context) => comingSoon(),));
-                          },
-                          child: Container(
-                            height: width*0.4,
-                            width: width*0.4,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(width*0.04),
-                                image: DecorationImage(image: AssetImage(items[index]['image']),fit: BoxFit.cover)
+                    mainAxisSpacing: 19,
+                    children: List.generate(
+                    5,
+                          (int index) {
+                        return AnimationConfiguration.staggeredGrid(
+                          position: index,
+                          duration:  Duration(milliseconds: 375),
+                          columnCount: 5,
+                          child: SlideAnimation(
+                            child: FadeInAnimation(
+                              child:  Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(context, CupertinoPageRoute(builder: (context) => comingSoon(),));
+                                    },
+                                    child: Container(
+                                      height: width*0.4,
+                                      width: width*0.4,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(width*0.04),
+                                          image: DecorationImage(image: AssetImage(items[index]['image']),fit: BoxFit.cover)
+                                      ),
+                                    ),
+                                  ),
+                                  Text(items[index]['name'],style: TextStyle(fontSize:width*0.035),)
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Text(items[index]['name'],style: TextStyle(fontSize:width*0.035),)
-                      ],
-                    );
+                        );
+                      },
+                    ),
+                  ),
+                ),
 
-                  },
-                )
+
+                // GridView.builder(
+                //   physics: NeverScrollableScrollPhysics(),
+                //   shrinkWrap: true,
+                //   itemCount: 5,
+                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //       childAspectRatio: 1,
+                //       crossAxisCount: 2,
+                //     crossAxisSpacing: 19,
+                //     mainAxisSpacing: 19
+                //
+                //
+                //   ),
+                //   itemBuilder: (context, index) {
+                //     return    Column(
+                //
+                //       children: [
+                //         InkWell(
+                //           onTap: () {
+                //             Navigator.push(context, CupertinoPageRoute(builder: (context) => comingSoon(),));
+                //           },
+                //           child: Container(
+                //             height: width*0.4,
+                //             width: width*0.4,
+                //             decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(width*0.04),
+                //                 image: DecorationImage(image: AssetImage(items[index]['image']),fit: BoxFit.cover)
+                //             ),
+                //           ),
+                //         ),
+                //         Text(items[index]['name'],style: TextStyle(fontSize:width*0.035),)
+                //       ],
+                //     );
+                //
+                //   },
+                // )
 
 
               ],

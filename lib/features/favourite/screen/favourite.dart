@@ -5,6 +5,7 @@ import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/favourite/controller/favourite_controller.dart';
@@ -175,121 +176,256 @@ class _favouriteState extends ConsumerState<favouritePage> {
                           ),
                           )
                         ],
-                      ) : GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: data.favourites.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 0.8, crossAxisCount: 2),
-                        itemBuilder: (context, index) {
-                          return ref.watch(productfavstreamProvider(data.favourites[index]["id"])).when(
-                            data: (data) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProducctSingleScreen(
-                                          fav: data!.favUser.contains(currentUserEmail) ? true : false,
-                                          like:true,
-                                          id: data!.id,
-                                          tag: data.productname,
-                                          Petcategory: false,
-                                            name:data.productname,
-                                            price:data.price,
-                                            category:data.category,
-                                          image:data.image
-                                        ),
-                                      ));
-                                },
-                                child:Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Hero(
-                                            tag: data!.productname,
-                                            child: Container(
-                                              height: width * 0.4,
-                                              width: width * 0.4,
-                                              child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(15),
-                                                  child: CachedNetworkImage(imageUrl:data.image[0],fit: BoxFit.cover,)),
+                      ) :
+
+                      AnimationLimiter(
+                        child: GridView.count(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          childAspectRatio: 0.8,
+                          crossAxisCount: 2,
+                          children: List.generate(
+                            data.favourites.length,
+                                (int index) {
+                              return AnimationConfiguration.staggeredGrid(
+                                position: index,
+                                duration:  Duration(seconds: 1),
+                                columnCount: data.favourites.length,
+                                child: ScaleAnimation(
+                                  child: FadeInAnimation(
+                                    curve:Curves.fastLinearToSlowEaseIn,
+                                    child: ref.watch(productfavstreamProvider(data.favourites[index]["id"])).when(
+                                      data: (data) {
+                                        return InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => ProducctSingleScreen(
+                                                      fav: data!.favUser.contains(currentUserEmail) ? true : false,
+                                                      like:true,
+                                                      id: data!.id,
+                                                      tag: data.productname,
+                                                      Petcategory: false,
+                                                      name:data.productname,
+                                                      price:data.price,
+                                                      category:data.category,
+                                                      image:data.image
+                                                  ),
+                                                ));
+                                          },
+                                          child:Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Column(
+                                              children: [
+                                                Stack(
+                                                  children: [
+                                                    Hero(
+                                                      tag: data!.productname,
+                                                      child: Container(
+                                                        height: width * 0.4,
+                                                        width: width * 0.4,
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(15),
+                                                            child: CachedNetworkImage(imageUrl:data.image[0],fit: BoxFit.cover,)),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      right: 0,
+                                                      child: Container(
+                                                        margin: EdgeInsets.all(5.0),
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          // color: Colors.white.withOpacity(0.1)
+                                                        ),
+                                                        child:
+                                                        IconButton(onPressed: (){
+                                                          // ref.read(favour.notifier).update((state) => !state);
+                                                          favFunc(data.productname,data.id, data.price, data.category,data.image);
+                                                        }
+                                                          , icon: Icon(
+                                                            fav.contains(data.id) ? Icons.favorite : Icons.favorite,
+                                                            color: fav.contains(data.id) ?Colors.red:Colors.grey,
+                                                          ),
+                                                        ),
+
+                                                        // Padding(
+                                                        //   padding: const EdgeInsets.all(5.0),
+                                                        //   child: FavoriteButton(
+                                                        //     isFavorite: true,
+                                                        //     iconSize: 25,
+                                                        //     valueChanged: (_isFavorite) async {
+                                                        //       favFunc(data);
+                                                        //     },
+                                                        //   ),
+                                                        // ),
+
+
+
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          data.productname,overflow: TextOverflow.ellipsis,
+                                                          textAlign: TextAlign.start,
+                                                          style: TextStyle(fontWeight: FontWeight.w800),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Text('₹ ' + data.price.toString(),overflow: TextOverflow.ellipsis,),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          Positioned(
-                                            right: 0,
-                                            child: Container(
-                                              margin: EdgeInsets.all(5.0),
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                // color: Colors.white.withOpacity(0.1)
-                                              ),
-                                              child:
-                                              IconButton(onPressed: (){
-                                                // ref.read(favour.notifier).update((state) => !state);
-                                                favFunc(data.productname,data.id, data.price, data.category,data.image);
-                                              }
-                                                , icon: Icon(
-                                                  fav.contains(data.id) ? Icons.favorite : Icons.favorite,
-                                                  color: fav.contains(data.id) ?Colors.red:Colors.grey,
-                                                ),
-                                              ),
-
-                                              // Padding(
-                                              //   padding: const EdgeInsets.all(5.0),
-                                              //   child: FavoriteButton(
-                                              //     isFavorite: true,
-                                              //     iconSize: 25,
-                                              //     valueChanged: (_isFavorite) async {
-                                              //       favFunc(data);
-                                              //     },
-                                              //   ),
-                                              // ),
-
-
-
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                data.productname,overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(fontWeight: FontWeight.w800),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Text('₹ ' + data.price.toString(),overflow: TextOverflow.ellipsis,),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                        );
+                                      },
+                                      error: (error, stackTrace) {
+                                        return Text(error.toString());
+                                      },
+                                      loading: () {
+                                        return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+                                      },),
                                   ),
                                 ),
                               );
                             },
-                            error: (error, stackTrace) {
-                              return Text(error.toString());
-                            },
-                            loading: () {
-                              return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
-                            },);
-                        },
+                          ),
+                        ),
                       );
+
+
+
+                      // GridView.builder(
+                      //   physics: NeverScrollableScrollPhysics(),
+                      //   shrinkWrap: true,
+                      //   itemCount: data.favourites.length,
+                      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //       childAspectRatio: 0.8, crossAxisCount: 2
+                      // ),
+                      //   itemBuilder: (context, index) {
+                      //     return ref.watch(productfavstreamProvider(data.favourites[index]["id"])).when(
+                      //       data: (data) {
+                      //         return InkWell(
+                      //           onTap: () {
+                      //             Navigator.push(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                   builder: (context) => ProducctSingleScreen(
+                      //                     fav: data!.favUser.contains(currentUserEmail) ? true : false,
+                      //                     like:true,
+                      //                     id: data!.id,
+                      //                     tag: data.productname,
+                      //                     Petcategory: false,
+                      //                       name:data.productname,
+                      //                       price:data.price,
+                      //                       category:data.category,
+                      //                     image:data.image
+                      //                   ),
+                      //                 ));
+                      //           },
+                      //           child:Padding(
+                      //             padding: const EdgeInsets.all(4.0),
+                      //             child: Column(
+                      //               children: [
+                      //                 Stack(
+                      //                   children: [
+                      //                     Hero(
+                      //                       tag: data!.productname,
+                      //                       child: Container(
+                      //                         height: width * 0.4,
+                      //                         width: width * 0.4,
+                      //                         child: ClipRRect(
+                      //                             borderRadius: BorderRadius.circular(15),
+                      //                             child: CachedNetworkImage(imageUrl:data.image[0],fit: BoxFit.cover,)),
+                      //                       ),
+                      //                     ),
+                      //                     Positioned(
+                      //                       right: 0,
+                      //                       child: Container(
+                      //                         margin: EdgeInsets.all(5.0),
+                      //                         decoration: BoxDecoration(
+                      //                           shape: BoxShape.circle,
+                      //                           // color: Colors.white.withOpacity(0.1)
+                      //                         ),
+                      //                         child:
+                      //                         IconButton(onPressed: (){
+                      //                           // ref.read(favour.notifier).update((state) => !state);
+                      //                           favFunc(data.productname,data.id, data.price, data.category,data.image);
+                      //                         }
+                      //                           , icon: Icon(
+                      //                             fav.contains(data.id) ? Icons.favorite : Icons.favorite,
+                      //                             color: fav.contains(data.id) ?Colors.red:Colors.grey,
+                      //                           ),
+                      //                         ),
+                      //
+                      //                         // Padding(
+                      //                         //   padding: const EdgeInsets.all(5.0),
+                      //                         //   child: FavoriteButton(
+                      //                         //     isFavorite: true,
+                      //                         //     iconSize: 25,
+                      //                         //     valueChanged: (_isFavorite) async {
+                      //                         //       favFunc(data);
+                      //                         //     },
+                      //                         //   ),
+                      //                         // ),
+                      //
+                      //
+                      //
+                      //                       ),
+                      //                     )
+                      //                   ],
+                      //                 ),
+                      //                 Padding(
+                      //                   padding: const EdgeInsets.all(8.0),
+                      //                   child: Row(
+                      //                     children: [
+                      //                       Expanded(
+                      //                         child: Text(
+                      //                           data.productname,overflow: TextOverflow.ellipsis,
+                      //                           textAlign: TextAlign.start,
+                      //                           style: TextStyle(fontWeight: FontWeight.w800),
+                      //                         ),
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //                 Padding(
+                      //                   padding: const EdgeInsets.all(2.0),
+                      //                   child: Row(
+                      //                     mainAxisAlignment: MainAxisAlignment.end,
+                      //                     children: [
+                      //                       Text('₹ ' + data.price.toString(),overflow: TextOverflow.ellipsis,),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //       error: (error, stackTrace) {
+                      //         return Text(error.toString());
+                      //       },
+                      //       loading: () {
+                      //         return Center(child: CircularProgressIndicator(color: Pallette.primaryColor,));
+                      //       },);
+                      //   },
+                      // );
                     },
                     error: (error, stackTrace) {
                       return Text(error.toString());

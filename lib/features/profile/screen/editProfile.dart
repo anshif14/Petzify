@@ -84,11 +84,12 @@ class _editProfileState extends ConsumerState<editProfile> {
     // }
   }
 
-  useredit() async {
+  userEdit() async {
     ref.read(authControllerProvider).userupd(currentUserModel!.copyWith(images: imageurl,
         name: nameController.text.trim(),number: numberController.text.trim(),gender: gender));
     var value =await FirebaseFirestore.instance.collection("users").doc(currentUserModel!.email).get();
     currentUserModel = UserModel.fromMap(value.data()!);
+
   }
   String phoneNumber = '';
 
@@ -408,7 +409,10 @@ class _editProfileState extends ConsumerState<editProfile> {
                                   return;
                                 }
 
-                                useredit();
+                                userEdit();
+                                setState(() {
+
+                                });
                                 Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavBar(passindex: 0,),), (route) => false);
                               },
                               isDefaultAction: true,

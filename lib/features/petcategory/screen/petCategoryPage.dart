@@ -166,7 +166,7 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                     shrinkWrap: true,
                     itemCount: data.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 0.6, crossAxisCount: 2),
+                        childAspectRatio: 0.75, crossAxisCount: 2),
                     itemBuilder: (context, index) {
                       return AnimationConfiguration.staggeredList(
                         position: index,
@@ -279,16 +279,12 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: width*0.4,
-                                            child: Text(
-                                              data[index].productname,
-                                              style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
-                                            ),
-                                          ),
-                                        ],
+                                      child: Container(
+                                        width: width*0.38,
+                                        child: Text(
+                                          data[index].productname,
+                                          style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
+                                        ),
                                       ),
                                     ),
                                     Padding(
