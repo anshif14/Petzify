@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:luna_demo/features/search/controller/home_search_controller.dart';
 
 import '../../../commons/color constansts.dart';
@@ -79,7 +80,7 @@ class _HomeSearchPageState extends ConsumerState<HomeSearchPage> {
               ref.watch(search)
             )).when(
               data: (data) {
-                return ListView.separated(
+                return data.isNotEmpty?ListView.separated(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     return InkWell(
@@ -149,22 +150,16 @@ class _HomeSearchPageState extends ConsumerState<HomeSearchPage> {
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox();
-                  },);
+                  },):Lottie.asset("assets/animation/3pexx7tb5g.json");
               },
               error: (error, stackTrace) {
                 return Text(error.toString());
               },
               loading: () {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: width*0.1,
-                        width: width*0.1,
-                        child: CircularProgressIndicator(
-                          color: Pallette.primaryColor,
-                        )),
-                  ],
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Pallette.primaryColor,
+                  ),
                 );
               },
             )

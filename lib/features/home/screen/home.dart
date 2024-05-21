@@ -161,12 +161,18 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     });
   }
+  up() async {
+    var userdata = await  FirebaseFirestore.instance.collection('users').doc(currentUserEmail).get();
+    currentUserModel = UserModel.fromMap(userdata.data()!);
+  }
 
   @override
   void initState() {
     fetch();
 
     getFav();
+    up();
+
     // TODO: implement initState
     super.initState();
   }
