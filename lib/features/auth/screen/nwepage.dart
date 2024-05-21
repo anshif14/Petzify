@@ -79,9 +79,9 @@ class sign{
   // }
 
       currentUserModel = UserModel.fromMap(data!.data()!);
-      print(currentUserModel);
-      print(currentUserModel!.id);
-      print("sadhdjashfkjshk");
+
+
+
       if(currentUserStatus=userlist.docs[0]["block"]==true){
 
         showDialog(context: context, builder: (context) =>

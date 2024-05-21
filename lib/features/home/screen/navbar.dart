@@ -61,7 +61,7 @@ class _NavBarState extends State<NavBar> {
               onTabChange: (value) {
                 selectedIndex = value;
                 setState(() {});
-                // print(value);
+
               },
               selectedIndex: selectedIndex,
               // haptic: true,

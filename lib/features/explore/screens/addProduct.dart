@@ -61,7 +61,7 @@ class _AddProductState extends ConsumerState<AddProduct> {
       ));
 
       imageurl = await uploadTask.ref.getDownloadURL();
-      print(imageurl);
+
       if(imageurl!=""){
         pets.add(imageurl);
         setState(() {

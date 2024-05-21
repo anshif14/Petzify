@@ -315,7 +315,7 @@ class _orderViewState extends ConsumerState<orderView> {
                                         }).then((value) {
                                       List? newBooking = currentUserModel?.booking;
                                       newBooking!.remove(widget.data.bookingId);
-                                      print(newBooking);
+
                                       FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
                                           {
                                             "bookingCount":newBooking.length,
@@ -433,7 +433,7 @@ class _orderViewState extends ConsumerState<orderView> {
                                   }).then((value) {
                                 List? newBooking = currentUserModel?.booking;
                                 newBooking!.remove(widget.data.bookingId);
-                                print(newBooking);
+
                                 FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
                                     {
                                       "bookingCount":newBooking.length,

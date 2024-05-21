@@ -40,7 +40,7 @@ class _myAdsState extends ConsumerState<myAds> {
     var data1=await FirebaseFirestore.instance.collection("users").get();
     await FirebaseFirestore.instance.collection("product").doc(data[index].id).get().then((value){
       productData = ProductModel.fromMap(value.data()!);
-      print(productData);
+
     });
     var product1=productData.favUser;
     if(product1.isNotEmpty){
@@ -53,19 +53,19 @@ class _myAdsState extends ConsumerState<myAds> {
             var fav2=userdata.favourites;
             var fav3=fav2[index]["id"];
             if(fav3==data[index].id){
-              print(fav2);
+
               fav2.removeWhere((element) {
                 return element["id"]==fav3;
               });
             }
-            print(fav2);
+
             FirebaseFirestore.instance.collection("users").doc(fav).update(
                 {
                   "favourites":fav2
                 });
             await FirebaseFirestore.instance.collection("users").doc(fav).get().then((value) {
               userdata=UserModel.fromMap(value.data()!);
-              print(userdata);
+
             });
             FirebaseFirestore.instance.collection("product").doc(data[index].id).delete();
 

@@ -95,10 +95,10 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
   http.Response? apiData;
 
   getPostalData({required String pincode}) async {
-    print("object");
+
     apiData = await http.get(Uri.tryParse(
         "https://api.postalpincode.in/pincode/${pincode}")!);
-    print(apiData!.statusCode);
+
 
     api = json.decode(apiData!.body);
     if (apiData != null) {
@@ -186,9 +186,9 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
               )),
           title: Text("Add delivery address",style: TextStyle(fontWeight: FontWeight.w600,fontSize: width*0.05),),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -523,7 +523,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                         ),
                         initialCountryCode: 'IN',
                         onChanged: (phone) {
-                          print(phone.completeNumber);
+
                           phoneNumber = phone.completeNumber;
 
                         },

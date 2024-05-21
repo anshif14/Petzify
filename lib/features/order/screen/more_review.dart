@@ -57,7 +57,7 @@ class _review_detailState extends State<review_detail> {
           .putFile(file!, SettableMetadata(contentType: 'image/jpeg'));
 
       imageurl = await uploadTask.ref.getDownloadURL();
-      print(imageurl);
+
       if (imageurl != "") {
         pets.add(imageurl);
         setState(() {});

@@ -66,7 +66,7 @@ class _editProfileState extends ConsumerState<editProfile> {
       ));
 
       imageurl = await uploadTask.ref.getDownloadURL();
-      print(imageurl);
+
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("image uploaded")));
 
@@ -341,7 +341,7 @@ class _editProfileState extends ConsumerState<editProfile> {
                             ),
                             initialCountryCode: 'IN',
                             onChanged: (phone) {
-                              print(phone.completeNumber);
+
                               phoneNumber = phone.completeNumber;
 
                             },

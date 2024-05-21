@@ -73,16 +73,16 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
 
     favUser=productModel.favUser;
     if(fav.contains(widget.id)){
-      print(fav);
+
       fav.removeWhere((element) => element==widget.id,);;
-      print(fav);
-      print(favourite);
+
+
       favourite.removeWhere((element) {
-        print(element["id"]);
+
         return element["id"]==widget.id;
       });
-      print(widget.id);
-      print(favourite);
+
+
       favUser.removeWhere((element) => element==currentUserEmail);
       FirebaseFirestore.instance.collection("product").doc(widget.id).update({
         "favUser":favUser
@@ -91,9 +91,9 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
         "favourites": favourite
       });
     }else{
-      print("starytttttttttttttttttttttttttttt");
+
       fav.add(widget.id);
-      print(fav);
+
       Map<String,dynamic> data = {
         "name":widget.name,
         "price":widget.price,

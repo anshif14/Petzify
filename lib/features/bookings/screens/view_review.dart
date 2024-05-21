@@ -30,7 +30,7 @@ class _View_reviewState extends State<View_review> {
       for(int j=0;j<widget.review[i]["productImage"].length;j++){
         images.add(widget.review[i]["productImage"][j]);
       }
-      print(images);
+
     }
 
   }

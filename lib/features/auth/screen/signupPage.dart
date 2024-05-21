@@ -68,7 +68,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       ));
 
       imageurl = await uploadTask.ref.getDownloadURL();
-      print(imageurl);
+
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("image uploaded")));

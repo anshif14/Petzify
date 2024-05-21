@@ -24,14 +24,14 @@ class StreamFavRepository{
 
 
   Stream<UserModel> favouriteDataStream(String id){
-    print(currentUserModel!.id);
-    print("sssssssssssssss");
+
+
     return _usersFavourite.doc(id).snapshots().map((event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
 
 
   Stream <ProductModel>favouriteProductStream(dataFavIndex){
-    print(dataFavIndex);
+
     return _productFavourite.doc(dataFavIndex.toString()).snapshots().map((event) => ProductModel.fromMap(event.data() as Map<String,dynamic>));
   }
 

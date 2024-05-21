@@ -115,16 +115,16 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     favUser=productModel.favUser;
     if(fav.contains(id)){
-      print(fav);
+
       fav.removeWhere((element) => element==id,);
-      print(fav);
-      print(favourite);
+
+
       favourite.removeWhere((element) {
-        print(element["id"]);
+
         return element["id"]==id;
       });
-      print(id);
-      print(favourite);
+
+
       favUser.removeWhere((element) => element==currentUserEmail);
       FirebaseFirestore.instance.collection("product").doc(id).update({
         "favUser":favUser
@@ -133,9 +133,9 @@ class _HomePageState extends ConsumerState<HomePage> {
         "favourites": favourite
       });
     }else{
-      print("starytttttttttttttttttttttttttttt");
+
       fav.add(id);
-      print(fav);
+
       Map<String,dynamic> data = {
         "name":name,
         "price":price,
