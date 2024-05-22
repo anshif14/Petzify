@@ -372,7 +372,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       shrinkWrap: true,
                       itemCount: data.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 0.8, crossAxisCount: 2),
+                          childAspectRatio: 0.76, crossAxisCount: 2),
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
@@ -514,7 +514,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Text('₹ ' + data[index].price.toString()),
+                                      Container(
+                                          width: width*0.2,
+                                          child: Text('₹ ' + data[index].price.toString(),overflow: TextOverflow.ellipsis,textAlign: TextAlign.end,)),
                                     ],
                                   ),
                                 ),

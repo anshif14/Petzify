@@ -143,7 +143,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
                     shrinkWrap: true,
-                    childAspectRatio: 1,
+                    childAspectRatio: 0.95,
                     crossAxisSpacing: 19,
                     mainAxisSpacing: 19,
                     children: List.generate(
@@ -170,7 +170,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       ),
                                     ),
                                   ),
-                                  Text(items[index]['name'],style: TextStyle(fontSize:width*0.035),)
+                                  Text(items[index]['name'],style: TextStyle(fontSize:width*0.035,overflow: TextOverflow.ellipsis),)
                                 ],
                               ),
                             ),

@@ -223,7 +223,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                             },
                           ),
                           Positioned(
-                            top: height * 0.24,
+                            top: height * 0.22,
                             left: width * 0.37,
                             child: AnimatedSmoothIndicator(
                               activeIndex: currentIndex,
@@ -256,7 +256,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                               ),
                               Container(
                                 child: Text(
-                                  "\₹ ${data.price}",
+                                  "\₹ ${data.price*count}",
                                   style: TextStyle(
                                       fontSize: width * 0.05,
                                       fontWeight: FontWeight.w800),
@@ -306,7 +306,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                           children: [
                             InkWell(
                                 onTap: () {
-                                  count <= 0 ? 0 : count--;
+                                  count <= 1 ? 1 : count--;
                                   setState(() {});
                                 },
                                 child: Icon(CupertinoIcons.minus)),
@@ -455,7 +455,7 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
 
                           );
                           Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(bookingdata: bookingModelData,
-                            dcharge: data.deliverycharge, price: data.price,),));
+                            dcharge: data.deliverycharge, price: data.price*count,),));
                         },
                         child: Container(
                           height: height * 0.07,

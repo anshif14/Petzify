@@ -180,7 +180,7 @@ class _favouriteState extends ConsumerState<favouritePage> {
                         child: GridView.count(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          childAspectRatio: 0.8,
+                          childAspectRatio: 0.76,
                           crossAxisCount: 2,
                           children: List.generate(
                             data.favourites.length,
@@ -283,7 +283,9 @@ class _favouriteState extends ConsumerState<favouritePage> {
                                                   child: Row(
                                                     mainAxisAlignment: MainAxisAlignment.end,
                                                     children: [
-                                                      Text('₹ ' + data.price.toString(),overflow: TextOverflow.ellipsis,),
+                                                      Container(
+                                                          width: width*0.2,
+                                                          child: Text('₹ ' + data.price.toString(),overflow: TextOverflow.ellipsis,textAlign: TextAlign.end,)),
                                                     ],
                                                   ),
                                                 ),

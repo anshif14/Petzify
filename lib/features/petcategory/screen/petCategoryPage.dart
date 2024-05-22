@@ -166,7 +166,7 @@ class _PetCategoryPageState extends ConsumerState<PetCategoryPage> {
                     shrinkWrap: true,
                     itemCount: data.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 0.75, crossAxisCount: 2),
+                        childAspectRatio: 0.735, crossAxisCount: 2),
                     itemBuilder: (context, index) {
                       return AnimationConfiguration.staggeredList(
                         position: index,
