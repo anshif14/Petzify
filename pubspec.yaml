@@ -66,6 +66,7 @@ dependencies:
   geolocator: ^11.0.0
   geocoding: ^3.0.0
   flml_internet_checker: ^0.0.9
+  animated_text_kit: ^4.2.2
 
 
 

@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
               );
             }
         );
-        Future.delayed(Duration(seconds: 3))
+        Future.delayed(Duration(seconds: 4))
             .then((value) => Navigator.pushReplacement(
             context,
             CupertinoPageRoute(
@@ -86,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     }else
       {
-        Future.delayed(Duration(seconds: 3)).then((value) =>
+        Future.delayed(Duration(seconds: 4)).then((value) =>
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) =>LoginPage())));
       }
@@ -126,9 +127,21 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           Column(
             children: [
-              Text("PETZIFY",style: GoogleFonts.cormorantGaramond(
-                  fontWeight: FontWeight.w600,
-              fontSize: width*0.11,color: Pallette.primaryColor),),
+
+              AnimatedTextKit(
+    animatedTexts: [
+    WavyAnimatedText("PETZIFY",textStyle:  GoogleFonts.cormorantGaramond(
+        fontWeight: FontWeight.w600,
+        fontSize: width*0.11,color: Pallette.primaryColor),),
+    ],
+    isRepeatingAnimation: true,
+    onTap: () {
+    print("Tap Event");
+    },
+    ),
+              // Text("PETZIFY",style: GoogleFonts.cormorantGaramond(
+              //     fontWeight: FontWeight.w600,
+              // fontSize: width*0.11,color: Pallette.primaryColor),),
               Text("Revolutionizing pet industry",style: GoogleFonts.cormorantGaramond(fontSize: width*0.05, fontWeight: FontWeight.w600,color: Pallette.primaryColor),)
             ],
           ),
