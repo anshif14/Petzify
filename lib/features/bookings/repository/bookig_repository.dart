@@ -24,13 +24,8 @@ class BookingRepository{
       value.update(bookingdata.copyWith(bookingId: value.id).toMap());
       /// FirebaseFirestore.instance.collection('users')
       _book.doc(currentUserModel!.id).update(
-        currentUserModel!.copyWith(booking: newBooking, bookingCount: newBooking?.length).toMap()
-          // {
-          //   "booking":list,
-          //   "bookingCount":list.length,
-          // }
+        currentUserModel!.copyWith(booking: newBooking, bookingCount: newBooking?.length,pendingorder: ++currentUserModel?.pendingorder).toMap()
           );
-
     },);
     // functionBook(){
     //

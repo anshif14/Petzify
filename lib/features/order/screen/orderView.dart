@@ -437,6 +437,7 @@ class _orderViewState extends ConsumerState<orderView> {
                                 FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
                                     {
                                       "bookingCount":newBooking.length,
+                                      "pendingorder": --currentUserModel?.pendingorder
                                     });
                               });
                               FirebaseFirestore.instance.collection("bookings").doc(widget.data.bookingId).delete();

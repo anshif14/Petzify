@@ -107,7 +107,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   add(){
     ref.read(authRepositoryProvider).addUser(UserModel(name: usernameController.text.trim(),
         email: emailController.text.trim(), password: passwordController.text.trim(), id:emailController.text.trim(), images:imageurl,
-        number: "", gender: "male", favourites: [], productadd: [], block: false, booking: [], bookingCount: 0, productCount: 0, search:setSearchParam(usernameController.text.trim()) ));
+        number: "", gender: "male", favourites: [], productadd: [], block: false, booking: [], bookingCount: 0, productCount: 0, search:setSearchParam(usernameController.text.trim()), pendingorder: 0 ));
   }
 
   @override
