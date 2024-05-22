@@ -44,7 +44,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   late bool servicePermission=false;
   late  LocationPermission permission;
   String _currentAdress ="";
-  TextEditingController searchController = TextEditingController();
 
 
   Future<Position> _getCurrentLocation() async {
@@ -221,44 +220,29 @@ class _HomePageState extends ConsumerState<HomePage> {
                   )
                 ),
                      children:[
-                  Container(
-                    height: height * 0.055,
-                    decoration: BoxDecoration(
-                        color: Pallette.secondaryBrown,
-                        borderRadius: BorderRadius.circular(width*0.03)),
-                    child: TextFormField(
-                      onTap: () {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
-                      },
-                      onChanged: (value) {
-                        Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(controller:searchController),));
-                      },
-                      controller: searchController,
-                      textCapitalization: TextCapitalization.words,
-                      keyboardType: TextInputType.multiline,
-                      textInputAction: TextInputAction.search,
-                      cursorColor: Pallette.primaryColor,
-                      cursorHeight: width*0.055,
-                      cursorWidth: width*0.003,
-                      style: TextStyle(
-                        fontSize: width * 0.04,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(top: width*0.03),
-                        prefixIcon:Icon(Icons.search),
-                        fillColor: Pallette.grey,
-                        filled: true,
-                        hintText: "Search",
-                        hintStyle: TextStyle(
-                          fontSize: width * 0.04,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeSearchPage(),));
+                    },
+                    child: Container(
+                      height: height * 0.055,
+                      decoration: BoxDecoration(
+                          color: Pallette.grey,
+                          borderRadius: BorderRadius.circular(width*0.03)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(9.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.search_rounded),
+                            SizedBox(width: width*0.02,),
+                            Text("Search",style: TextStyle(
+                              fontSize: width * 0.04,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                            ),)
+                          ],
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(width * 0.03),
-                            borderSide: BorderSide.none),
-                      ),
+                      )
                     ),
                   ),
                   // gap,

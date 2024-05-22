@@ -12,14 +12,14 @@ import '../../bookings/screens/productSingle.dart';
 import '../../home/screen/home.dart';
 
 class HomeSearchPage extends ConsumerStatefulWidget {
-   final TextEditingController controller;
-  const HomeSearchPage({super.key,required this.controller});
+  const HomeSearchPage({super.key});
 
   @override
   ConsumerState createState() => _HomeSearchPageState();
 }
 
 class _HomeSearchPageState extends ConsumerState<HomeSearchPage> {
+  TextEditingController searchController = TextEditingController();
   final search=StateProvider<String>((ref) => '');
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _HomeSearchPageState extends ConsumerState<HomeSearchPage> {
                   ref.read(search.notifier).update((state) => value.toString().toUpperCase());
                 },
                 autofocus: true,
-                controller: widget.controller,
+                controller: searchController,
                 textCapitalization: TextCapitalization.words,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.search,
