@@ -318,8 +318,10 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                               width: width * 0.1,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(width * 0.03),
-                                  border: Border.all(color: Colors.grey.shade300)),
-                              child: Center(child: Text(count.toString())),
+                                  border: Border.all(color: Colors.grey.shade400)),
+                              child: Center(child: Text(count.toString(),style: TextStyle(
+                                fontSize: width*0.045,fontWeight: FontWeight.w600
+                              ),)),
                             ),
                             SizedBox(
                               width: width * 0.03,
