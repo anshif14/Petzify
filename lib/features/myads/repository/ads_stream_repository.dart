@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/core/providers/firebase_provider.dart';
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/product_Model.dart';
-import 'package:luna_demo/model/user_Model.dart';
+
 
  final adsstreamRepositoryProvider=Provider((ref) => AdsStreamRepository(firestore: ref.watch(firestoreProvider)));
 class AdsStreamRepository{
@@ -12,7 +12,7 @@ class AdsStreamRepository{
     required FirebaseFirestore firestore
 }):_firestore=firestore;
    CollectionReference get adStream=> _firestore.collection("product");
-  CollectionReference get _delete => _firestore.collection('users');
+  // CollectionReference get _delete => _firestore.collection('users');
 
 
    adsData(){

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorite_button/favorite_button.dart';
+
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -302,38 +302,84 @@ class _ProducctSingleScreenState extends ConsumerState<ProducctSingleScreen> {
                         SizedBox(
                           height: height * 0.02,
                         ),
-                        data.category=="Product"? Row(
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  count <= 1 ? 1 : count--;
-                                  setState(() {});
-                                },
-                                child: Icon(CupertinoIcons.minus)),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            Container(
-                              height: height * 0.05,
-                              width: width * 0.1,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(width * 0.03),
-                                  border: Border.all(color: Colors.grey.shade400)),
-                              child: Center(child: Text(count.toString(),style: TextStyle(
-                                fontSize: width*0.045,fontWeight: FontWeight.w600
-                              ),)),
-                            ),
-                            SizedBox(
-                              width: width * 0.03,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  count++;
-                                  setState(() {});
-                                },
-                                child: Icon(CupertinoIcons.add)),
-                          ],
-                        ):SizedBox(),
+                        data.category=="Product"? Container(
+                          height: width*0.1,
+                          width: width*0.4,
+                          decoration: BoxDecoration(
+                              color: Pallette.primaryColor,
+                            borderRadius: BorderRadius.circular(width*0.02)
+                          ),
+                          child:
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    count <= 1 ? 1 : count--;
+                                    setState(() {});
+                                  },
+                                  child: Icon(CupertinoIcons.minus,color: Colors.white,size: width*0.055)),
+
+                              Container(
+                                height: height * 0.041,
+                                width: width * 0.18,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                    borderRadius: BorderRadius.circular(width * 0.02),
+                                    // border: Border.all(color: Colors.grey.shade400)
+                                ),
+                                child: Center(child: Text("Qty : ${count.toString()}",style: TextStyle(
+                                  fontSize: width*0.04,fontWeight: FontWeight.w600
+                                ),)),
+                              ),
+
+                              InkWell(
+                                  onTap: () {
+                                    count++;
+                                    setState(() {});
+                                  },
+                                  child: Icon(CupertinoIcons.add,color: Colors.white,size: width*0.055,)),
+                            ],
+                          )
+                        ):
+
+
+
+
+                        // Row(
+                        //   children: [
+                        //     InkWell(
+                        //         onTap: () {
+                        //           count <= 1 ? 1 : count--;
+                        //           setState(() {});
+                        //         },
+                        //         child: Icon(CupertinoIcons.minus)),
+                        //     SizedBox(
+                        //       width: width * 0.03,
+                        //     ),
+                        //     Container(
+                        //       height: height * 0.05,
+                        //       width: width * 0.1,
+                        //       decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(width * 0.03),
+                        //           border: Border.all(color: Colors.grey.shade400)),
+                        //       child: Center(child: Text(count.toString(),style: TextStyle(
+                        //         fontSize: width*0.045,fontWeight: FontWeight.w600
+                        //       ),)),
+                        //     ),
+                        //     SizedBox(
+                        //       width: width * 0.03,
+                        //     ),
+                        //     InkWell(
+                        //         onTap: () {
+                        //           count++;
+                        //           setState(() {});
+                        //         },
+                        //         child: Icon(CupertinoIcons.add)),
+                        //   ],
+                        // )
+
+                        SizedBox(),
                         // gap,
                         Text("Product Details",style: TextStyle(fontSize: width*0.045,fontWeight: FontWeight.w600),),
                         SizedBox(height: height*0.015,),

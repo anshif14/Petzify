@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:luna_demo/core/providers/firebase_provider.dart';
+
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,7 +78,7 @@ class sign{
   //   }
   // }
 
-      currentUserModel = UserModel.fromMap(data!.data()!);
+      currentUserModel = UserModel.fromMap(data.data()!);
 
 
 

@@ -1,19 +1,17 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flml_internet_checker/flml_internet_checker.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
-// import 'package:luna_demo/core/features/home/navbar.dart';
+
 import 'package:luna_demo/main.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../auth/screen/signupPage.dart';
 import '../../home/screen/navbar.dart';
 
 class SplashScreen extends StatefulWidget {

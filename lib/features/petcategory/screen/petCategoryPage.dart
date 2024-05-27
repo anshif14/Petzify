@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorite_button/favorite_button.dart';
+
 import 'package:flml_internet_checker/flml_internet_checker.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/core/constproviders/searcProvider.dart';
+
 import 'package:luna_demo/features/petcategory/controller/categoryController.dart';
 
 import '../../../commons/color constansts.dart';

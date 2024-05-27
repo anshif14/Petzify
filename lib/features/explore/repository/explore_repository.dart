@@ -5,7 +5,7 @@ import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 
 import '../../../core/providers/firebase_provider.dart';
-import '../../bookings/repository/bookig_repository.dart';
+
 
 final exploreRepositoryProvider=Provider((ref)=>ExploreRepository(firestore:ref.watch(firestoreProvider)));
 

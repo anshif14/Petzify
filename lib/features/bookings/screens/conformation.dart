@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/widgets.dart';
@@ -17,11 +17,11 @@ import '../../../model/booking_model.dart';
 import '../../home/screen/navbar.dart';
 import '../controller/booking_controller.dart';
 
-class confirmation extends ConsumerStatefulWidget {
+class Confirm_page extends ConsumerStatefulWidget {
   BookingModel bookingModel1;
   final double dcharge;
   final double price;
-  confirmation(
+  Confirm_page(
       {super.key,
       required this.bookingModel1,
       required this.dcharge,
@@ -29,10 +29,10 @@ class confirmation extends ConsumerStatefulWidget {
   // final Map<String, dynamic> slotbooking;
 
   @override
-  ConsumerState<confirmation> createState() => _confirmationState();
+  ConsumerState<Confirm_page> createState() => _confirmationState();
 }
 
-class _confirmationState extends ConsumerState<confirmation> {
+class _confirmationState extends ConsumerState<Confirm_page> {
   String cont = "Cash on delivery";
 
   add() {
@@ -223,7 +223,7 @@ class _confirmationState extends ConsumerState<confirmation> {
                                   ),
                                   trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: MaterialStatePropertyAll(
+                                    fillColor: WidgetStatePropertyAll(
                                         Pallette.primaryColor),
                                     value: "Google Pay",
                                     groupValue: cont,
@@ -239,7 +239,7 @@ class _confirmationState extends ConsumerState<confirmation> {
                                   ),
                                   trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: MaterialStatePropertyAll(
+                                    fillColor: WidgetStatePropertyAll(
                                         Pallette.primaryColor),
                                     value: "Credit/Debit",
                                     groupValue: cont,
@@ -255,7 +255,7 @@ class _confirmationState extends ConsumerState<confirmation> {
                                   ),
                                   trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: MaterialStatePropertyAll(
+                                    fillColor: WidgetStatePropertyAll(
                                         Pallette.primaryColor),
                                     value: "Cash on delivery",
                                     groupValue: cont,

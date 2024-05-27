@@ -1,24 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/features/auth/controller/auth_controller.dart';
+
 import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
-import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/main.dart';
-import 'package:luna_demo/model/user_Model.dart';
+
 import 'dart:io'as platform;
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 

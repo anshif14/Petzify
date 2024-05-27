@@ -15,7 +15,6 @@ import 'package:luna_demo/features/auth/repository/auth_repository.dart';
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
 import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signinPage.dart';
-import 'package:luna_demo/features/home/screen/home.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -534,7 +533,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       var data = await FirebaseFirestore.instance.collection('users')
                           .doc(emailController.text.trim())
                           .get();
-                      currentUserModel = UserModel.fromMap(data!.data()!);
+                      currentUserModel = UserModel.fromMap(data.data()!);
 
                       // if(tick==true){
                       //   SharedPreferences _prefs = await SharedPreferences.getInstance();

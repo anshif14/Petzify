@@ -1,19 +1,17 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
-import 'package:luna_demo/features/bookings/controller/booking_controller.dart';
-import 'package:luna_demo/features/bookings/screens/paymentMethods.dart';
+
 import 'package:luna_demo/model/booking_model.dart';
 
 import '../../../commons/image Constants.dart';
@@ -52,7 +50,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
         buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
         buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
 
-    Navigator.push(context, CupertinoPageRoute(builder: (context) =>confirmation(bookingModel1: bookingModel,
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>Confirm_page(bookingModel1: bookingModel,
       dcharge: widget.dcharge, price: widget.price,) ,));
 
   }

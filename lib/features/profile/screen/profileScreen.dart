@@ -1,27 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/color%20constansts.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
-import 'package:luna_demo/commons/widgets.dart';
+
 import 'package:luna_demo/features/auth/screen/loginPage.dart';
-import 'package:luna_demo/features/explore/repository/explore_repository.dart';
+
 import 'package:luna_demo/features/home/screen/home.dart';
-import 'package:luna_demo/features/order/controller/order_stream_controller.dart';
+
 import 'package:luna_demo/features/profile/screen/editProfile.dart';
 import 'package:luna_demo/features/myads/screen/myAds.dart';
 import 'package:luna_demo/features/order/screen/myOrder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
-import '../../../model/user_Model.dart';
+
 
 class profileScreen extends StatefulWidget {
   const profileScreen({super.key});

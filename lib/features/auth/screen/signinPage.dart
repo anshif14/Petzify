@@ -1,17 +1,16 @@
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
 import 'package:luna_demo/features/auth/screen/nwepage.dart';
 import 'package:luna_demo/features/auth/screen/signupPage.dart';
-import 'package:luna_demo/features/home/screen/home.dart';
+
 import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:quickalert/models/quickalert_type.dart';
@@ -322,7 +321,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                         var data = await FirebaseFirestore.instance.collection('users')
                             .doc(UserEmail)
                             .get();
-                        currentUserModel = UserModel.fromMap(data!.data()!);
+                        currentUserModel = UserModel.fromMap(data.data()!);
 
                       }else{
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User doesn't Exits")));

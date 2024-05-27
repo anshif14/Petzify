@@ -7,22 +7,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/commons/widgets.dart';
-import 'package:luna_demo/features/auth/screen/nwepage.dart';
+
 import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/model/user_Model.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
 import '../../auth/controller/auth_controller.dart';
-import '../../auth/screen/loginPage.dart';
-import '../../explore/repository/explore_repository.dart';
+
 
 class editProfile extends ConsumerStatefulWidget {
   final String place;
@@ -224,7 +223,7 @@ class _editProfileState extends ConsumerState<editProfile> {
                       gap,
                       Column(
                         children: [
-                          Text(currentUserModel!.name!,
+                          Text(currentUserModel!.name,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: width * 0.042,

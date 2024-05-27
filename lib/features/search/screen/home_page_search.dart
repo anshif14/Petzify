@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:luna_demo/features/search/controller/home_search_controller.dart';
 
 import '../../../commons/color constansts.dart';
-import '../../../commons/widgets.dart';
+
 import '../../../main.dart';
 import '../../bookings/screens/productSingle.dart';
 import '../../home/screen/home.dart';

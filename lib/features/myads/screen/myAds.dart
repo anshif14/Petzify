@@ -1,11 +1,10 @@
-import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flml_internet_checker/flml_internet_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
@@ -18,7 +17,7 @@ import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 import '../../../commons/color constansts.dart';
 import '../../../main.dart';
-import '../../explore/controller/explore_controller.dart';
+
 
 class myAds extends ConsumerStatefulWidget {
   const myAds({super.key});

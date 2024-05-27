@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:luna_demo/core/providers/firebase_provider.dart';
 import 'package:luna_demo/model/booking_model.dart';
 
-import '../../../main.dart';
-
 final orderStreamRepositoryProvider =Provider((ref) => OrderStreamRepository(firestore: ref.watch(firestoreProvider)));
 
 class OrderStreamRepository{
