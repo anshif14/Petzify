@@ -17,11 +17,11 @@ import '../../../model/booking_model.dart';
 import '../../home/screen/navbar.dart';
 import '../controller/booking_controller.dart';
 
-class Confirm_page extends ConsumerStatefulWidget {
+class ConfirmPage extends ConsumerStatefulWidget {
   BookingModel bookingModel1;
   final double dcharge;
   final double price;
-  Confirm_page(
+  ConfirmPage(
       {super.key,
       required this.bookingModel1,
       required this.dcharge,
@@ -29,10 +29,10 @@ class Confirm_page extends ConsumerStatefulWidget {
   // final Map<String, dynamic> slotbooking;
 
   @override
-  ConsumerState<Confirm_page> createState() => _confirmationState();
+  ConsumerState<ConfirmPage> createState() => _confirmationState();
 }
 
-class _confirmationState extends ConsumerState<Confirm_page> {
+class _confirmationState extends ConsumerState<ConfirmPage> {
   String cont = "Cash on delivery";
 
   add() {

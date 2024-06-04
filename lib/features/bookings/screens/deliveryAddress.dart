@@ -50,7 +50,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
         buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
         buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
 
-    Navigator.push(context, CupertinoPageRoute(builder: (context) =>Confirm_page(bookingModel1: bookingModel,
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>ConfirmPage(bookingModel1: bookingModel,
       dcharge: widget.dcharge, price: widget.price,) ,));
 
   }

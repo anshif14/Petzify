@@ -47,7 +47,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   TextEditingController usernameController=TextEditingController();
 
   pickFile(ImageSource) async {
-    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+    final imageFile = await ImagePicker().pickImage(source: ImageSource);
     file = File(imageFile!.path);
     if (mounted) {
       setState(() {

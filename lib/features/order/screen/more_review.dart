@@ -36,7 +36,7 @@ class _review_detailState extends State<review_detail> {
   List pets = [];
   bool loading = false;
   pickFile(ImageSource) async {
-    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+    final imageFile = await ImagePicker().pickImage(source: ImageSource);
     file = File(imageFile!.path);
     if (mounted) {
       setState(() {

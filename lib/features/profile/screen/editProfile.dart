@@ -45,7 +45,7 @@ class _editProfileState extends ConsumerState<editProfile> {
       RegExp(r"^[a-z0-9.a-z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-z0-9]+\.[a-z]+");
 
   pickFile(ImageSource) async {
-    final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+    final imageFile = await ImagePicker().pickImage(source: ImageSource);
     file = File(imageFile!.path);
     if (mounted) {
       setState(() {

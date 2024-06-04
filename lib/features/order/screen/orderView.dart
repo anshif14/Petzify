@@ -195,7 +195,7 @@ class _orderViewState extends ConsumerState<orderView> {
                 ),),
               ),
               gap,
-              Column(
+              widget.data.selectindex==2?Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -492,7 +492,7 @@ class _orderViewState extends ConsumerState<orderView> {
                   //   ),
                   // )
                 ],
-              ),
+              ):SizedBox(),
               // InkWell(
               //   onTap: () {
               //     // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
