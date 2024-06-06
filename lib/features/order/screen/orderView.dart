@@ -195,7 +195,8 @@ class _orderViewState extends ConsumerState<orderView> {
                 ),),
               ),
               gap,
-              widget.data.selectindex==2?Column(
+              widget.data.selectindex==2?
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -386,199 +387,98 @@ class _orderViewState extends ConsumerState<orderView> {
                         ),
                       ),
                     ],
-                  ):widget.data.selectindex!=2?GestureDetector(
-                  onTap: () {
-                    showDialog(context: context, builder:(context) =>
-                        AlertDialog(
-                          surfaceTintColor: Pallette.secondaryBrown,
-                          title: Text("Are you sure \n to cancel the order",textAlign: TextAlign.center, style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
-                          actions: [
+                  ):SizedBox()
 
-                            TextButton(onPressed:() {
-                              Navigator.pop(context);
-                            },
-                                child: Text("Cancel",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
-                            TextButton(onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    surfaceTintColor: Pallette.secondaryBrown,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(width*0.05)
+
+                ],
+              ):
+              GestureDetector(
+                onTap: () {
+                  showDialog(context: context, builder:(context) =>
+                      AlertDialog(
+                        surfaceTintColor: Pallette.secondaryBrown,
+                        title: Text("Are you sure \n to cancel the order",textAlign: TextAlign.center, style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
+                        actions: [
+
+                          TextButton(onPressed:() {
+                            Navigator.pop(context);
+                          },
+                              child: Text("Cancel",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
+                          TextButton(onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  surfaceTintColor: Pallette.secondaryBrown,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(width*0.05)
+                                  ),
+                                  content: Container(
+                                    height: height*0.5,
+                                    width: width*1,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(width*0.03)
                                     ),
-                                    content: Container(
-                                      height: height*0.5,
-                                      width: width*1,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(width*0.03)
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Lottie.asset(ImageConstants.lottie),
-                                          Text("Successfully Canceled Your Order\n Thank You Visit again!!! ",
-                                            textAlign: TextAlign.center,)
-                                        ],
-                                      ),
+                                    child: Column(
+                                      children: [
+                                        Lottie.asset(ImageConstants.lottie),
+                                        Text("Successfully Canceled Your Order\n Thank You Visit again!!! ",
+                                          textAlign: TextAlign.center,)
+                                      ],
                                     ),
-                                  );
-                                },
-                              );
+                                  ),
+                                );
+                              },
+                            );
+
+                            FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
+                              // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
+                                {
+                                  "booking":FieldValue.arrayRemove([widget.data.bookingId]),
+
+                                }).then((value) {
+                              List? newBooking = currentUserModel?.booking;
+                              newBooking!.remove(widget.data.bookingId);
 
                               FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
-                                // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
                                   {
-                                    "booking":FieldValue.arrayRemove([widget.data.bookingId]),
+                                    "bookingCount":newBooking.length,
+                                    "pendingorder": currentUserModel?.pendingorder
+                                  });
+                            });
+                            FirebaseFirestore.instance.collection("bookings").doc(widget.data.bookingId).delete();
+                            Future.delayed(Duration(seconds: 3))
+                                .then((value) => Navigator.pushAndRemoveUntil(context,
+                                CupertinoPageRoute(builder: (context) => NavBar(passindex: 3,)), (route) => false));
 
-                                  }).then((value) {
-                                List? newBooking = currentUserModel?.booking;
-                                newBooking!.remove(widget.data.bookingId);
+                          },
+                              child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
+                        ],
+                      )
+                  );
 
-                                FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
-                                    {
-                                      "bookingCount":newBooking.length,
-                                      "pendingorder": --currentUserModel?.pendingorder
-                                    });
-                              });
-                              FirebaseFirestore.instance.collection("bookings").doc(widget.data.bookingId).delete();
-                              Future.delayed(Duration(seconds: 3))
-                                  .then((value) => Navigator.pushAndRemoveUntil(context,
-                                  CupertinoPageRoute(builder: (context) => NavBar(passindex: 3,)), (route) => false));
-
-                            },
-                                child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
-                          ],
-                        )
-                    );
-
-                  },
-                  child: Center(
-                    child: Container(
-                      height: height*0.06,
-                      width: width*0.4,
-                      decoration: BoxDecoration(
-                          color: Pallette.primaryColor,
-                          borderRadius: BorderRadius.circular(width*0.02)
-                      ),
-                      child: Center(
-                        child: Text("Order Cancel",
-                            style: TextStyle(
-                              color: Pallette.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: width*0.04,
-                            )),
-                      ),
-
+                },
+                child: Center(
+                  child: Container(
+                    height: height*0.06,
+                    width: width*0.4,
+                    decoration: BoxDecoration(
+                        color: Pallette.primaryColor,
+                        borderRadius: BorderRadius.circular(width*0.02)
                     ),
-                  ),
-                ):Text(""),
+                    child: Center(
+                      child: Text("Order Cancel",
+                          style: TextStyle(
+                            color: Pallette.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: width*0.04,
+                          )),
+                    ),
 
-                  // Center(
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //     FirebaseFirestore.instance.collection('product').doc(widget.data.productId).update({
-                  //       "review":FieldValue.arrayUnion([
-                  //         {
-                  //           "review": reviewcontroller.text,
-                  //           "userid":currentUserModel!.id,
-                  //           "image":currentUserModel!.images,
-                  //         }
-                  //       ]
-                  //       )
-                  //     });
-                  //     Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavBar(),));
-                  //   },child: Text("Submit",style: TextStyle(color: Pallette.white,fontSize: width*0.045,fontWeight: FontWeight.w600),),
-                  //     style: ButtonStyle(backgroundColor:MaterialStatePropertyAll(Pallette.primaryColor)),
-                  //   ),
-                  // )
-                ],
-              ):SizedBox(),
-              // InkWell(
-              //   onTap: () {
-              //     // FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update({
-              //     //   "booking":"noOrder"
-              //     // });
-              //     showDialog(context: context, builder:(context) =>
-              //       AlertDialog(
-              //         surfaceTintColor: Pallette.secondaryBrown,
-              //         title: Text("Are you sure to cancel the order",textAlign: TextAlign.center, style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600),),
-              //         actions: [
-              //           TextButton(onPressed: () {
-              //             showDialog(
-              //                 context: context,
-              //                 builder: (context) {
-              //                   return AlertDialog(
-              //                     surfaceTintColor: Pallette.secondaryBrown,
-              //                     shape: RoundedRectangleBorder(
-              //                       borderRadius: BorderRadius.circular(width*0.05)
-              //                     ),
-              //                     content: Container(
-              //                       height: height*0.5,
-              //                       width: width*1,
-              //                       decoration: BoxDecoration(
-              //                           borderRadius: BorderRadius.circular(width*0.03)
-              //                       ),
-              //                       child: Column(
-              //                         children: [
-              //                           Lottie.asset(imageConstants.lottie),
-              //                           Text("Successfully Canceled Your Order\n Thank You Visit again!!! ",
-              //                             textAlign: TextAlign.center,)
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   );
-              //                 },
-              //             );
-              //
-              //             FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
-              //                 // currentUserModel!.copyWith(booking: FieldValue.arrayRemove([widget.data.bookingId], bookingCount: newBooking?.length).toMap()
-              //                 {
-              //               "booking":FieldValue.arrayRemove([widget.data.bookingId]),
-              //
-              //             }).then((value) {
-              //               List? newBooking = currentUserModel?.booking;
-              //               newBooking!.remove(widget.data.bookingId);
-              //               print(newBooking);
-              //               FirebaseFirestore.instance.collection("users").doc(currentUserModel!.id).update(
-              //                   {
-              //                     "bookingCount":newBooking.length,
-              //                   });
-              //             });
-              //             FirebaseFirestore.instance.collection("bookings").doc(widget.data.bookingId).delete();
-              //             Future.delayed(Duration(seconds: 3))
-              //                 .then((value) => Navigator.pushReplacement(context,
-              //                 CupertinoPageRoute(builder: (context) =>myOrder() ,))
-              //             );
-              //
-              //           },
-              //               child: Text("Ok",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
-              //           TextButton(onPressed:() {
-              //             Navigator.pop(context);
-              //           },
-              //               child: Text("Cancel",style: TextStyle(fontSize: width*0.05,fontWeight: FontWeight.w600,color: Pallette.primaryColor),)),
-              //         ],
-              //       )
-              //       );
-              //
-              //   },
-              //   child: Container(
-              //     height: height*0.06,
-              //     width: width*0.8,
-              //     decoration: BoxDecoration(
-              //       color: Pallette.primaryColor,
-              //    borderRadius: BorderRadius.circular(width*0.02)
-              //     ),
-              //     child: Center(
-              //       child: Text("Cancel",
-              //           style: TextStyle(
-              //             color: Pallette.white,
-              //
-              //             fontSize: width*0.04,
-              //           )),
-              //     ),
-              //
-              //   ),
-              // )
+                  ),
+                ),
+              )
+
             ],
           ),
       ),
