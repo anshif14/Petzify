@@ -397,50 +397,50 @@ class _HomePageState extends ConsumerState<HomePage> {
                             padding: const EdgeInsets.all(4.0),
                             child: Column(
                               children: [
-                                loading?
-                                Stack(
-                                  children: [
-                                    Hero(
-                                      tag: data[index].image,
-                                      child:Container(
-                                        height: width * 0.4,
-                                        width: width * 0.4,
-                                        decoration: BoxDecoration(
-                                            color: Pallette.secondaryBrown,
-                                            image: DecorationImage(
-                                                image: NetworkImage(data[index].image[0]),
-                                                fit: BoxFit.cover,opacity:0.6),
-                                            borderRadius: BorderRadius.circular(15)),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      top: 1,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Container(
-                                          height: width*0.1,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            // color: Colors.white.withOpacity(0.4)
-                                          ),
-                                          child: Center(
-                                            child: IconButton(onPressed: (){
-                                              // ref.read(favour.notifier).update((state) => !state);
-                                              favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
-
-                                            }
-                                              , icon: Icon(
-                                                fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
-                                                color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ):
+                                // loading?
+                                // Stack(
+                                //   children: [
+                                //     Hero(
+                                //       tag: data[index].image,
+                                //       child:Container(
+                                //         height: width * 0.4,
+                                //         width: width * 0.4,
+                                //         decoration: BoxDecoration(
+                                //             color: Pallette.secondaryBrown,
+                                //             image: DecorationImage(
+                                //                 image: NetworkImage(data[index].image[0]),
+                                //                 fit: BoxFit.cover,opacity:0.6),
+                                //             borderRadius: BorderRadius.circular(15)),
+                                //       ),
+                                //     ),
+                                //     Positioned(
+                                //       right: 0,
+                                //       top: 1,
+                                //       child: Padding(
+                                //         padding: const EdgeInsets.all(5.0),
+                                //         child: Container(
+                                //           height: width*0.1,
+                                //           decoration: BoxDecoration(
+                                //             shape: BoxShape.circle,
+                                //             // color: Colors.white.withOpacity(0.4)
+                                //           ),
+                                //           child: Center(
+                                //             child: IconButton(onPressed: (){
+                                //               // ref.read(favour.notifier).update((state) => !state);
+                                //               favFunc(data[index].productname,data[index].id, data[index].price, data[index].category,data[index].image);
+                                //
+                                //             }
+                                //               , icon: Icon(
+                                //                 fav.contains(data[index].id) ? Icons.favorite : Icons.favorite,
+                                //                 color: fav.contains(data[index].id) ?Colors.red:Colors.grey,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     )
+                                //   ],
+                                // ):
 
                                 // Container(
                                 //   width: width*0.4,
