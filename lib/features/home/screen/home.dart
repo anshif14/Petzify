@@ -197,7 +197,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                   fontWeight: FontWeight.w800),
             ),
             subtitle: Row(
-              children: [Icon(Icons.location_on_outlined),_currentAdress.isNotEmpty?Text(_currentAdress.toString()):Text("Kerala")
+              children: [Icon(Icons.location_on_outlined),_currentAdress.isNotEmpty?Container(
+                  width: width*0.55,
+                  child: Text(_currentAdress.toString(),overflow: TextOverflow.ellipsis,)):Text("Kerala")
               ],
             ),
             trailing:  SvgPicture.asset(ImageConstants.dogSvg),
@@ -499,18 +501,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
-                                      Container(
-                                        width: width*0.4,
+                                      Expanded(
                                         child: Text(
-                                          data[index].productname,
-                                          style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
+                                          data[index].productname,overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(fontWeight: FontWeight.w800),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Row(
+                                //     children: [
+                                //       Container(
+                                //         width: width*0.4,
+                                //         child: Text(
+                                //           data[index].productname,
+                                //           style: TextStyle(fontWeight: FontWeight.w800,overflow: TextOverflow.ellipsis),
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                                 Padding(
-                                  padding: const EdgeInsets.all(2.0),
+                                  padding:  EdgeInsets.only(bottom: 2.0,top: 2.0,left: 2.0,right:width*0.045),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [

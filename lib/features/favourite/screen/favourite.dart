@@ -180,7 +180,7 @@ class _favouriteState extends ConsumerState<favouritePage> {
                         child: GridView.count(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          childAspectRatio: 0.76,
+                          childAspectRatio: 0.78,
                           crossAxisCount: 2,
                           children: List.generate(
                             data.favourites.length,

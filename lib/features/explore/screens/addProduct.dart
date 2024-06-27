@@ -562,7 +562,8 @@ class _AddProductState extends ConsumerState<AddProduct> {
 
                     // update();
 
-                  add();
+
+                    add();
                     // adrup();
                     Navigator.pop(context);
 

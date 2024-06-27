@@ -11,6 +11,7 @@ import 'package:lottie/lottie.dart';
 import 'package:luna_demo/commons/image%20Constants.dart';
 import 'package:luna_demo/features/myads/controller/ads_stream_controller.dart';
 import 'package:luna_demo/features/myads/screen/adsView.dart';
+import 'package:luna_demo/features/myads/screen/advertisement.dart';
 import 'package:luna_demo/model/product_Model.dart';
 import 'package:luna_demo/model/user_Model.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
@@ -123,19 +124,23 @@ class _myAdsState extends ConsumerState<myAds> {
       ),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-          floatingActionButton: WidgetAnimator(
-            atRestEffect: WidgetRestingEffects.rotate(),
-
-            child: CircleAvatar(
-              radius: width*0.08,backgroundColor:Pallette.primaryColor ,
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,border: Border.all(width: width*0.008,color: Colors.white)
+          floatingActionButton: InkWell(
+            onTap: () {
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => Advertisement(),));
+            },
+            child: WidgetAnimator(
+              atRestEffect: WidgetRestingEffects.rotate(),
+              child: CircleAvatar(
+                radius: width*0.08,backgroundColor:Pallette.primaryColor ,
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,border: Border.all(width: width*0.008,color: Colors.white)
+                  ),
+                  child: CircleAvatar(
+                    radius: width*0.06,
+                    child: Icon(Icons.play_circle,size: width*0.08,),
+                    backgroundColor: Pallette.primaryColor,),
                 ),
-                child: CircleAvatar(
-                  radius: width*0.06,
-                  child: Icon(Icons.play_circle,size: width*0.08,),
-                  backgroundColor: Pallette.primaryColor,),
               ),
             ),
           ),

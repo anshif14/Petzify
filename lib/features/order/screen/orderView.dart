@@ -18,6 +18,7 @@ import 'package:luna_demo/features/home/screen/navbar.dart';
 import 'package:luna_demo/features/order/screen/more_review.dart';
 
 import 'package:luna_demo/model/booking_model.dart';
+import 'package:order_tracker/order_tracker.dart';
 
 
 import '../../../main.dart';
@@ -43,7 +44,23 @@ class orderView extends ConsumerStatefulWidget {
 
 class _orderViewState extends ConsumerState<orderView> {
 
- // int selectindex=0;
+
+  // List<TextDto> orderList = [
+  //   TextDto("Your order has been placed",""),
+  // ];
+  //
+  // List<TextDto> shippedList = [
+  //   TextDto("Your order has been shipped", ""),
+  // ];
+  //
+  // List<TextDto> outOfDeliveryList = [
+  //   TextDto("Your order is out for delivery", ""),
+  // ];
+  //
+  // List<TextDto> deliveredList = [
+  //   TextDto("Your order has been delivered", ""),
+  // ];
+
   List<StepperData> stepperData = [
     StepperData(
         title: StepperText(
@@ -52,36 +69,25 @@ class _orderViewState extends ConsumerState<orderView> {
           ),
         ),
         subtitle: StepperText("Your order has been placed"),
-        // iconWidget: Container(
-        //   width: width*0.03,
-        //   height: height*0.03,
-        //   decoration:  BoxDecoration(
-        //       color: Colors.green,
-        //       shape: BoxShape.circle
-        //   ),
-        //   child:  Icon(Icons.check, color: Colors.white,size: width*0.04),
-        // )
     ),
     StepperData(
-        title: StepperText("On the way",textStyle: TextStyle(
-          fontWeight: FontWeight.w500
+      title: StepperText(
+        "Shipped",
+        textStyle:  TextStyle(
+        ),
+      ),
+      subtitle: StepperText("Item yet to be shipped"),
+    ),
+    StepperData(
+        title: StepperText("Out of delivery",textStyle: TextStyle(
         )),
         subtitle: StepperText(
-            "Our delivery executive is on the way to deliver your item"),
-        // iconWidget: Container(
-        //   width: width*0.03,
-        //   height: height*0.03,
-        //   decoration:  BoxDecoration(
-        //       color: Colors.green,
-        //       shape: BoxShape.circle
-        //   ),
-        //   child:  Icon(Icons.check, color: Colors.white,size: width*0.04),
-        // )
+            "Your order is out for delivery"),
+
     ),
     StepperData(
       title: StepperText("Delivered",
           textStyle: TextStyle(
-            color: Colors.grey,
           )),
     ),
   ];
@@ -167,35 +173,43 @@ class _orderViewState extends ConsumerState<orderView> {
                 barThickness: width*0.006,
                 activeBarColor: Colors.green,
                 verticalGap: width*0.07,
-
               ),
+              // OrderTracker(
+              //   status: Status.delivered,
+              //   activeColor: Colors.green,
+              //   inActiveColor: Colors.grey[300],
+              //   orderTitleAndDateList: orderList,
+              //   shippedTitleAndDateList: shippedList,
+              //   outOfDeliveryTitleAndDateList: outOfDeliveryList,
+              //   deliveredTitleAndDateList: deliveredList,
+              // ),
 
 
-              Container(
-               height: height*0.07,
-               width: width*1,
-               decoration: BoxDecoration(
-                   color: Pallette.secondaryBrown,
-                 borderRadius: BorderRadius.circular(width*0.015),
-               ),
-                child: Center(child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Container(
-                          height: height*0.03,
-                          child: Image.asset(ImageConstants.checkout)),
-                    ),
-                    Text("You can cancel this order till tomorrow 12 PM",
-                    style: TextStyle(
-                      fontSize: width*0.03
-                    )),
-                  ],
-                ),),
-              ),
-              gap,
-              widget.data.selectindex==2?
+              // Container(
+              //  height: height*0.07,
+              //  width: width*1,
+              //  decoration: BoxDecoration(
+              //      color: Pallette.secondaryBrown,
+              //    borderRadius: BorderRadius.circular(width*0.015),
+              //  ),
+              //   child: Center(child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Padding(
+              //         padding: EdgeInsets.all(8.0),
+              //         child: Container(
+              //             height: height*0.03,
+              //             child: Image.asset(ImageConstants.checkout)),
+              //       ),
+              //       Text("You can cancel this order till tomorrow 12 PM",
+              //       style: TextStyle(
+              //         fontSize: width*0.03
+              //       )),
+              //     ],
+              //   ),),
+              // ),
+
+              widget.data.selectindex==2 || widget.data.selectindex==3 ?
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,7 +283,7 @@ class _orderViewState extends ConsumerState<orderView> {
                 reviewcontroller.text.isNotEmpty?Row(
                     mainAxisAlignment:MainAxisAlignment.spaceBetween,
                     children: [
-                  widget.data.selectindex!=2?GestureDetector(
+                  widget.data.selectindex!=3?GestureDetector(
                         onTap: () {
                           showDialog(context: context, builder:(context) =>
                               AlertDialog(
