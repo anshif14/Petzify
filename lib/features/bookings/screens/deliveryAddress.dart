@@ -35,6 +35,7 @@ class deliveryAddress extends ConsumerStatefulWidget {
 
 class _deliveryAddressState extends ConsumerState<deliveryAddress> {
 
+
   TextEditingController namecontroller=TextEditingController();
   TextEditingController numbercontroller=TextEditingController();
   TextEditingController housecontroller=TextEditingController();
@@ -162,6 +163,9 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
     fetch();
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).unfocus();
+    });
   }
 
 
@@ -532,6 +536,9 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                 gap,
                 InkWell(
                   onTap: () {
+
+                    FocusScope.of(context).unfocus();
+
                     if(namecontroller.text.isEmpty){
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your Name")));
                       return;

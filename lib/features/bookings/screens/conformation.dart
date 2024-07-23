@@ -223,7 +223,7 @@ class _confirmationState extends ConsumerState<ConfirmPage> {
                                   ),
                                   trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: WidgetStatePropertyAll(
+                                    fillColor: MaterialStatePropertyAll(
                                         Pallette.primaryColor),
                                     value: "Google Pay",
                                     groupValue: cont,
@@ -239,7 +239,7 @@ class _confirmationState extends ConsumerState<ConfirmPage> {
                                   ),
                                   trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: WidgetStatePropertyAll(
+                                    fillColor: MaterialStatePropertyAll(
                                         Pallette.primaryColor),
                                     value: "Credit/Debit",
                                     groupValue: cont,
@@ -255,7 +255,7 @@ class _confirmationState extends ConsumerState<ConfirmPage> {
                                   ),
                                   trailing: Radio(
                                     activeColor: Pallette.primaryColor,
-                                    fillColor: WidgetStatePropertyAll(
+                                    fillColor: MaterialStatePropertyAll(
                                         Pallette.primaryColor),
                                     value: "Cash on delivery",
                                     groupValue: cont,
